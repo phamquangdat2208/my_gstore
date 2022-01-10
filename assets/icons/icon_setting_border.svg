@@ -1,0 +1,25 @@
+<svg width="70" height="70" viewBox="0 0 70 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g filter="url(#filter0_d)">
+<circle cx="35" cy="33" r="20" fill="white"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M35.868 25.1875H45.4166V26.9237H35.868V25.1875Z" fill="black"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M24.5833 25.1875H28.9236V26.9237H24.5833V25.1875Z" fill="black"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M42.8125 32.132H45.4166V33.8681H42.8125V32.132Z" fill="black"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M24.5833 32.132H35.868V33.8681H24.5833V32.132Z" fill="black"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M35.868 39.0764H45.4166V40.8125H35.868V39.0764Z" fill="black"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M24.5833 39.0764H28.9236V40.8125H24.5833V39.0764Z" fill="black"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M30.6597 24.3195C29.7009 24.3195 28.9236 25.0968 28.9236 26.0556C28.9236 27.0144 29.7009 27.7917 30.6597 27.7917C31.6185 27.7917 32.3958 27.0144 32.3958 26.0556C32.3958 25.0968 31.6185 24.3195 30.6597 24.3195ZM27.1875 26.0556C27.1875 24.1379 28.742 22.5834 30.6597 22.5834C32.5774 22.5834 34.1319 24.1379 34.1319 26.0556C34.1319 27.9733 32.5774 29.5278 30.6597 29.5278C28.742 29.5278 27.1875 27.9733 27.1875 26.0556Z" fill="black"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M37.6041 31.2639C36.6453 31.2639 35.868 32.0412 35.868 33C35.868 33.9589 36.6453 34.7362 37.6041 34.7362C38.563 34.7362 39.3403 33.9589 39.3403 33C39.3403 32.0412 38.563 31.2639 37.6041 31.2639ZM34.1319 33C34.1319 31.0824 35.6865 29.5278 37.6041 29.5278C39.5218 29.5278 41.0764 31.0824 41.0764 33C41.0764 34.9177 39.5218 36.4723 37.6041 36.4723C35.6865 36.4723 34.1319 34.9177 34.1319 33Z" fill="black"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M30.6597 38.2084C29.7009 38.2084 28.9236 38.9857 28.9236 39.9445C28.9236 40.9033 29.7009 41.6806 30.6597 41.6806C31.6185 41.6806 32.3958 40.9033 32.3958 39.9445C32.3958 38.9857 31.6185 38.2084 30.6597 38.2084ZM27.1875 39.9445C27.1875 38.0268 28.742 36.4723 30.6597 36.4723C32.5774 36.4723 34.1319 38.0268 34.1319 39.9445C34.1319 41.8621 32.5774 43.4167 30.6597 43.4167C28.742 43.4167 27.1875 41.8621 27.1875 39.9445Z" fill="black"/>
+</g>
+<defs>
+<filter id="filter0_d" x="0" y="0" width="70" height="70" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"/>
+<feOffset dy="2"/>
+<feGaussianBlur stdDeviation="7.5"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.1 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape"/>
+</filter>
+</defs>
+</svg>
