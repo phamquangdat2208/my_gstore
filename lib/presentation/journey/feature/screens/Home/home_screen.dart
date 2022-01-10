@@ -48,31 +48,31 @@ class _HomeScreenState extends State<HomeScreen> {
                     HomeCenter(),
                   ],
                 ),
-                // BlocBuilder<HomeCubit, HomeState>(
-                //   bloc: _homeCubit,
-                //   builder: (_, state) {
-                //     if (state is HomeGettingDataState) {
-                //       return CommonShimmer(
-                //         numberItem: 5,
-                //       );
-                //     }
-                //     if (state is HomeGotDataState &&
-                //         state.getGShop.isNotEmpty) {
-                //       return ListViewDisplayGShop(
-                //         label: 'G-Shop',
-                //         information: state.getGShop,
-                //         onMore: () {
-                //           // Routes.instance.navigateTo(RouteName.AllCourseScreen,
-                //           //     arguments: ArgumentAllCourseScreen(
-                //           //         url: 'get-edu-courses-hot',
-                //           //         title: 'Khoá học đang hot',
-                //           //         haveIconHot: true));
-                //         },
-                //       );
-                //     }
-                //     return const SizedBox();
-                //   },
-                // ),
+                BlocBuilder<HomeCubit, HomeState>(
+                  bloc: _homeCubit,
+                  builder: (_, state) {
+                    if (state is HomeGettingDataState) {
+                      return CommonShimmer(
+                        numberItem: 5,
+                      );
+                    }
+                    if (state is HomeGotDataState &&
+                        state.getGShop.isNotEmpty) {
+                      return ListViewDisplayGShop(
+                        label: 'G-Shop',
+                        information: state.getGShop,
+                        onMore: () {
+                          // Routes.instance.navigateTo(RouteName.AllCourseScreen,
+                          //     arguments: ArgumentAllCourseScreen(
+                          //         url: 'get-edu-courses-hot',
+                          //         title: 'Khoá học đang hot',
+                          //         haveIconHot: true));
+                        },
+                      );
+                    }
+                    return const SizedBox();
+                  },
+                ),
                 BlocBuilder<HomeCubit, HomeState>(
                   bloc: _homeCubit,
                   builder: (_, state) {

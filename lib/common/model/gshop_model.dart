@@ -1,3 +1,5 @@
+import 'package:my_gstore/common/ultils/common_util.dart';
+
 class GShopModels {
   String? fullname;
   String? address;
@@ -16,7 +18,7 @@ class GShopModels {
   GShopModels.fromJson(Map<String, dynamic> json) {
     fullname = json['Fullname'];
     address = json['Address'];
-    avartaUrl = json['AvartaUrl'];
+    avartaUrl = CommonUtils.getUrlImage(json['AvartaUrl']);
     ratings = json['Ratings'];
     avgRating = json['AvgRating'];
     longitude = json['Longitude'];

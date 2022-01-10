@@ -18,6 +18,8 @@ class AppHeader {
     final Map<String, String> data = Map<String, String>();
     if (accessToken != null) {
       data['token'] = '$accessToken';
+      data['latitude'] = '$lat';
+      data['longitude'] = '$lng';
       data['Content-Type'] = 'application/json';
     }
     return data;

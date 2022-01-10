@@ -33,13 +33,23 @@ class CategoryDetailWidgetItemGShop extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            CustomCacheImageNetwork(
-              url: information?.avartaUrl ?? '',
-              width: double.infinity,
-              height: 140,
-              fit: BoxFit.cover,
-              border: 8,
-            ),
+            Container(
+              padding:EdgeInsets.all(2),
+              decoration: const BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                gradient: LinearGradient(
+                  colors: AppColors.colorsGradient,
+                  begin: Alignment.centerLeft,
+                  end: Alignment.centerRight,
+                ),
+              ),
+              child: CustomCacheImageNetwork(
+                url: information?.avartaUrl??'',
+                width: double.infinity,
+                height: 146,
+                fit: BoxFit.cover,
+                border: 8,
+              ),),
             SizedBox(height: 4.0),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 4),
@@ -47,11 +57,11 @@ class CategoryDetailWidgetItemGShop extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(
-                    height:35,
+                    height:20,
                     child: Text(
                       information?.fullname ?? '',
                       overflow: TextOverflow.ellipsis,
-                      style: AppTextTheme.normalBlack.copyWith(
+                      style: AppTextTheme.mediumBlack.copyWith(
                         fontWeight: FontWeight.w400,
                       ),
                       textAlign: TextAlign.start,
@@ -94,7 +104,7 @@ class CategoryDetailWidgetItemGShop extends StatelessWidget {
                         width: 18,
                       ),
                       Text(
-                        '${(information?.km??0).toStringAsFixed(2)}',
+                        ' ${(information?.km??0).toStringAsFixed(2)}km',
                         style: AppTextTheme.smallGreen,
                       ),
 

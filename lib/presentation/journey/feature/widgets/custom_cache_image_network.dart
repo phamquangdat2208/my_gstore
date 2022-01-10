@@ -96,6 +96,7 @@ class CustomCacheImageNetwork extends StatelessWidget {
     width: width,
     height: height,
     decoration: BoxDecoration(
+      color: AppColors.grey6,
       borderRadius: BorderRadius.all(Radius.circular(8)),
       border: Border.all(color: AppColors.grey4),
     ),

@@ -19,30 +19,27 @@ class HomeCubit extends Cubit<HomeState> {
   void getInitData() async {
     try {
       emit(HomeGettingDataState());
-      // GlobalAppCache appCache = injector<GlobalAppCache>();
+      GlobalAppCache appCache = injector<GlobalAppCache>();
       // final position = globalAppCache.gspPosition;
-      // final getGShop = await getInforGShop(
-      //     'AIO/GetHomePage?maxKm=25&latitude=21.023714&longitude=105.754272&page=1&pagesize=12&type=3');
+      final getGShop = await getInforGShop(
+          'Customer/GetShopGStoreNew?maxKm=25&page=1&pagesize=12&type=3');
       final getBestBuyNew = await getProduct(
           'ProductApp/GetBestProductForYouNew?km=25&latitude=21.023714&longitude=105.754272&page=1&pagesize=12');
       emit(HomeGotDataState(
+        getGShop,
         getBestBuyNew,
-        // getGShop,
       ));
     } catch (e) {
-      emit(HomeGotDataState([]));
+      emit(HomeGotDataState([],[]));
       CommonUtils.handleException(snackBarBloc, e,
           methodName: 'getInitData HomeCubit');
     }
   }
 
   Future<List<GShopModels>> getInforGShop(String endPoint) async {
-    Map? data;
-    // final data = await appClient.get(endPoint);
-    data = await appClient.get(endPoint);
-    Map<String, dynamic> listData = data['Data'] ?? {};
     List<GShopModels> result1 = [];
-    listData['LstShopGStore'].forEach((e) {
+    final data = await appClient.get(endPoint);
+    data['Data'].forEach((e) {
       result1.add(GShopModels.fromJson(e));
     });
     return result1;
@@ -66,7 +63,7 @@ class HomeGettingDataState extends HomeState {}
 
 class HomeGotDataState extends HomeState {
   final List<ProductModel> getBestBuyNew;
-  // final List<GShopModels> getGShop;
+  final List<GShopModels> getGShop;
 
-  HomeGotDataState(this.getBestBuyNew);
+  HomeGotDataState(this.getGShop,this.getBestBuyNew);
 }
