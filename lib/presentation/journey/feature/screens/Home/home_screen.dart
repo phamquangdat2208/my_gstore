@@ -1,16 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:my_gstore/common/constants/icon_constant.dart';
 import 'package:my_gstore/common/global_app_cache/global_app_catch.dart';
+import 'package:my_gstore/common/navigation/route_names.dart';
 import 'package:my_gstore/common/theme/theme_color.dart';
 import 'package:my_gstore/presentation/injector_container.dart';
+import 'package:my_gstore/presentation/journey/feature/auth/all%20product/all_product_page.dart';
 import 'package:my_gstore/presentation/journey/feature/screens/Home/component/custom_sliver_appbar_home.dart';
 import 'package:my_gstore/presentation/journey/feature/screens/Home/component/home_center.dart';
 import 'package:my_gstore/presentation/journey/feature/widgets/G%20Shop%20Items/listview_gshop.dart';
 import 'package:my_gstore/presentation/journey/feature/widgets/gridview_product.dart';
-import 'package:my_gstore/presentation/journey/feature/widgets/Product%20Item/listview_product.dart';
 import 'package:my_gstore/presentation/journey/feature/widgets/shimmer/common_shimmer.dart';
+import '../../../../routes.dart';
 import 'component/home_map.dart';
 import 'cubit/home_cubit.dart';
 
@@ -62,11 +63,11 @@ class _HomeScreenState extends State<HomeScreen> {
                         label: 'G-Shop',
                         information: state.getGShop,
                         onMore: () {
-                          // Routes.instance.navigateTo(RouteName.AllCourseScreen,
-                          //     arguments: ArgumentAllCourseScreen(
-                          //         url: 'get-edu-courses-hot',
-                          //         title: 'Khoá học đang hot',
-                          //         haveIconHot: true));
+                          Routes.instance.navigateTo(RouteName.allProductScreen,
+                              arguments: AllProductScreen(
+                                  url: 'get-edu-courses-hot',
+                                  title: 'Khoá học đang hot',
+                              ));
                         },
                       );
                     }

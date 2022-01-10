@@ -4,6 +4,7 @@ import 'package:my_gstore/common/bloc/loading_bloc/loading_bloc.dart';
 import 'package:my_gstore/common/bloc/loading_bloc/loading_event.dart';
 import 'package:my_gstore/common/navigation/route_names.dart';
 import 'package:my_gstore/common/ultils/log_util.dart';
+import 'package:my_gstore/presentation/journey/feature/auth/all%20product/all_product_page.dart';
 import 'package:my_gstore/presentation/journey/feature/auth/login/login_phone_number_screen.dart';
 import 'package:my_gstore/presentation/journey/feature/auth/login/login_screen.dart';
 import 'package:my_gstore/presentation/journey/feature/auth/otp/confirm_screen.dart';
@@ -81,6 +82,14 @@ class Routes {
       case RouteName.loginWithPhoneNumber:
         return CupertinoPageRoute(
             builder: (context) => LoginWithPhoneNumberScreen());
+      case RouteName.allProductScreen:
+        return CupertinoPageRoute(
+        //
+            builder: (context) => AllProductScreen(
+                argument: settings.arguments != null
+              ? settings.arguments as AllProductScreen
+                : null,
+            ));
       // case RouteName.confirmScreen:
       //   return CupertinoPageRoute(
       //       builder: (context) => ConfirmScreen(

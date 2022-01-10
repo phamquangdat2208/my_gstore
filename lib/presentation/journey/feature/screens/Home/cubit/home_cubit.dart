@@ -12,10 +12,8 @@ class HomeCubit extends Cubit<HomeState> {
   final AppClient appClient;
   final SnackBarBloc snackBarBloc;
   final GlobalAppCache globalAppCache;
-
   HomeCubit(this.appClient, this.snackBarBloc, this.globalAppCache)
       : super(HomeInitState());
-
   void getInitData() async {
     try {
       emit(HomeGettingDataState());

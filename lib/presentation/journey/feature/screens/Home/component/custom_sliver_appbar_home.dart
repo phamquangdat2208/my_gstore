@@ -94,8 +94,8 @@ class CustomSliverAppbarHome extends SliverPersistentHeaderDelegate {
                                 .copyWith(fontSize: 18.0)),
                         TextSpan(
                             text: injector<GlobalAppCache>().haveLoggedIn
-                                ? ' ${profileModel?.fullName ?? ''}'
-                                : '',
+                                ? ' '
+                                : ' ${profileModel?.lastName ?? ''}',
                             style: AppTextTheme.normalWhite.copyWith(
                                 fontSize: 18.0, fontWeight: FontWeight.bold)),
                       ])),
