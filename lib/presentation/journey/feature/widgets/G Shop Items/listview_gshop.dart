@@ -48,7 +48,7 @@ class ListViewDisplayGShop extends StatelessWidget {
                 ),
               ],
             )
-                : const SizedBox(),
+                : const SizedBox(width: 8,),
             const SizedBox(width: 8),
             Text(
               label,

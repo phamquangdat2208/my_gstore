@@ -11,7 +11,6 @@ import 'package:my_gstore/common/navigation/route_names.dart';
 import 'package:my_gstore/common/network/app_client.dart';
 import 'package:my_gstore/common/network/app_header.dart';
 import 'package:my_gstore/presentation/routes.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../injector_container.dart';
 

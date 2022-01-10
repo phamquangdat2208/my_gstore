@@ -9,6 +9,7 @@ import 'package:my_gstore/presentation/journey/feature/auth/all%20product/all_pr
 import 'package:my_gstore/presentation/journey/feature/screens/Home/component/custom_sliver_appbar_home.dart';
 import 'package:my_gstore/presentation/journey/feature/screens/Home/component/home_center.dart';
 import 'package:my_gstore/presentation/journey/feature/widgets/G%20Shop%20Items/listview_gshop.dart';
+import 'package:my_gstore/presentation/journey/feature/widgets/Product%20Item/listview_product.dart';
 import 'package:my_gstore/presentation/journey/feature/widgets/gridview_product.dart';
 import 'package:my_gstore/presentation/journey/feature/widgets/shimmer/common_shimmer.dart';
 import '../../../../routes.dart';
@@ -63,11 +64,29 @@ class _HomeScreenState extends State<HomeScreen> {
                         label: 'G-Shop',
                         information: state.getGShop,
                         onMore: () {
-                          Routes.instance.navigateTo(RouteName.allProductScreen,
-                              arguments: AllProductScreen(
-                                  url: 'get-edu-courses-hot',
-                                  title: 'Khoá học đang hot',
-                              ));
+
+                        },
+                      );
+                    }
+                    return const SizedBox();
+                  },
+                ),
+                BlocBuilder<HomeCubit, HomeState>(
+                  bloc: _homeCubit,
+                  builder: (_, state) {
+                    if (state is HomeGettingDataState) {
+                      return CommonShimmer(
+                        numberItem: 5,
+                      );
+                    }
+                    if (state is HomeGotDataState &&
+                        state.getGShop.isNotEmpty) {
+                      return ListViewDisplayProduct(
+                        haveIcon: false,
+                        label: 'Sản phẩm bán chạy',
+                        productModel: state.getBestBuy,
+                        onMore: () {
+
                         },
                       );
                     }
@@ -88,11 +107,11 @@ class _HomeScreenState extends State<HomeScreen> {
                         label: 'Gần tôi',
                         courses: state.getBestBuyNew,
                         onMore: () {
-                          // Routes.instance.navigateTo(RouteName.AllCourseScreen,
-                          //     arguments: ArgumentAllCourseScreen(
-                          //         url: 'get-edu-courses-hot',
-                          //         title: 'Khoá học đang hot',
-                          //         haveIconHot: true));
+                          Routes.instance.navigateTo(RouteName.allProductScreen,
+                              arguments: ArgumentAllProductScreen(
+                                url: 'get-edu-courses-hot',
+                                title: 'Gần tôi',
+                              ));
                         },
                       );
                     }

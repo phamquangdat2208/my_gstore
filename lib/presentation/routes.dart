@@ -86,10 +86,11 @@ class Routes {
         return CupertinoPageRoute(
         //
             builder: (context) => AllProductScreen(
-                argument: settings.arguments != null
-              ? settings.arguments as AllProductScreen
+              argument: settings.arguments != null
+              ? settings.arguments as ArgumentAllProductScreen
                 : null,
-            ));
+            )
+        );
       // case RouteName.confirmScreen:
       //   return CupertinoPageRoute(
       //       builder: (context) => ConfirmScreen(

@@ -3,10 +3,8 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:my_gstore/common/constants/icon_constant.dart';
-import 'package:my_gstore/common/model/gshop_model.dart';
 import 'package:my_gstore/common/model/product_model.dart';
 import 'package:my_gstore/common/theme/theme_text.dart';
-import 'package:my_gstore/common/ultils/common_util.dart';
 import 'package:my_gstore/common/ultils/screen_utils.dart';
 
 import 'gridview_product_item.dart';
@@ -52,7 +50,7 @@ class ListViewDisplayProduct extends StatelessWidget {
                 ),
               ],
             )
-                : const SizedBox(),
+                : const SizedBox(width: 8),
             const SizedBox(width: 8),
             Text(
               label,

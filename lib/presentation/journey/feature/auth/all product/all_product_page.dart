@@ -3,11 +3,16 @@ import 'package:my_gstore/common/theme/theme_color.dart';
 
 import '../../../../routes.dart';
 
-
-class AllProductScreen extends StatefulWidget {
+class ArgumentAllProductScreen{
   final String? url;
   final String? title;
-  const AllProductScreen({Key? key,required this.url,required this.title}) : super(key: key);
+
+
+  ArgumentAllProductScreen({this.url, this.title});
+}
+class AllProductScreen extends StatefulWidget {
+    ArgumentAllProductScreen? argument;
+   AllProductScreen({Key? key,required this.argument}) : super(key: key);
   @override
   _AllProductScreenState createState() => _AllProductScreenState();
 }
@@ -21,7 +26,7 @@ class _AllProductScreenState extends State<AllProductScreen> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         centerTitle: true,
-        title: Text(widget?.title??'', style: TextStyle(fontSize: 16, color: AppColors.grey9, fontWeight: FontWeight.w500),),
+        title: Text(widget.argument?.title??'', style: TextStyle(fontSize: 16, color: AppColors.grey9, fontWeight: FontWeight.w500),),
         actions: [
           IconButton(
               onPressed: () {
