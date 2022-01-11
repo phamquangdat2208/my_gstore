@@ -1,3 +1,6 @@
+import 'package:my_gstore/common/enum.dart';
+import 'package:my_gstore/common/ultils/common_util.dart';
+
 class CategoryModel {
   String? name;
   String? slug;
@@ -15,8 +18,12 @@ class CategoryModel {
     parentId = json['ParentId'];
     sort = json['Sort'];
     languageId = json['LanguageId'];
-    urlPicture = json['UrlPicture'];
-    urlIcon = json['UrlIcon'];
+    urlPicture = CommonUtils.getUrlImage(json['UrlPicture'],
+      typeImage: TypeSizeImage.thumbs,
+      oldUrl: true,);
+    urlIcon = CommonUtils.getUrlImage(json['UrlIcon'],
+      typeImage: TypeSizeImage.thumbs,
+      oldUrl: true,);;
     isPrestige = json['IsPrestige'];
     iD = json['ID'];
   }

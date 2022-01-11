@@ -1,6 +1,4 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_gstore/common/bloc/loading_bloc/loading_bloc.dart';
 import 'package:my_gstore/common/bloc/loading_bloc/loading_event.dart';
 import 'package:my_gstore/common/bloc/snackbar_bloc/snackbar_bloc.dart';
@@ -11,10 +9,8 @@ import 'package:my_gstore/common/theme/theme_color.dart';
 import 'package:my_gstore/common/theme/theme_text.dart';
 import 'package:my_gstore/common/ultils/common_util.dart';
 import 'package:my_gstore/common/ultils/format_utils.dart';
-import 'package:my_gstore/presentation/journey/feature/auth/detail%20page/cubit/detail_cubit.dart';
 import 'package:my_gstore/presentation/journey/feature/auth/detail%20page/page_container_demo/demo_pageview_title.dart';
 import 'package:my_gstore/presentation/journey/feature/auth/detail%20page/page_container_demo/page_container_demo.dart';
-
 import 'package:my_gstore/presentation/journey/feature/widgets/custom_cache_image_network.dart';
 
 
@@ -40,7 +36,6 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
     _initData();
     super.initState();
   }
-
   void _initData() async {
     try {
       injector<LoadingBloc>().add(StartLoading());
@@ -56,6 +51,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
       injector<LoadingBloc>().add(FinishLoading());
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -148,21 +144,6 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
         physics: BouncingScrollPhysics(),
         child:Column(
           children: [
-            // BlocBuilder<DetailProductCubit, DetailState>(
-            //   bloc: _detailCubit,
-            //   builder: (_, state) {
-            //     if(state is DetailGettingDataState){
-            //       return CommonShimmer(
-            //         numberItem: 0,
-            //       );
-            //     }
-            //     if(state is DetailGotDataState && state.getDetail.isNotEmpty){
-            //       return
-            //     }
-            //     return const SizedBox(height: 50,child: Text('lỗi'),);
-            //   },
-            // ),
-        // ),
         //     SlideImage(
         //       urls: _detailProductModel?.lstPictures
         //           ?.map((e) => e.url ?? '')
@@ -174,7 +155,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
         //     ),
             CustomCacheImageNetwork(
               url: _detailProductModel?.urlPicture ?? '',
-              height: MediaQuery.of(context).size.height*1/2,
+              height: MediaQuery.of(context).size.height*1/2-25,
               width: MediaQuery.of(context).size.width,
             ),
             Container(
