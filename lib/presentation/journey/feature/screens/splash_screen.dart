@@ -30,7 +30,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void _initData() async {
     final localApp = injector<LocalApp>();
     bool? showWelcome = localApp.getBool(KeySaveDataLocal.keySaveWelcomeScreen);
-    await Future.delayed(Duration(milliseconds: 300));
+    await Future.delayed(const Duration(milliseconds: 300));
     if (showWelcome == null) {
       localApp.saveBool(KeySaveDataLocal.keySaveWelcomeScreen, true);
       Routes.instance.navigateTo(RouteName.onBoardingScreen);

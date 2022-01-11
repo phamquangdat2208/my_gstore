@@ -2,6 +2,7 @@ class StringConst {
   static const String _path = 'StringConst.';
   static const String appName = 'G-STORE';
   static const String textCompany = 'Tech company';
+  static const String isGShop =' Cửa hàng uy tín ';
   static const String login = 'Đăng nhập';
   static const String loginWithPhoneNumber = 'Đăng nhập bằng số điện thoại';
   static const String done = 'Xong';
@@ -17,6 +18,8 @@ class StringConst {
   static const String gShop = 'G-Shop';
   static const String gMart = 'G-Mart';
   static const String continueText = 'Tiếp tục';
+  static const String sameProduct ='Sản phẩm tương tự';
+  static const String descriptionProduct ='Mô tả sản phẩm';
   static const String pleaseWaitToApprove = 'Vui lòng chờ sản phẩm phê duyệt';
   static const String rewardWallet = 'Tài khoản thưởng';
   static const String mainWallet = 'Tài khoản G-Store';
@@ -68,6 +71,7 @@ class StringConst {
   static const String addSellPolicyGStore =
       'Theo chính sách bán hàng ký gửi trên các G-Shop của G-Store. Bạn vui lòng nạp thêm vào Tài Khoản G-Store 10% giá trị đơn hàng để hiển thị đơn hàng giao dịch.\nThanks!';
   static const String chargeNow = 'NẠP NGAY';
+  static const String all='Tất cả';
   static const String later = 'để sau';
   static const String classify = 'Phân loại sản phẩm';
   static const String classifyBreakLine = 'Phân loại\nsản phẩm';
@@ -159,6 +163,7 @@ class StringConst {
   static const String removeInLanding = 'Xóa khỏi Landing';
   static const String postedLimitProduct =
       'Bạn đã đăng sản phẩm quá giới hạn cho phép';
+  static const String sameSeller ='Cùng người bán';
   static const String viewDetail = 'Xem chi tiết';
   static const String videoTooShort =
       'Video quá ngắn, vui lòng chọn video hơn 10s';

@@ -138,6 +138,11 @@ class AppTextTheme {
     fontWeight: FontWeight.w500,
     color: AppColors.grey9,
   );
+  static const mediumRed = TextStyle(
+    fontSize: 16.0,
+    fontWeight: FontWeight.w500,
+    color: AppColors.red,
+  );
   static const mediumBlack14px = TextStyle(
     fontSize: 14.0,
     fontWeight: FontWeight.w500,
@@ -212,5 +217,10 @@ class AppTextTheme {
     fontSize: 14,
     fontWeight: FontWeight.w400,
     fontFamily: 'Roboto',
+  );
+  static const smallgreyline = TextStyle(
+    fontSize: 10.0,
+    fontWeight: FontWeight.w400,
+    color: AppColors.grey7,
   );
 }

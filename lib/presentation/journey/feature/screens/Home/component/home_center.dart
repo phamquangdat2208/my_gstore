@@ -57,16 +57,18 @@ class HomeCenter extends StatelessWidget {
                                 fontSize: 12,
                                 fontWeight: FontWeight.w500),
                             maxLines: 1,
-                            minFontSize: 8,
+                            minFontSize: 7,
                           ),
                           SizedBox(
                             height: 2,
                           ),
-                          Text("176.544,000đ",
+                          AutoSizeText("176.544,000đ",
                               style: TextStyle(
                                   color: AppColors.fashion,
                                   fontSize: 15,
-                                  fontWeight: FontWeight.w500)),
+                                  fontWeight: FontWeight.w500,
+                              ),
+                          minFontSize: 9,),
                         ],
                       )
                     ],

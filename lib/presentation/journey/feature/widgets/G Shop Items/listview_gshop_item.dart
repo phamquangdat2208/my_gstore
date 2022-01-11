@@ -104,7 +104,7 @@ class CategoryDetailWidgetItemGShop extends StatelessWidget {
                         width: 18,
                       ),
                       Text(
-                        ' ${(information?.km??0).toStringAsFixed(2)}km',
+                        ' ${(information?.km??0).toStringAsFixed(1)}km',
                         style: AppTextTheme.smallGreen,
                       ),
 

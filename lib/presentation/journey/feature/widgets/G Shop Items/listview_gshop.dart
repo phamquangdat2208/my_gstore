@@ -2,6 +2,7 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:my_gstore/common/constants/icon_constant.dart';
+import 'package:my_gstore/common/customs/custom_gesturedetactor.dart';
 import 'package:my_gstore/common/model/gshop_model.dart';
 import 'package:my_gstore/common/theme/theme_text.dart';
 import 'package:my_gstore/common/ultils/screen_utils.dart';
@@ -57,7 +58,7 @@ class ListViewDisplayGShop extends StatelessWidget {
               ),
             ),
             const Spacer(),
-            InkWell(
+            CustomGestureDetector(
               onTap: () {
                 if (onMore != null) {
                   onMore!();

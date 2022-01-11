@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:my_gstore/common/constants/icon_constant.dart';
+import 'package:my_gstore/presentation/journey/feature/auth/Category/category_screen.dart';
 import 'package:my_gstore/presentation/journey/feature/widgets/bottom_nagivation_widget.dart';
 import 'package:my_gstore/presentation/journey/feature/widgets/layout_contain_widget_keep_alive.dart';
-
 import 'Cart/cart_screen.dart';
 import 'Home/home_screen.dart';
 import 'News/news_screen.dart';
-import 'category/category_screen.dart';
 import 'individual/individual_screen.dart';
 
 class ContainerScreen extends StatelessWidget {
@@ -24,7 +23,7 @@ class ContainerScreen extends StatelessWidget {
           IconConst.user,
         ],
         tabViews: const [
-          HomeScreen(),
+          LayoutContainWidgetKeepAlive(child: HomeScreen()),
           LayoutContainWidgetKeepAlive(child: CategoriesScreen()),
           LayoutContainWidgetKeepAlive(child: CartScreen()),
           LayoutContainWidgetKeepAlive(child: NewsScreen()),

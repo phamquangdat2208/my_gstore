@@ -1,6 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_gstore/common/bloc/snackbar_bloc/snackbar_bloc.dart';
 import 'package:my_gstore/common/global_app_cache/global_app_catch.dart';
+import 'package:my_gstore/common/model/banner_model.dart';
 import 'package:my_gstore/common/model/gshop_model.dart';
 import 'package:my_gstore/common/model/product_model.dart';
 import 'package:my_gstore/common/network/app_client.dart';
@@ -21,17 +23,19 @@ class HomeCubit extends Cubit<HomeState> {
       // final position = globalAppCache.gspPosition;
       final getGShop = await getInforGShop(
           'Customer/GetShopGStoreNew?maxKm=25&page=1&pagesize=12&type=3');
+      final getbanner  = await  getBanner('Advertising/GetByPosition?id=8');
       final getBestBuy = await getProduct(
           'productapp/GetBestBuyNew?page=1&pagesize=12');
       final getBestBuyNew = await getProduct(
           'ProductApp/GetBestProductForYouNew?km=25&latitude=21.023714&longitude=105.754272&page=1&pagesize=12');
       emit(HomeGotDataState(
         getGShop,
+        getbanner,
         getBestBuy,
         getBestBuyNew,
       ));
     } catch (e) {
-      emit(HomeGotDataState([],[],[]));
+      emit(HomeGotDataState([],[],[],[]));
       CommonUtils.handleException(snackBarBloc, e,
           methodName: 'getInitData HomeCubit');
     }
@@ -45,7 +49,14 @@ class HomeCubit extends Cubit<HomeState> {
     });
     return result1;
   }
-
+Future<List<BannerModels>> getBanner(String endPoint) async{
+    List<BannerModels> result=[];
+    final data = await appClient.get(endPoint);
+    data['Data'].forEach((e) {
+      result.add(BannerModels.fromJson(e));
+    });
+    return result;
+}
   Future<List<ProductModel>> getProduct(String endPoint) async {
     List<ProductModel> result = [];
     final data = await appClient.get(endPoint);
@@ -66,7 +77,8 @@ class HomeGotDataState extends HomeState {
   final List<GShopModels> getGShop;
   final List<ProductModel> getBestBuy;
   final List<ProductModel> getBestBuyNew;
+  final List<BannerModels> getBanner;
 
 
-  HomeGotDataState(this.getGShop,this.getBestBuyNew,this.getBestBuy);
+  HomeGotDataState(this.getGShop,this.getBanner,this.getBestBuyNew,this.getBestBuy);
 }

@@ -8,4 +8,5 @@ class RouteName {
   static const String containerScreen = 'containerScreen';
   static const String onBoardingScreen = 'onBoardingScreen';
   static const String allProductScreen ='All Product Screen';
+  static const String detailProductScreen = 'Detail all Product screen';
 }

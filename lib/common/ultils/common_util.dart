@@ -1,9 +1,15 @@
 import 'package:flash/flash.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:intl/intl.dart';
 import 'package:my_gstore/common/bloc/snackbar_bloc/snackbar_bloc.dart';
 import 'package:my_gstore/common/bloc/snackbar_bloc/snackbar_event.dart';
 import 'package:my_gstore/common/bloc/snackbar_bloc/snackbar_state.dart';
+import 'package:my_gstore/common/constants/app_constant.dart';
 import 'package:my_gstore/common/constants/home_constant.dart';
+import 'package:my_gstore/common/constants/icon_constant.dart';
+import 'package:my_gstore/common/constants/image_constant.dart';
+import 'package:my_gstore/common/constants/service_package_constant.dart';
 import 'package:my_gstore/common/exception/app_exception.dart';
 import 'package:my_gstore/common/exception/connect_exception.dart';
 import 'package:my_gstore/common/exception/timeout_exception.dart';
@@ -11,6 +17,7 @@ import 'package:my_gstore/common/exception/token_expired_exception.dart';
 import 'package:my_gstore/common/navigation/route_names.dart';
 import 'package:my_gstore/common/network/app_client.dart';
 import 'package:my_gstore/common/network/configs.dart';
+import 'package:my_gstore/common/theme/theme_color.dart';
 import 'package:my_gstore/presentation/injector_container.dart';
 
 import '../../presentation/routes.dart';
@@ -70,7 +77,26 @@ class CommonUtils {
       return name ?? '';
     }
   }
-
+  static Widget mapLevelUserToWidget(int? sort, {bool? haveLogoGstore}) {
+    if ((sort ?? 0) >= ServicePackageConstant.gShopTS ||
+        haveLogoGstore == true) {
+      return Container(
+        width: 30,
+        height: 30,
+        decoration: BoxDecoration(
+            color: AppColors.white,
+            shape: BoxShape.circle,
+            boxShadow: CommonConstant.defaultShadow),
+        padding: EdgeInsets.all(4),
+        child: SvgPicture.asset(ImageConstant.logo),
+      );
+    }
+    if (sort == ServicePackageConstant.reputationTS) {
+      return SvgPicture.asset(IconConst.shopping_cart,
+          width: 32.0, height: 32.0);
+    }
+    return SizedBox();
+  }
   static bool _getOld(String endpoint) {
     try {
       List<String> result = endpoint.split('/');
@@ -118,7 +144,19 @@ class CommonUtils {
     }
     return 'http://image.gstore.social/ResizeImg/ImageResize/$type/resize${typePng ? 'png' : ''}/normal/high/${_oldUrl ? Configurations.hostImageOld : Configurations.hostImage}$endPoint';
   }
-
+  static dynamic convertDateTime(String? input,
+      {bool outputDateTime = false, String? format}) {
+    if (input?.isEmpty ?? true) {
+      return null;
+    }
+    DateFormat dateFormat = DateFormat(format ?? "yyyy-MM-ddTHH:mm:ss");
+    DateFormat dateFormatText = DateFormat("HH:mm - dd/MM/yyyy");
+    DateTime dateTime = dateFormat.parse(input!);
+    if (outputDateTime == true) {
+      return dateTime;
+    }
+    return dateFormatText.format(dateTime);
+  }
   static void handleException(SnackBarBloc? snackBarBloc, e,
       {required String methodName,
       String? exceptionName,
