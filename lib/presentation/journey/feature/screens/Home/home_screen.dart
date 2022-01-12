@@ -27,7 +27,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int _current = 0;
+  // int _current = 0;
   HomeCubit _homeCubit = injector<HomeCubit>();
   ScrollController _controller = ScrollController();
   void initState() {
@@ -88,7 +88,6 @@ class _HomeScreenState extends State<HomeScreen> {
                         options: CarouselOptions(
                             onPageChanged: (index, other) {
                               setState(() {
-                                _current = index;
                               });
                             },
                             autoPlayInterval: Duration(seconds: 4),

@@ -7,6 +7,7 @@ import 'package:my_gstore/common/local/local_app.dart';
 import 'package:my_gstore/common/network/app_client.dart';
 import 'package:my_gstore/presentation/journey/feature/auth/Category/Cubit/category_cubit.dart';
 import 'package:my_gstore/presentation/journey/feature/auth/detail%20page/cubit/detail_cubit.dart';
+import 'package:my_gstore/presentation/journey/feature/auth/individual/cubit/individual_cubit.dart';
 import 'package:my_gstore/presentation/journey/feature/auth/otp/otp_cubit.dart';
 import 'package:my_gstore/presentation/journey/feature/screens/Home/cubit/home_cubit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -43,6 +44,11 @@ void _initBloc() {
     injector(),
   ));
   injector.registerFactory(() => CategoryCubit(
+    injector(),
+    injector(),
+    injector(),
+  ));
+  injector.registerFactory(() => IndividualCubit(
     injector(),
     injector(),
     injector(),

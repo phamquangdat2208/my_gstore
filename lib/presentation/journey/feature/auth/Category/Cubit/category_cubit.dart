@@ -32,12 +32,11 @@ class CategoryCubit extends Cubit<CategoryState> {
           methodName: 'getInitData CategoryCubit');
     }
   }
-  Future<List<ItemCategory>> getCategory(String endPoint) async{
-    List<ItemCategory> result=[];
+  Future<List<CategoryModel>> getCategory(String endPoint) async{
+    List<CategoryModel> result=[];
     final data = await appClient.get(endPoint);
     data['Data'].forEach((e) {
-      var a =CategoryModel.fromJson(e);
-      result.add(ItemCategory(a.name!, a.urlIcon??""));
+     result.add(CategoryModel.fromJson(e));
     });
     return result;
   }
@@ -57,12 +56,8 @@ class CategoryGettingDataState extends CategoryState {}
 
 class CategoryGotDataState extends CategoryState {
   final List<BannerModels> getBanner;
-  final List<ItemCategory> getCategories;
+  final List<CategoryModel> getCategories;
   CategoryGotDataState(this.getBanner,this.getCategories);
 }
-class ItemCategory {
-  ItemCategory(this.nameItem, this.link);
-  final String nameItem;
-  final String link;
-}
+
 

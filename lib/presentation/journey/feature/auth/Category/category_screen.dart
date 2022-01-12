@@ -2,15 +2,21 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_gstore/common/constants/app_constant.dart';
+import 'package:my_gstore/common/constants/home_constant.dart';
+import 'package:my_gstore/common/customs/custom_gesturedetactor.dart';
 import 'package:my_gstore/common/customs/custom_scaffold.dart';
 import 'package:my_gstore/common/model/category_model.dart';
+import 'package:my_gstore/common/navigation/route_names.dart';
 import 'package:my_gstore/common/theme/theme_color.dart';
 import 'package:my_gstore/common/theme/theme_text.dart';
 import 'package:my_gstore/presentation/injector_container.dart';
 import 'package:my_gstore/presentation/journey/feature/auth/Category/Cubit/category_cubit.dart';
+import 'package:my_gstore/presentation/journey/feature/auth/all%20product/all_product_page.dart';
 import 'package:my_gstore/presentation/journey/feature/widgets/banner_slide_image.dart';
 import 'package:my_gstore/presentation/journey/feature/widgets/custom_cache_image_network.dart';
 import 'package:my_gstore/presentation/journey/feature/widgets/shimmer/common_shimmer.dart';
+
+import '../../../../routes.dart';
 
 class CategoriesScreen extends StatefulWidget {
   const CategoriesScreen({Key? key}) : super(key: key);
@@ -31,7 +37,8 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(child: Scaffold(
+    return SafeArea(
+        child: Scaffold(
       backgroundColor: Colors.white,
       body: Column(
         children: [
@@ -41,11 +48,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
               builder: (_, state) {
                 if (state is CategoryGettingDataState) {
                   return CommonShimmer(
-                    child: Container(
-                      width: double.infinity,
-                      height: 180,
-                      color: AppColors.white,
-                    ),
+                    numberItem: 1,
                   );
                 }
                 if (state is CategoryGotDataState &&
@@ -53,10 +56,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                   return Stack(
                     children: [
                       Container(
-                        width: MediaQuery
-                            .of(context)
-                            .size
-                            .width,
+                        width: MediaQuery.of(context).size.width,
                         color: Colors.white,
                         child: CarouselSlider(
                           options: CarouselOptions(
@@ -66,40 +66,38 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                 });
                               },
                               viewportFraction: 1,
-                              autoPlay: true
-                          ),
+                              autoPlay: true),
                           items: state.getBanner
-                              .map((banner) =>
-                              ClipRRect(
-                                // borderRadius: BorderRadius.circular(8),
-                                child: CustomCacheImageNetwork(
-                                  height: MediaQuery
-                                      .of(context)
-                                      .size
-                                      .height * 1 / 4,
-                                  url: banner.pictureUrl ?? '',
-                                  fit: BoxFit.cover,
-                                  width: MediaQuery
-                                      .of(context)
-                                      .size
-                                      .width,
-                                ),
-                              )).toList(),
+                              .map((banner) => ClipRRect(
+                                    // borderRadius: BorderRadius.circular(8),
+                                    child: CustomCacheImageNetwork(
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              1 /
+                                              4,
+                                      url: banner.pictureUrl ?? '',
+                                      fit: BoxFit.cover,
+                                      width: MediaQuery.of(context).size.width,
+                                    ),
+                                  ))
+                              .toList(),
                         ),
                       ),
                       Positioned(
-                        bottom: 10, right: 10,
+                        bottom: 10,
+                        right: 10,
                         child: Container(
                           alignment: Alignment.center,
                           height: 24,
                           width: 38,
                           decoration: const BoxDecoration(
                               color: Colors.white70,
-                              borderRadius: BorderRadius.all(
-                                  Radius.circular(10.0))
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10.0))),
+                          child: Text(
+                            "$_current/${state.getBanner.length}",
+                            style: AppTextTheme.mediumBlack,
                           ),
-                          child: Text("$_current/${state.getBanner.length}",
-                            style: AppTextTheme.mediumBlack,),
                         ),
                       ),
                     ],
@@ -117,16 +115,20 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                 }
                 if (state is CategoryGotDataState &&
                     state.getCategories.isNotEmpty) {
+                  List<CategoryModel> categories = state.getCategories
+                      .where((element) => element.parentId == 1)
+                      .toList();
                   return Expanded(
                     child: GridView.builder(
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 4,
                         childAspectRatio: 1,
                       ),
                       scrollDirection: Axis.vertical,
                       itemBuilder: (context, index) =>
-                          ItemCard(item: state.getCategories[index]),
-                      itemCount: state.getCategories.length,
+                          ItemCard(item: categories[index]),
+                      itemCount: categories.length,
                     ),
                   );
                 }
@@ -138,9 +140,8 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
   }
 }
 
-
 class ItemCard extends StatelessWidget {
-  final ItemCategory item;
+  final CategoryModel item;
 
   const ItemCard({
     Key? key,
@@ -157,33 +158,59 @@ class ItemCard extends StatelessWidget {
           alignment: Alignment.center,
           child: Column(
             children: [
-              item.link == ""
-                  ? Container(
-                  decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                    color: AppColors.lightGreen,
-                  ),
-                  margin: const EdgeInsets.only(top: 16, left: 22, right: 22),
-                  width: 40,
-                  height: 40,
-                  child: const Icon(Icons.home,color: AppColors.white,)
-              )
-                  : Container(
-                  color: AppColors.white,
-                  margin: const EdgeInsets.only(top: 16, left: 22, right: 22),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.all(Radius.circular(8)),
-                    child: CustomCacheImageNetwork(
-                      url: item.link,
-                      fit: BoxFit.cover, width: 40, height: 40,
+              item.urlPicture ==''
+                  ? CustomGestureDetector(
+                      onTap: () {
+                        Routes.instance.navigateTo(RouteName.allProductScreen,
+                            arguments: ArgumentAllProductScreen(
+                              url:
+                                  'productapp/GetProductForMapElasticNew?name=&minKm=&maxKm=0&cateId=${item.iD}&minPrice=0&maxPrice=0&latitude=21.030235&longitude=105.761697&page=1&pagesize=12&isGstore=ALL',
+                              title: item.name,
+                            ));
+                      },
+                      child: Container(
+                          decoration: const BoxDecoration(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(8.0)),
+                            color: AppColors.lightGreen,
+                          ),
+                          margin: const EdgeInsets.only(
+                              top: 16, left: 22, right: 22),
+                          width: 40,
+                          height: 40,
+                          child: const Icon(
+                            Icons.home,
+                            color: AppColors.white,
+                          )),
+                    )
+                  : CustomGestureDetector(
+                      onTap: () {
+                        Routes.instance.navigateTo(RouteName.allProductScreen,
+                            arguments: ArgumentAllProductScreen(
+                              url:
+                                  'productapp/GetProductForMapElasticNew?name=&minKm=&maxKm=0&cateId=${item.iD}&minPrice=0&maxPrice=0&latitude=21.030235&longitude=105.761697&page=1&pagesize=12&isGstore=ALL',
+                              title: item.name,
+                            ));
+                      },
+                      child: Container(
+                        color: AppColors.white,
+                        margin:
+                            const EdgeInsets.only(top: 16, left: 22, right: 22),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.all(Radius.circular(8)),
+                          child: CustomCacheImageNetwork(
+                            url: item.urlPicture ?? '',
+                            height: 35,
+                            width: 35,
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
-              ),
               Container(
                 width: 84,
                 padding: const EdgeInsets.only(top: 2),
                 child: Text(
-                  item.nameItem?? "",
+                  item.name ?? '',
                   textAlign: TextAlign.center,
                   maxLines: 2,
                   style: const TextStyle(
@@ -195,4 +222,3 @@ class ItemCard extends StatelessWidget {
         ));
   }
 }
-

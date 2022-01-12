@@ -9,13 +9,14 @@ import 'package:my_gstore/common/theme/theme_color.dart';
 import 'package:my_gstore/common/theme/theme_text.dart';
 import 'package:my_gstore/common/ultils/common_util.dart';
 import 'package:my_gstore/common/ultils/format_utils.dart';
-import 'package:my_gstore/presentation/journey/feature/auth/detail%20page/page_container_demo/demo_pageview_title.dart';
-import 'package:my_gstore/presentation/journey/feature/auth/detail%20page/page_container_demo/page_container_demo.dart';
+import 'package:my_gstore/presentation/journey/feature/auth/detail%20page/widget/demo_pageview_title.dart';
+import 'package:my_gstore/presentation/journey/feature/auth/detail%20page/widget/page_container_demo.dart';
 import 'package:my_gstore/presentation/journey/feature/widgets/custom_cache_image_network.dart';
 
 
 import '../../../../injector_container.dart';
 import '../../../../routes.dart';
+import 'cubit/detail_cubit.dart';
 
 class ProductDetailPage extends StatefulWidget {
   int? id;
@@ -27,30 +28,31 @@ class ProductDetailPage extends StatefulWidget {
 }
 
 class _ProductDetailPageState extends State<ProductDetailPage> {
-  // DetailProductCubit _detailCubit = injector<DetailProductCubit>();
+  DetailProductCubit _detailCubit = injector<DetailProductCubit>();
   DetailProductModel? _detailProductModel;
   int _currentindex = 0;
 
   @override
   void initState() {
-    _initData();
+    // _initData();
+    _detailCubit.getDetailProduct(widget.id.toString());
     super.initState();
   }
-  void _initData() async {
-    try {
-      injector<LoadingBloc>().add(StartLoading());
-      final data = await injector<AppClient>().get(
-          'ProductApp/GetById?id=${widget.id}&latitude=21.030235&longitude=105.761697');
-      _detailProductModel = DetailProductModel.fromJson(data['Data']);
-      setState(() {});
-    } catch (e) {
-      CommonUtils.handleException(injector<SnackBarBloc>(), e,
-          methodName: 'getThemes DetailProduct');
-      Routes.instance.pop();
-    } finally {
-      injector<LoadingBloc>().add(FinishLoading());
-    }
-  }
+  // void _initData() async {
+  //   try {
+  //     injector<LoadingBloc>().add(StartLoading());
+  //     final data = await injector<AppClient>().get(
+  //         'ProductApp/GetById?id=${widget.id}&latitude=21.030235&longitude=105.761697');
+  //     _detailProductModel = DetailProductModel.fromJson(data['Data']);
+  //     setState(() {});
+  //   } catch (e) {
+  //     CommonUtils.handleException(injector<SnackBarBloc>(), e,
+  //         methodName: 'getThemes DetailProduct');
+  //     Routes.instance.pop();
+  //   } finally {
+  //     injector<LoadingBloc>().add(FinishLoading());
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -153,6 +155,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
         //       fit: BoxFit.cover,
         //       height: 300,
         //     ),
+
             CustomCacheImageNetwork(
               url: _detailProductModel?.urlPicture ?? '',
               height: MediaQuery.of(context).size.height*1/2-25,

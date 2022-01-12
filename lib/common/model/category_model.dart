@@ -20,10 +20,16 @@ class CategoryModel {
     languageId = json['LanguageId'];
     urlPicture = CommonUtils.getUrlImage(json['UrlPicture'],
       typeImage: TypeSizeImage.thumbs,
+      typePng: true,
       oldUrl: true,);
-    urlIcon = CommonUtils.getUrlImage(json['UrlIcon'],
-      typeImage: TypeSizeImage.thumbs,
-      oldUrl: true,);;
+    if(json['UrlIcon']!= null){
+      urlIcon = CommonUtils.getUrlImage(
+        json['UrlIcon'],
+        typePng: true,
+        typeImage: TypeSizeImage.thumbs,
+        oldUrl: true,
+      );
+    }
     isPrestige = json['IsPrestige'];
     iD = json['ID'];
   }

@@ -17,13 +17,11 @@ import '../../../../routes.dart';
 class ArgumentAllProductScreen {
   final String? url;
   final String? title;
-
   ArgumentAllProductScreen({this.url, this.title});
 }
 
 class AllProductScreen extends StatefulWidget {
   ArgumentAllProductScreen? argument;
-
   AllProductScreen({Key? key, required this.argument}) : super(key: key);
 
   @override

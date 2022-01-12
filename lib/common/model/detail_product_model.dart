@@ -38,9 +38,8 @@ class DetailProductModel {
   List<CustomerItem>? customerItemShop;
   List<ProductVariants>? productVariants;
   List<LstPictures>? lstPictures;
-  List<Videos>? videos;
+  List<VideoModel>? videos;
   int? iD;
-
 
   DetailProductModel.fromJson(Map<String, dynamic> json) {
     cateId = json['CateId'];
@@ -53,9 +52,11 @@ class DetailProductModel {
     isApproved = json['IsApproved'];
     dateCreated = json['DateCreated'];
     strDateCreated = json['StrDateCreated'];
-    urlPicture = CommonUtils.getUrlImage(json['UrlPicture'],
+    urlPicture = CommonUtils.getUrlImage(
+      json['UrlPicture'],
       typeImage: TypeSizeImage.origin,
-      oldUrl: true,);
+      oldUrl: true,
+    );
     priceOld = json['PriceOld'];
     priceNew = json['PriceNew'];
     hasTransfer = json['HasTransfer'];
@@ -81,19 +82,19 @@ class DetailProductModel {
     if (json['Landing'] != null) {
       landing = <Landing>[];
       json['Landing'].forEach((v) {
-        landing!.add( Landing.fromJson(v));
+        landing!.add(Landing.fromJson(v));
       });
     }
     if (json['CustomerItemShop'] != null) {
       customerItemShop = <CustomerItem>[];
       json['CustomerItemShop'].forEach((v) {
-        customerItemShop!.add( CustomerItem.fromJson(v));
+        customerItemShop!.add(CustomerItem.fromJson(v));
       });
     }
     if (json['ProductVariants'] != null) {
       productVariants = <ProductVariants>[];
       json['ProductVariants'].forEach((v) {
-        productVariants!.add( ProductVariants.fromJson(v));
+        productVariants!.add(ProductVariants.fromJson(v));
       });
     }
     if (json['LstPictures'] != null) {
@@ -103,9 +104,9 @@ class DetailProductModel {
       });
     }
     if (json['Videos'] != null) {
-      videos = <Videos>[];
+      videos = <VideoModel>[];
       json['Videos'].forEach((v) {
-        videos!.add(Videos.fromJson(v));
+        videos!.add(VideoModel.fromJson(v));
       });
     }
     iD = json['ID'];
@@ -161,26 +162,42 @@ class DetailProductModel {
       data['LstPictures'] = this.lstPictures!.map((v) => v.toJson()).toList();
     }
     if (this.videos != null) {
-      data['Videos'] = this.videos!.map((v) => v.toJson()).toList();
+      data['Videos'] = this.videos!.map((v) => v.toJsonId()).toList();
     }
     data['ID'] = this.iD;
     return data;
   }
 }
 
-class Videos {
-  Videos.fromJson(Map<String, dynamic> json){
+class VideoModel {
+  String? name;
+  String? url;
+  String? dateCreated;
+  bool? isShow;
+  bool? isDeleted;
+  int? iD;
 
+  VideoModel();
+
+  VideoModel.fromJson(Map<String, dynamic> json) {
+    name = json['Name'];
+    if (json['Url'] != null) {
+      url = json['Url'];
+    }
+    dateCreated = json['DateCreated'];
+    isShow = json['IsShow'];
+    isDeleted = json['IsDeleted'];
+    iD = json['ID'];
   }
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    return data;
+
+  Map<String, dynamic> toJsonId() {
+    return {"Id": iD};
   }
 }
 
 class ProductVariants {
-  ProductVariants.fromJson(Map<String, dynamic> json) {
-  }
+  ProductVariants.fromJson(Map<String, dynamic> json) {}
+
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     return data;
@@ -188,8 +205,8 @@ class ProductVariants {
 }
 
 class Landing {
-  Landing.fromJson(Map<String, dynamic> json) {
-  }
+  Landing.fromJson(Map<String, dynamic> json) {}
+
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     return data;
@@ -212,17 +229,17 @@ class CustomerItem {
 
   CustomerItem(
       {this.addressID,
-        this.address,
-        this.latitude,
-        this.longitude,
-        this.fullname,
-        this.mobile,
-        this.avatarUrl,
-        this.km,
-        this.numberTS,
-        this.isPrestige,
-        this.isPersonal,
-        this.iD});
+      this.address,
+      this.latitude,
+      this.longitude,
+      this.fullname,
+      this.mobile,
+      this.avatarUrl,
+      this.km,
+      this.numberTS,
+      this.isPrestige,
+      this.isPersonal,
+      this.iD});
 
   CustomerItem.fromJson(Map<String, dynamic> json) {
     addressID = json['AddressID'];
@@ -268,9 +285,9 @@ class LstPictures {
   LstPictures.fromJson(Map<String, dynamic> json) {
     folder = json['Folder'];
     url = CommonUtils.getUrlImage(
-      '$folder${json['Url']}',
-      typeImage: TypeSizeImage.origin,
-    ) ??
+          '$folder${json['Url']}',
+          typeImage: TypeSizeImage.origin,
+        ) ??
         '';
     iD = json['ID'];
     type = json['Type'];

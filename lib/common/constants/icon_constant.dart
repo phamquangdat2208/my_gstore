@@ -19,5 +19,31 @@ class IconConst {
   static const String homecenter_gshop ='${_path}home_center_gshop.png';
   static const String homecenter_hand ='${_path}home_center_hand.png';
   static const String homecenter_share ='${_path}home_center_share.png';
+  static const String childs = '${_path}childs.svg';
   static const String icondistance= '${_path}icon_distance.png';
+  static const String transfer= '${_path}transfer.svg';
+  static const String personalRelationship = '${_path}relationship.svg';
+  static const String gWalletIcon = '${_path}gwallet_icon.svg';
+  static const String personalManagerSale= '${_path}personal_manager_revanue.png';
+  static const String personalShipping = '${_path}personal_motor.svg';
+  static const String personalSelDone = '${_path}personal_order_sell_done.svg';
+  static const String personalNewOrder = '${_path}personal_new_order.png';
+  static const String personalLocation = '${_path}personal_list_location.svg';
+  static const String personalPaymentType = '${_path}personal_payment_type.svg';
+  static const String personalPolicy = '${_path}personal_privacy_policy.svg';
+  static const String personalReward = '${_path}personal_reward.svg';
+  static const String personalWallet = '${_path}personal_waller_gstore.svg';
+  static const String personalOnSelling = '${_path}personal_product_selling.png';
+  static const String settings = '${_path}setting.svg';
+  static const String personalLeft = '${_path}personal_infor_back.svg';
+  static const String personalBirthDay = '${_path}personal_infor_birthday.svg';
+  static const String personalCamera = '${_path}personal_infor_camera.svg';
+  static const String personalEmail = '${_path}personal_infor_email.svg';
+  static const String personalPhone = '${_path}personal_infor_phone.svg';
+  static const String personalSex = '${_path}personal_infor_sex.svg';
+  static const String personalCart = '${_path}personal_cart.svg';
+  static const String personalLogout = '${_path}personal_logout.svg';
+  static const String personalSetting = '${_path}personal_setting.svg';
+  static const String personalUpgrade = '${_path}personal_upgrade.svg';
+
 }
