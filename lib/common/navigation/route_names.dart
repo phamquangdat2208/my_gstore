@@ -9,4 +9,5 @@ class RouteName {
   static const String onBoardingScreen = 'onBoardingScreen';
   static const String allProductScreen ='All Product Screen';
   static const String detailProductScreen = 'Detail all Product screen';
+  static const String searchProductScreen = 'Search Product Screen';
 }

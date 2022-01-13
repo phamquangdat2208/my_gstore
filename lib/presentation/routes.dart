@@ -9,6 +9,7 @@ import 'package:my_gstore/presentation/journey/feature/auth/detail%20page/detail
 import 'package:my_gstore/presentation/journey/feature/auth/login/login_phone_number_screen.dart';
 import 'package:my_gstore/presentation/journey/feature/auth/login/login_screen.dart';
 import 'package:my_gstore/presentation/journey/feature/auth/otp/confirm_screen.dart';
+import 'package:my_gstore/presentation/journey/feature/screens/Search%20product%20screen/map_page.dart';
 import 'package:my_gstore/presentation/journey/feature/screens/on_boarding_screen.dart';
 import 'package:my_gstore/presentation/journey/feature/screens/screen_container.dart';
 import 'package:my_gstore/presentation/journey/feature/screens/splash_screen.dart';
@@ -90,6 +91,8 @@ class Routes {
                       ? settings.arguments as ArgumentAllProductScreen
                       : null,
                 ));
+      case RouteName.searchProductScreen:
+        return CupertinoPageRoute(builder: (context) => MapPageScreen());
       case RouteName.detailProductScreen:
         return CupertinoPageRoute(
             builder: (context) => ProductDetailPage(

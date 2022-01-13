@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_gstore/common/constants/home_constant.dart';
+import 'package:my_gstore/common/customs/custom_gesturedetactor.dart';
 import 'package:my_gstore/common/global_app_cache/global_app_catch.dart';
 import 'package:my_gstore/common/navigation/route_names.dart';
 import 'package:my_gstore/common/theme/theme_color.dart';
@@ -27,7 +28,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  // int _current = 0;
   HomeCubit _homeCubit = injector<HomeCubit>();
   ScrollController _controller = ScrollController();
   void initState() {
@@ -48,7 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
           SliverToBoxAdapter(
             child: Column(
               children: [
-                const HomeMapComponent(),
+               HomeMapComponent(),
                 Row(
                   children: const [
                     HomeCenter(),
@@ -67,8 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       return ListViewDisplayGShop(
                         label: HomeConstant.gShop,
                         information: state.getGShop,
-                        onMore: () {
-                        },
+                        onMore: () {},
                       );
                     }
                     return const SizedBox();
@@ -87,8 +86,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       return CarouselSlider(
                         options: CarouselOptions(
                             onPageChanged: (index, other) {
-                              setState(() {
-                              });
+                              setState(() {});
                             },
                             autoPlayInterval: Duration(seconds: 4),
                             autoPlayAnimationDuration: Duration(seconds: 3),
@@ -96,13 +94,16 @@ class _HomeScreenState extends State<HomeScreen> {
                             autoPlay: true),
                         items: state.getBanner
                             .map((banner) => ClipRRect(
-                          child: CustomCacheImageNetwork(
-                            height: MediaQuery.of(context).size.height*1/5+20,
-                           url:  banner.pictureUrl??'',
-                            fit: BoxFit.cover,
-                            width: MediaQuery.of(context).size.width,
-                          ),
-                        ))
+                                  child: CustomCacheImageNetwork(
+                                    height: MediaQuery.of(context).size.height *
+                                            1 /
+                                            5 +
+                                        20,
+                                    url: banner.pictureUrl ?? '',
+                                    fit: BoxFit.cover,
+                                    width: MediaQuery.of(context).size.width,
+                                  ),
+                                ))
                             .toList(),
                       );
                     }
@@ -126,9 +127,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         onMore: () {
                           Routes.instance.navigateTo(RouteName.allProductScreen,
                               arguments: ArgumentAllProductScreen(
-                                  url: 'productapp/GetBestBuyNew?page=1&pagesize=12',
-                                  title: HomeConstant.bestBuy,
-                                 ));
+                                url:
+                                    'productapp/GetBestBuyNew?page=1&pagesize=12',
+                                title: HomeConstant.bestBuy,
+                              ));
                         },
                       );
                     }
@@ -160,6 +162,4 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-
 }
-

@@ -5,19 +5,19 @@ import 'package:my_gstore/common/theme/theme_color.dart';
 import 'package:my_gstore/common/theme/theme_text.dart';
 
 class LayoutTopSearchInHomeScreen extends StatelessWidget {
-  final Function? onTapSelectCity;
-  final Function? onSearch;
+  // final Function? onTapSelectCity;
+  // final Function? onSearch;
   final bool haveShadow;
 
   const LayoutTopSearchInHomeScreen(
-      {Key? key, this.onTapSelectCity, this.onSearch, this.haveShadow = true})
+      {Key? key,this.haveShadow = true})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        onSearch!();
+        // onSearch!();
       },
       child: Container(
         // width: double.infinity,

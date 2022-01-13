@@ -31,10 +31,7 @@ class _CartScreenState extends State<CartScreen> {
                         width: MediaQuery.of(context).size.width,
                         margin: EdgeInsets.only(bottom: 91.0),
                         decoration: BoxDecoration(
-                          image: DecorationImage(
-                              image:
-                                  AssetImage('assets/images/coverImgCart.png'),
-                              fit: BoxFit.fitWidth),
+
                         ),
                       ),
                       Positioned(
@@ -64,11 +61,6 @@ class _CartScreenState extends State<CartScreen> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
                                     children: [
-                                      Image.asset(
-                                        'assets/images/icons/address.png',
-                                        width: 32,
-                                        height: 32,
-                                      )
                                     ],
                                   ),
                                   SizedBox(
@@ -107,20 +99,11 @@ class _CartScreenState extends State<CartScreen> {
                               ),
                             )),
                       ),
-                      Positioned(
-                        top: 40.0,
-                        left: MediaQuery.of(context).size.width - 140,
-                        child: Image.asset(
-                          'assets/images/icons/flycam.png',
-                          width: 90,
-                          height: 90,
-                        ),
-                      ),
+
                     ],
                   ),
                   Container(
                     child: TabBar(
-                      isScrollable: true,
                       labelColor: AppColors.greenText,
                       labelPadding: EdgeInsets.only(
                           bottom: 10.0, right: 20.0, left: 20.0),
@@ -140,16 +123,8 @@ class _CartScreenState extends State<CartScreen> {
           body: TabBarView(
             children: [
               MyCart(),
-              Updating(
-                  srcImg: 'assets/images/null_page/icon_right2.png',
-                  label: 'Bạn chưa có sản phẩm yêu thích nào được lưu',
-                  textFunction: 'Khám phá ngay',
-                  onTap: () {}),
-              Updating(
-                  srcImg: 'assets/images/null_page/icon_right2.png',
-                  label: 'Bạn chưa có sản phẩm mua sau nào',
-                  textFunction: 'Khám phá ngay',
-                  onTap: () {}),
+              Container(),
+              Container(),
             ],
           )),
     );

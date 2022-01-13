@@ -111,6 +111,7 @@ class CategoryDetailWidgetItemProduct extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Text('${FormatUtils.formatCurrencyDoubleToString(productModel?.priceOld??0)}',style:AppTextTheme.smallgreyline.copyWith(decoration: TextDecoration.lineThrough) ),
+                      SizedBox(width: 4,),
                       Text(
                         '${FormatUtils.formatCurrencyDoubleToString(productModel?.priceNew??0)}',
                         style: AppTextTheme.normalRobotoRed,

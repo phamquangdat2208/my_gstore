@@ -48,10 +48,18 @@ class _IndividualScreenState extends State<IndividualScreen> {
               children: [
                 Column(
                   children: [
-                    Image(
-                      image: AssetImage(ImageConstant.mockTopBackGround),
+                    _globalAppCatch.profileModel?.imageTimeline == ''
+                        ? Image(
+                            image: AssetImage(ImageConstant.mockTopBackGround),
+                            height: MediaQuery.of(context).size.height * 1 / 5,
+                            fit: BoxFit.fitWidth,
+                            width: double.infinity,
+                          )
+                        : CustomCacheImageNetwork(
+                            url: _globalAppCatch.profileModel?.imageTimeline ??
+                                '',
                       height: MediaQuery.of(context).size.height * 1 / 5,
-                      fit: BoxFit.fitWidth,
+                      fit:BoxFit.cover,
                       width: double.infinity,
                     ),
                     SizedBox(
@@ -92,12 +100,10 @@ class _IndividualScreenState extends State<IndividualScreen> {
                           ),
                           child: ClipOval(
                             child: CustomCacheImageNetwork(
-                              url: _globalAppCatch.profileModel?.avartaUrl ??
-                                  '',
-                              height:
-                                  MediaQuery.of(context).size.width * 1 / 4,
-                              width:
-                                  MediaQuery.of(context).size.width * 1 / 4,
+                              url:
+                                  _globalAppCatch.profileModel?.avartaUrl ?? '',
+                              height: MediaQuery.of(context).size.width * 1 / 4,
+                              width: MediaQuery.of(context).size.width * 1 / 4,
                               fit: BoxFit.fill,
                             ),
                           ),
@@ -111,10 +117,8 @@ class _IndividualScreenState extends State<IndividualScreen> {
                 SizedBox(
                   height: 8,
                 ),
-                Text(
-                  '${_globalAppCatch.profileModel?.fullName ?? ''}',
-                  style: AppTextTheme.medium20PxBlack),
-
+                Text('${_globalAppCatch.profileModel?.fullName ?? ''}',
+                    style: AppTextTheme.medium20PxBlack),
               ],
             ),
             Padding(
@@ -177,7 +181,8 @@ class _IndividualScreenState extends State<IndividualScreen> {
               height: 0,
             ),
             ListTile(
-              onTap: () {},
+              onTap: () {
+              },
               leading: PersonalItemCustom(
                 icon: IconConst.personalShipping,
                 height: 32,

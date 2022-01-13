@@ -19,5 +19,6 @@ class HomeConstant {
   static const String nearMe = 'Gần tôi';
   static const String forYou = 'Dành cho bạn';
   static const String fastShip = 'Vận chuyển nhanh';
+  static const String SampleShop = 'Cùng người bán';
   static const String area = '${_path}area';
 }

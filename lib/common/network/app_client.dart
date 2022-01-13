@@ -28,7 +28,7 @@ class AppClient {
   }
 
 
-  Future<Map> get(String endPoint,{bool handleData = true}) async {
+  Future<Map<String,dynamic>> get(String endPoint,{bool handleData = true}) async {
     await _checkConnectionAndPosition();
     var url = Uri.parse('${Configurations.host}$endPoint');
     Response? response = await http
@@ -67,7 +67,7 @@ class AppClient {
     return data;
   }
 
-  Future<Map> post(
+  Future<Map<String,dynamic>> post(
     String endPoint, {
     dynamic body,
     String? contentType,

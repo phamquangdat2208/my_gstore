@@ -10,13 +10,14 @@ import 'package:my_gstore/common/navigation/route_names.dart';
 import 'package:my_gstore/common/theme/theme_color.dart';
 import 'package:my_gstore/common/theme/theme_text.dart';
 import 'package:my_gstore/presentation/injector_container.dart';
-import 'package:my_gstore/presentation/journey/feature/auth/Category/Cubit/category_cubit.dart';
+
 import 'package:my_gstore/presentation/journey/feature/auth/all%20product/all_product_page.dart';
 import 'package:my_gstore/presentation/journey/feature/widgets/banner_slide_image.dart';
 import 'package:my_gstore/presentation/journey/feature/widgets/custom_cache_image_network.dart';
 import 'package:my_gstore/presentation/journey/feature/widgets/shimmer/common_shimmer.dart';
 
 import '../../../../routes.dart';
+import 'Cubit/category_cubit.dart';
 
 class CategoriesScreen extends StatefulWidget {
   const CategoriesScreen({Key? key}) : super(key: key);
@@ -194,14 +195,12 @@ class ItemCard extends StatelessWidget {
                       },
                       child: Container(
                         color: AppColors.white,
-                        margin:
-                            const EdgeInsets.only(top: 16, left: 22, right: 22),
                         child: ClipRRect(
                           borderRadius: BorderRadius.all(Radius.circular(8)),
                           child: CustomCacheImageNetwork(
                             url: item.urlPicture ?? '',
-                            height: 35,
-                            width: 35,
+                            height: 50,
+                            width: 50,
                           ),
                         ),
                       ),

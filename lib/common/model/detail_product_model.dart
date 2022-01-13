@@ -2,7 +2,31 @@ import 'package:my_gstore/common/ultils/common_util.dart';
 
 import '../enum.dart';
 
-class DetailProductModel {
+
+
+
+
+
+class ProductModels {
+  DataProduct? data;
+  bool? erros;
+  String? message;
+  String? iD;
+  int? type;
+  int? code;
+
+  ProductModels.fromJson(Map<String, dynamic> json) {
+    data = json['Data'] != null ? DataProduct.fromJson(json['Data']) : null;
+    erros = json['Erros'];
+    message = json['Message'];
+    iD = json['ID'];
+    type = json['Type'];
+    code = json['Code'];
+  }
+}
+
+
+class DataProduct {
   int? cateId;
   int? pictureId;
   int? quantity;
@@ -17,7 +41,7 @@ class DetailProductModel {
   double? priceOld;
   double? priceNew;
   bool? hasTransfer;
-  String? type;
+  dynamic type;
   int? ratings;
   double? avgRating;
   double? longitude;
@@ -39,9 +63,9 @@ class DetailProductModel {
   List<ProductVariants>? productVariants;
   List<LstPictures>? lstPictures;
   List<VideoModel>? videos;
-  int? iD;
+  dynamic iD;
 
-  DetailProductModel.fromJson(Map<String, dynamic> json) {
+  DataProduct.fromJson(Map<String, dynamic> json) {
     cateId = json['CateId'];
     pictureId = json['PictureId'];
     quantity = json['Quantity'];
@@ -112,61 +136,61 @@ class DetailProductModel {
     iD = json['ID'];
   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['CateId'] = this.cateId;
-    data['PictureId'] = this.pictureId;
-    data['Quantity'] = this.quantity;
-    data['Name'] = this.name;
-    data['Description'] = this.description;
-    data['QuantityOut'] = this.quantityOut;
-    data['IsShow'] = this.isShow;
-    data['IsApproved'] = this.isApproved;
-    data['DateCreated'] = this.dateCreated;
-    data['StrDateCreated'] = this.strDateCreated;
-    data['UrlPicture'] = this.urlPicture;
-    data['PriceOld'] = this.priceOld;
-    data['PriceNew'] = this.priceNew;
-    data['HasTransfer'] = this.hasTransfer;
-    data['Type'] = this.type;
-    data['Ratings'] = this.ratings;
-    data['AvgRating'] = this.avgRating;
-    data['Longitude'] = this.longitude;
-    data['Latitude'] = this.latitude;
-    data['LongitudeKg'] = this.longitudeKg;
-    data['LatitudeKg'] = this.latitudeKg;
-    data['CustomerId'] = this.customerId;
-    data['CategoryName'] = this.categoryName;
-    data['TopRankShop'] = this.topRankShop;
-    if (this.customerItem != null) {
-      data['CustomerItem'] = this.customerItem!.toJson();
-    }
-    data['IsAccept'] = this.isAccept;
-    data['NumberTS'] = this.numberTS;
-    data['ShopType'] = this.shopType;
-    data['IsGstore'] = this.isGstore;
-    data['LandingId'] = this.landingId;
-    data['IsLike'] = this.isLike;
-    if (this.landing != null) {
-      data['Landing'] = this.landing!.map((v) => v.toJson()).toList();
-    }
-    if (this.customerItemShop != null) {
-      data['CustomerItemShop'] =
-          this.customerItemShop!.map((v) => v.toJson()).toList();
-    }
-    if (this.productVariants != null) {
-      data['ProductVariants'] =
-          this.productVariants!.map((v) => v.toJson()).toList();
-    }
-    if (this.lstPictures != null) {
-      data['LstPictures'] = this.lstPictures!.map((v) => v.toJson()).toList();
-    }
-    if (this.videos != null) {
-      data['Videos'] = this.videos!.map((v) => v.toJsonId()).toList();
-    }
-    data['ID'] = this.iD;
-    return data;
-  }
+  // Map<String, dynamic> toJson() {
+  //   final Map<String, dynamic> data = new Map<String, dynamic>();
+  //   data['CateId'] = this.cateId;
+  //   data['PictureId'] = this.pictureId;
+  //   data['Quantity'] = this.quantity;
+  //   data['Name'] = this.name;
+  //   data['Description'] = this.description;
+  //   data['QuantityOut'] = this.quantityOut;
+  //   data['IsShow'] = this.isShow;
+  //   data['IsApproved'] = this.isApproved;
+  //   data['DateCreated'] = this.dateCreated;
+  //   data['StrDateCreated'] = this.strDateCreated;
+  //   data['UrlPicture'] = this.urlPicture;
+  //   data['PriceOld'] = this.priceOld;
+  //   data['PriceNew'] = this.priceNew;
+  //   data['HasTransfer'] = this.hasTransfer;
+  //   data['Type'] = this.type;
+  //   data['Ratings'] = this.ratings;
+  //   data['AvgRating'] = this.avgRating;
+  //   data['Longitude'] = this.longitude;
+  //   data['Latitude'] = this.latitude;
+  //   data['LongitudeKg'] = this.longitudeKg;
+  //   data['LatitudeKg'] = this.latitudeKg;
+  //   data['CustomerId'] = this.customerId;
+  //   data['CategoryName'] = this.categoryName;
+  //   data['TopRankShop'] = this.topRankShop;
+  //   if (this.customerItem != null) {
+  //     data['CustomerItem'] = this.customerItem!.toJson();
+  //   }
+  //   data['IsAccept'] = this.isAccept;
+  //   data['NumberTS'] = this.numberTS;
+  //   data['ShopType'] = this.shopType;
+  //   data['IsGstore'] = this.isGstore;
+  //   data['LandingId'] = this.landingId;
+  //   data['IsLike'] = this.isLike;
+  //   if (this.landing != null) {
+  //     data['Landing'] = this.landing!.map((v) => v.toJson()).toList();
+  //   }
+  //   if (this.customerItemShop != null) {
+  //     data['CustomerItemShop'] =
+  //         this.customerItemShop!.map((v) => v.toJson()).toList();
+  //   }
+  //   if (this.productVariants != null) {
+  //     data['ProductVariants'] =
+  //         this.productVariants!.map((v) => v.toJson()).toList();
+  //   }
+  //   if (this.lstPictures != null) {
+  //     data['LstPictures'] = this.lstPictures!.map((v) => v.toJson()).toList();
+  //   }
+  //   if (this.videos != null) {
+  //     data['Videos'] = this.videos!.map((v) => v.toJsonId()).toList();
+  //   }
+  //   data['ID'] = this.iD;
+  //   return data;
+  // }
 }
 
 class VideoModel {

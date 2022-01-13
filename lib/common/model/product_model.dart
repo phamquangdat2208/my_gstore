@@ -2,6 +2,8 @@
 
 import 'package:my_gstore/common/ultils/common_util.dart';
 
+import '../enum.dart';
+
 class ProductModel {
   int? iD;
   String? name;
@@ -26,7 +28,8 @@ class ProductModel {
   ProductModel.fromJson(Map<String, dynamic> json) {
     iD = json['ID'];
     name = json['Name'];
-    urlPicture = CommonUtils.getUrlImage(json['UrlPicture']);
+    urlPicture = CommonUtils.getUrlImage(json['UrlPicture'],
+    typeImage: TypeSizeImage.origin,);
     folder = json['Folder'];
     priceNew = json['PriceNew'];
     ratings = json['Ratings'];

@@ -26,6 +26,7 @@ class CategoryCubit extends Cubit<CategoryState> {
         getbanner,
         getCategories,
       ));
+      Future.delayed(const Duration(seconds: 2));
     } catch (e) {
       emit(CategoryGotDataState([],[]));
       CommonUtils.handleException(snackBarBloc, e,

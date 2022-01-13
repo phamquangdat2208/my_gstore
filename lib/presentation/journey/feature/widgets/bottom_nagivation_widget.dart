@@ -91,7 +91,7 @@ class BottomNavigationState extends State<BottomNavigation> {
                       builder: (_, state) {
                         var count;
                         if (state is EventBusRequestInitDataNotificationState &&
-                            index == 2) {
+                            index == 3) {
                           count = state.count;
                         }
                         return Stack(
@@ -111,7 +111,7 @@ class BottomNavigationState extends State<BottomNavigation> {
                             ),
                             count != null
                                 ? Positioned(
-                                    right: 26,
+                                    right: 18,
                                     top: 12,
                                     child: Container(
                                       width: 18,

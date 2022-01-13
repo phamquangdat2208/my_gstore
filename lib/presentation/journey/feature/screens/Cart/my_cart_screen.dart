@@ -48,11 +48,7 @@ class _MyCartState extends State<MyCart> {
                     Row(
                       children: [
                         Spacer(),
-                        Image.asset(
-                          'assets/icons/close-button.png',
-                          width: 14,
-                          height: 14,
-                        )
+
                       ],
                     ),
                     Row(
@@ -301,19 +297,19 @@ class ItemCart {
         name: "MV912 / MV932 - Macbook Pro 15 inch 2019 - i9 2.3/16GB",
         nameShop: "Cung cấp bởi máy tính Huy Hoàng",
         price: "54000000",
-        pathImage: "assets/images/product.png",
+        pathImage: "assets/icons/logo_momo.png",
         sl: 1),
     ItemCart(
         name: "MV912 / MV932 - Macbook Pro 15 inch 2019 - i9 2.3/16GB",
         nameShop: "Cung cấp bởi máy tính Huy Hoàng",
         price: "54000000",
-        pathImage: "assets/images/product.png",
+        pathImage: "assets/icons/logo_momo.png",
         sl: 1),
     ItemCart(
         name: "Áo đũi nam cộc tay cổ bẻ hai túi ngực",
         nameShop: "Cung cấp bởi máy tính Huy Hoàng",
         price: "2000000",
-        pathImage: "assets/images/product.png",
+        pathImage: "assets/icons/logo_momo.png",
         sl: 1),
   ];
 }
