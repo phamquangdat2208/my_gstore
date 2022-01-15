@@ -20,6 +20,7 @@ import 'package:my_gstore/presentation/journey/feature/auth/detail%20page/widget
 import 'package:my_gstore/presentation/journey/feature/auth/detail%20page/widget/page_container_demo.dart';
 import 'package:my_gstore/presentation/journey/feature/widgets/Product%20Item/listview_product.dart';
 import 'package:my_gstore/presentation/journey/feature/widgets/custom_cache_image_network.dart';
+import 'package:my_gstore/presentation/journey/feature/widgets/gridview_product.dart';
 
 import '../../../../injector_container.dart';
 import '../../../../routes.dart';
@@ -38,6 +39,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
   DetailProductCubit _detailCubit = injector<DetailProductCubit>();
   int _currentindex = 0;
   int _index = 0;
+  bool favorite = false;
 
   @override
   void initState() {
@@ -94,9 +96,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                         ))),
                 Spacer(),
                 GestureDetector(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
+                    onTap: () {},
                     child: Container(
                         padding: EdgeInsets.all(5),
                         width: 32,
@@ -114,7 +114,8 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                 ),
                 GestureDetector(
                     onTap: () {
-                      Navigator.pop(context);
+                      favorite = !favorite;
+                      setState(() {});
                     },
                     child: Container(
                         padding: EdgeInsets.all(5),
@@ -124,7 +125,9 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                           color: Colors.black.withOpacity(0.5),
                         ),
                         child: Icon(
-                          Icons.favorite,
+                          favorite == false
+                              ? Icons.favorite_border
+                              : Icons.favorite,
                           color: Colors.white,
                           size: 18,
                         ))),
@@ -132,9 +135,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                   width: 10.0,
                 ),
                 GestureDetector(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
+                    onTap: () {},
                     child: Container(
                         padding: EdgeInsets.all(5),
                         width: 32,
@@ -164,250 +165,271 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                 }
                 if (state is DetailGotDataState) {
                   return Column(children: [
-                  state.getDetail.lstPictures == null
-                  ? Container(
-                      height: MediaQuery.of(context).size.height * 1 / 2,
-                width: MediaQuery.of(context).size.width,
-                color: Colors.white,
-                child: CustomCacheImageNetwork(
-                url: state.getDetail.urlPicture ?? '',
-                fit: BoxFit.cover,
-                ),
-                )
-                    : Container(
-                width: MediaQuery.of(context).size.width,
-                color: Colors.white,
-                child: CarouselSlider(
-                options: CarouselOptions(
-                height: MediaQuery.of(context).size.height *
-                1 /
-                2-20,
-                onPageChanged: (index, other) {
-                setState(() {
-                _currentindex = index + 1;
-                });
-                },
-                viewportFraction: 1,
-                autoPlay: true),
-                items: state.listUrlImage
-                    .map((e) => CustomCacheImageNetwork(
-                url: e,
-                fit: BoxFit.cover,
-                height: MediaQuery.of(context).size.height *
-                1 /
-                2-20,
-                width:
-                MediaQuery.of(context).size.width,
-                ))
-                    .toList(),
-                ),
-                ),
-                Container(
-                padding: EdgeInsets.all(8),
-                width: double.infinity,
-                // height: 220,
-                child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                Row(
-                children: [
-                Icon(
-                Icons.shield,
-                color: AppColors.green,
-                ),
-                Text(StringConst.isGShop,
-                style: TextStyle(color: AppColors.green)),
-                ],
-                ),
-                SizedBox(height: 8),
-                Text(state.getDetail.name ?? '',
-                style: AppTextTheme.normalBlue),
-                SizedBox(height: 8),
-                Text(
-                '${state.getDetail.name ?? ''}',
-                style: AppTextTheme.mediumBlack,
-                maxLines: 2,
-                ),
-                SizedBox(height: 8),
-                Text(
-                '${state.getDetail.customerItem?.fullname ?? ''}',
-                style: AppTextTheme.normalBlue),
-                SizedBox(height: 8),
-                Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                Container(
-                width:
-                MediaQuery.of(context).size.width * 1 / 4,
-                child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                Icon(
-                Icons.star,
-                color: AppColors.colorSun,
-                size: 20,
-                ),
-                Text('${state.getDetail.avgRating}',
-                style: AppTextTheme.normalGrey),
-                Text(
-                '(${state.getDetail.ratings})',
-                style: AppTextTheme.normalGrey,
-                )
-                ],
-                ),
-                ),
-                Expanded(
-                child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                Icon(
-                Icons.schedule,
-                size: 17,
-                color: AppColors.grey6,
-                ),
-                Expanded(
-                child: Text(
-                '${(state.getDetail.customerItem?.km ?? 0).toStringAsFixed(1)}km - ${state.getDetail.customerItem?.address ?? ''}',
-                style: AppTextTheme.normalGrey,
-                ),
-                ),
-                ],
-                ),
-                ),
-                ],
-                ),
-                SizedBox(
-                height: 8,
-                ),
-                Row(
-                children: [
-                Spacer(),
-                Text(
-                '${FormatUtils.formatCurrencyDoubleToString(state.getDetail.priceOld ?? 0)}',
-                style: AppTextTheme.smallgreyline.copyWith(
-                decoration: TextDecoration.lineThrough)),
-                SizedBox(
-                width: 4,
-                ),
-                Text(
-                '${FormatUtils.formatCurrencyDoubleToString(state.getDetail.priceNew)}',
-                style: AppTextTheme.mediumRed,
-                )
-                ],
-                )
-                ],
-                ),
-                ),
-                DemoPageViewTitle(
-                onChangeTab: (int index) {
-                setState(() {
-                _index = index;
-                });
-                },
-                currentIndex: _index,
-                ),
-                Stack(children: [
-                PageContainerDemo(
-                index: 0,
-                indexSelected: _index,
-                child: SingleChildScrollView(
-                child: Container(
-                color: AppColors.grey3,
-                child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                Container(
-                margin: EdgeInsets.only(
-                left: 16, right: 16, top: 16, bottom: 12),
-                padding: EdgeInsets.all(15),
-                decoration: const BoxDecoration(
-                borderRadius:
-                BorderRadius.all(Radius.circular(15)),
-                color: Colors.white,
-                ),
-                child: Row(
-                children: [
-                SizedBox(
-                width: 5,
-                ),
-                Text(
-                'Giảm 300,000 đ khi thanh toán bằng G-Token',
-                style: TextStyle(fontSize: 12),
-                ),
-                ],
-                ),
-                ),
-                Container(
-                color: AppColors.white,
-                width: MediaQuery.of(context).size.width,
-                child: BlocBuilder<DetailProductCubit,
-                DetailState>(
-                bloc: _detailCubit,
-                builder: (_, state) {
-                if (state is DetailGotDataState) {
-                if (state.getSampleShop.isNotEmpty) {
-                return ListViewDisplayProduct(
-                haveIcon: false,
-                label: HomeConstant.SampleShop,
-                productModel: state.getSampleShop,
-                onMore: () {
-                Routes.instance.navigateTo(
-                RouteName.allProductScreen,
-                arguments:
-                ArgumentAllProductScreen(
-                url:
-                'productapp/GetProductSampleShop?id=${widget.id}&page=1&pagesize=12&latitude=${injector<AppClient>().header?.lat}&longitude=${injector<AppClient>().header?.lng}',
-                title: HomeConstant
-                    .SampleShop,
-                ));
-                },
-                );
-                }
-                return Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Text(
-                StringConst.sameSeller,
-                style: AppTextTheme.mediumBlack
-                    .copyWith(
-                fontWeight: FontWeight.w600,
-                ),
-                ),
-                );
-                }
-                return Text('false');
-                }),
-                )
-                ],
-                ),
-                ))),
-                PageContainerDemo(
-                index: 1,
-                indexSelected: _index,
-                child: Container(
-                child: Image.asset(ImageConstant.mockTopBackGround),
-                ),
-                ),
-                PageContainerDemo(
-                index: 2,
-                indexSelected: _index,
-                child: Container(
-                width: double.infinity,
-                height: 300,
-                child: Center(
-                child: Text('Chưa có đánh giá nào về sản phẩm này'),
-                ),
-                ),
-                ),
-                ])
-                ]);
+                    state.getDetail.lstPictures == null
+                        ? Container(
+                            height: MediaQuery.of(context).size.height * 1 / 2,
+                            width: MediaQuery.of(context).size.width,
+                            color: Colors.white,
+                            child: CustomCacheImageNetwork(
+                              url: state.getDetail.urlPicture ?? '',
+                              fit: BoxFit.cover,
+                            ),
+                          )
+                        : Container(
+                            width: MediaQuery.of(context).size.width,
+                            color: Colors.white,
+                            child: CarouselSlider(
+                              options: CarouselOptions(
+                                  height: MediaQuery.of(context).size.height *
+                                          1 /
+                                          2 -
+                                      20,
+                                  onPageChanged: (index, other) {
+                                    setState(() {
+                                      _currentindex = index + 1;
+                                    });
+                                  },
+                                  viewportFraction: 1,
+                                  autoPlay: true),
+                              items: state.listUrlImage
+                                  .map((e) => CustomCacheImageNetwork(
+                                        url: e,
+                                        fit: BoxFit.cover,
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                    1 /
+                                                    2 -
+                                                20,
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                      ))
+                                  .toList(),
+                            ),
+                          ),
+                    Container(
+                      padding: EdgeInsets.all(8),
+                      width: double.infinity,
+                      // height: 220,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.shield,
+                                color: AppColors.green,
+                              ),
+                              Text(StringConst.isGShop,
+                                  style: TextStyle(color: AppColors.green)),
+                            ],
+                          ),
+                          SizedBox(height: 8),
+                          Text(state.getDetail.name ?? '',
+                              style: AppTextTheme.normalBlue),
+                          SizedBox(height: 8),
+                          Text(
+                            '${state.getDetail.name ?? ''}',
+                            style: AppTextTheme.mediumBlack,
+                            maxLines: 2,
+                          ),
+                          SizedBox(height: 8),
+                          Text(
+                              '${state.getDetail.customerItem?.fullname ?? ''}',
+                              style: AppTextTheme.normalBlue),
+                          SizedBox(height: 8),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                width:
+                                    MediaQuery.of(context).size.width * 1 / 4,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Icon(
+                                      Icons.star,
+                                      color: AppColors.colorSun,
+                                      size: 20,
+                                    ),
+                                    Text('${state.getDetail.avgRating}',
+                                        style: AppTextTheme.normalGrey),
+                                    Text(
+                                      '(${state.getDetail.ratings})',
+                                      style: AppTextTheme.normalGrey,
+                                    )
+                                  ],
+                                ),
+                              ),
+                              Expanded(
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Icon(
+                                      Icons.schedule,
+                                      size: 17,
+                                      color: AppColors.grey6,
+                                    ),
+                                    Expanded(
+                                      child: Text(
+                                        '${(state.getDetail.customerItem?.km ?? 0).toStringAsFixed(1)}km - ${state.getDetail.customerItem?.address ?? ''}',
+                                        style: AppTextTheme.normalGrey,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 8,
+                          ),
+                          Row(
+                            children: [
+                              Spacer(),
+                              Text(
+                                  '${FormatUtils.formatCurrencyDoubleToString(state.getDetail.priceOld ?? 0)}',
+                                  style: AppTextTheme.smallgreyline.copyWith(
+                                      decoration: TextDecoration.lineThrough)),
+                              SizedBox(
+                                width: 4,
+                              ),
+                              Text(
+                                '${FormatUtils.formatCurrencyDoubleToString(state.getDetail.priceNew)}',
+                                style: AppTextTheme.mediumRed,
+                              )
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
+                    DemoPageViewTitle(
+                      onChangeTab: (int index) {
+                        setState(() {
+                          _index = index;
+                        });
+                      },
+                      currentIndex: _index,
+                    ),
+                    Stack(children: [
+                      PageContainerDemo(
+                          index: 0,
+                          indexSelected: _index,
+                          child: SingleChildScrollView(
+                              child: Container(
+                            color: AppColors.grey3,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                  margin: EdgeInsets.only(
+                                      left: 16, right: 16, top: 16, bottom: 12),
+                                  padding: EdgeInsets.all(15),
+                                  decoration: const BoxDecoration(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(15)),
+                                    color: Colors.white,
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      SizedBox(
+                                        width: 5,
+                                      ),
+                                      Text(
+                                        'Giảm 300,000 đ khi thanh toán bằng G-Token',
+                                        style: TextStyle(fontSize: 12),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Container(
+                                  color: AppColors.white,
+                                  width: MediaQuery.of(context).size.width,
+                                  child: BlocBuilder<DetailProductCubit,
+                                          DetailState>(
+                                      bloc: _detailCubit,
+                                      builder: (_, state) {
+                                        if (state is DetailGotDataState) {
+                                          if (state.getSampleShop.isNotEmpty) {
+                                            return ListViewDisplayProduct(
+                                              haveIcon: false,
+                                              label: HomeConstant.SampleShop,
+                                              productModel: state.getSampleShop,
+                                              onMore: () {
+                                                Routes.instance.navigateTo(
+                                                    RouteName.allProductScreen,
+                                                    arguments:
+                                                        ArgumentAllProductScreen(
+                                                      url:
+                                                          'productapp/GetProductSampleShop?id=${widget.id}&page=1&pagesize=12&latitude=${injector<AppClient>().header?.lat}&longitude=${injector<AppClient>().header?.lng}',
+                                                      title: HomeConstant
+                                                          .SampleShop,
+                                                    ));
+                                              },
+                                            );
+                                          }
+                                          return SizedBox();
+                                        }
+                                        return Text('false');
+                                      }),
+                                ),
+                                Container(
+                                  color: AppColors.white,
+                                  width: MediaQuery.of(context).size.width,
+                                  child: BlocBuilder<DetailProductCubit,
+                                      DetailState>(
+                                      bloc: _detailCubit,
+                                      builder: (_, state) {
+                                        if (state is DetailGotDataState) {
+                                          if (state.getSampleProduct.isNotEmpty) {
+                                            return GridViewDisplayProduct(
+                                              label: StringConst.sameProduct,
+                                              courses: state.getSampleProduct,
+                                            );
+                                          }
+                                          return Padding(
+                                            padding: const EdgeInsets.all(16.0),
+                                            child: Text(
+                                              StringConst.sameProduct,
+                                              style: AppTextTheme.mediumBlack
+                                                  .copyWith(
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                            ),
+                                          );
+                                        }
+                                        return Text('false');
+                                      }),
+                                )
+                              ],
+                            ),
+                          ))),
+                      PageContainerDemo(
+                        index: 1,
+                        indexSelected: _index,
+                        child: Container(
+                          child: Image.asset(ImageConstant.mockTopBackGround),
+                        ),
+                      ),
+                      PageContainerDemo(
+                        index: 2,
+                        indexSelected: _index,
+                        child: Container(
+                          width: double.infinity,
+                          height: 300,
+                          child: Center(
+                            child: Text('Chưa có đánh giá nào về sản phẩm này'),
+                          ),
+                        ),
+                      ),
+                    ])
+                  ]);
                 }
                 return Center(
-                child: Text(
-                'loix',
-                )
-                );
+                    child: Text(
+                  'loix',
+                ));
               },
             ),
           ],
@@ -431,10 +453,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
               onTap: () {},
               child: Container(
                 padding: EdgeInsets.all(5),
-                width: MediaQuery
-                    .of(context)
-                    .size
-                    .width * 1 / 2.2 - 12,
+                width: MediaQuery.of(context).size.width * 1 / 2.2 - 12,
                 height: 44.0,
                 decoration: BoxDecoration(
                     color: AppColors.pink,
@@ -466,10 +485,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
               onTap: () {},
               child: Container(
                 padding: EdgeInsets.all(5),
-                width: MediaQuery
-                    .of(context)
-                    .size
-                    .width * 1 / 2.2 - 6,
+                width: MediaQuery.of(context).size.width * 1 / 2.2 - 6,
                 height: 44.0,
                 decoration: BoxDecoration(
                     color: AppColors.green,

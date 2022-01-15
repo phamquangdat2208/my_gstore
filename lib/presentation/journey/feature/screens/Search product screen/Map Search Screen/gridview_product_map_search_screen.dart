@@ -6,23 +6,25 @@ import 'package:my_gstore/common/model/product_model.dart';
 import 'package:my_gstore/common/theme/theme_text.dart';
 import 'package:my_gstore/common/ultils/common_util.dart';
 import 'package:my_gstore/common/ultils/screen_utils.dart';
+import 'package:my_gstore/presentation/journey/feature/widgets/Product%20Item/gridview_product_item.dart';
 
-import 'Product Item/gridview_product_item.dart';
 
-class GridViewDisplayProduct extends StatelessWidget {
+class GridViewDisplayProductMapSearch extends StatelessWidget {
   final int numberItem;
   final String label;
   final bool haveIcon;
   final List<ProductModel>? courses;
   final bool notExpand;
+  final ScrollController? controller;
 
-  const GridViewDisplayProduct({
+  const GridViewDisplayProductMapSearch({
     Key? key,
     this.numberItem =2,
     required this.label,
     this.courses,
     this.notExpand = false,
     this.haveIcon = true,
+    required this.controller,
   }) : super(key: key);
 
   @override
@@ -53,7 +55,7 @@ class GridViewDisplayProduct extends StatelessWidget {
           height: heightList,
           child: GridView.builder(
             itemCount:
-                notExpand ? min(courses?.length ?? 0, 4) : courses?.length,
+            notExpand ? min(courses?.length ?? 0, 4) : courses?.length,
             physics: const NeverScrollableScrollPhysics(),
             padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 12.0),
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(

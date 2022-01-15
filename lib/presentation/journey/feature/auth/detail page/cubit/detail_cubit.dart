@@ -25,7 +25,8 @@ class DetailProductCubit extends Cubit<DetailState>{
       var dataProduct = productModel.data;
       final getSampleShop = await getProduct(
           'productapp/GetProductSampleShop?id=${id}&page=1&pagesize=12&latitude=${injector<AppClient>().header?.lat}&longitude=${injector<AppClient>().header?.lng}');
-
+      final getSampleProduct = await getProduct(
+          'productapp/GetBestBuyNew?page=11&pagesize=24');
       if(productModel.erros == false) {
         if(dataProduct?.lstPictures!= null){
           for(int i =0; i< dataProduct!.lstPictures!.length; i++){
@@ -35,7 +36,8 @@ class DetailProductCubit extends Cubit<DetailState>{
         emit(DetailGotDataState(
           dataProduct!,
           getSampleShop,
-          listUrlImage
+          listUrlImage,
+            getSampleProduct,
         ));
         Future.delayed(const Duration(seconds: 2));
       }
@@ -76,5 +78,6 @@ class DetailGotDataState extends DetailState {
   final DataProduct getDetail;
   final List<ProductModel> getSampleShop;
   final List<String> listUrlImage;
-  DetailGotDataState(this.getDetail,this.getSampleShop, this.listUrlImage);
+  final List <ProductModel> getSampleProduct;
+  DetailGotDataState(this.getDetail,this.getSampleShop, this.listUrlImage,this.getSampleProduct);
 }

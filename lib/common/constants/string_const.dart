@@ -16,6 +16,8 @@ class StringConst {
   static const String versionLoginInvalid =
       'Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại!';
   static const String gShop = 'G-Shop';
+  static const String notePersonal =
+      '(*) Lưu ý : Bạn vui lòng điền đầy đủ và chính xác các thông tin để đảm bảo tốt nhất quyền lợi khi tham gia ứng dụng!';
   static const String gMart = 'G-Mart';
   static const String continueText = 'Tiếp tục';
   static const String sameProduct ='Sản phẩm tương tự';
@@ -44,6 +46,7 @@ class StringConst {
   static const String billLadingInfo = 'Thông tin vận đơn';
   static const String orderConfirmation = 'Xác nhận đơn hàng';
   static const String finishPacking = 'Hoàn tất đóng gói';
+  static const String finishAction = 'Hoàn tất';
   static const String selectTransportation = 'CHỌN ĐƠN VỊ VẬN CHUYỂN';
   static const String selfTransportation = 'TỰ VẬN CHUYỂN';
   static const String baoKimTransportation = 'ĐƠN VỊ VẬN CHUYỂN BẢO KIM';
@@ -177,6 +180,12 @@ class StringConst {
   static const String maybeYouFavorite = 'Có thể bạn thích';
   static const String popularCourse = 'Khóa học phổ biến';
   static const String contactToBuyCourse = 'Liên hệ mua khóa học';
+  static const String noteNamePersonal = 'Họ tên hoặc Tên Cửa Hàng phải ít nhất 5 kí tự và nhiều nhất 30 kí tự. Không được chứa kí tự đặc biệt';
+  static const String namePersonal = 'Họ tên';
+  static const String phoneNumber = 'Số điện thoại';
+static const String birthDay = 'Ngày sinh';
+static const String dateProvide = 'Ngày cấp';
+static const String whereProvide = 'Nơi cấp';
 
   static const String connectError = 'Lỗi kết nối';
 }

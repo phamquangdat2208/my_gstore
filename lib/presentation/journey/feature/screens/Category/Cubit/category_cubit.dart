@@ -18,8 +18,6 @@ class CategoryCubit extends Cubit<CategoryState> {
   void getInitData() async {
     try {
       emit(CategoryGettingDataState());
-      // GlobalAppCache appCache = injector<GlobalAppCache>();
-      // final position = globalAppCache.gspPosition;
       final getbanner  = await getBanner('Advertising/GetByPosition?id=8');
       final getCategories = await getCategory('Category/GetAllProducts');
       emit(CategoryGotDataState(

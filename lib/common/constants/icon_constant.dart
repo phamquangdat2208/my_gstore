@@ -11,12 +11,14 @@ class IconConst {
   static const String phone = '${_path}phone.png';
   static const String notification = '${_path}notification.svg';
   static const String search = '${_path}search.png';
+  static const String personalCamera = '${_path}personal_infor_camera.svg';
   static const String imagePlaceHolder = '${_path}image_place_holder.svg';
   static const String iconRight='${_path}icon_right2.png';
   static const String iconClock = '${_path}icon_clock_2.svg';
   static const String homecenter_qr ='${_path}home_center_qr.png';
   static const String homecenter_chart ='${_path}home_center_chart.png';
   static const String homecenter_edu ='${_path}home_center_education.png';
+  static const String iconCheck = '${_path}icon_check.svg';
   static const String homecenter_gift ='${_path}home_center_gift.png';
   static const String homecenter_gshop ='${_path}home_center_gshop.png';
   static const String homecenter_hand ='${_path}home_center_hand.png';
@@ -40,7 +42,6 @@ class IconConst {
   static const String settings = '${_path}setting.svg';
   static const String personalLeft = '${_path}personal_infor_back.svg';
   static const String personalBirthDay = '${_path}personal_infor_birthday.svg';
-  static const String personalCamera = '${_path}personal_infor_camera.svg';
   static const String personalEmail = '${_path}personal_infor_email.svg';
   static const String personalPhone = '${_path}personal_infor_phone.svg';
   static const String personalSex = '${_path}personal_infor_sex.svg';
@@ -48,5 +49,7 @@ class IconConst {
   static const String personalLogout = '${_path}personal_logout.svg';
   static const String personalSetting = '${_path}personal_setting.svg';
   static const String personalUpgrade = '${_path}personal_upgrade.svg';
+  static const String markerCart = '${_path}marker_small_store.png';
+  static const String markerGstore = '${_path}marker_small_gstore.png';
 
 }

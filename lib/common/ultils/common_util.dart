@@ -1,5 +1,9 @@
+import 'dart:math';
+import 'dart:typed_data';
+
 import 'package:flash/flash.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:my_gstore/common/bloc/snackbar_bloc/snackbar_bloc.dart';
@@ -18,13 +22,24 @@ import 'package:my_gstore/common/navigation/route_names.dart';
 import 'package:my_gstore/common/network/app_client.dart';
 import 'package:my_gstore/common/network/configs.dart';
 import 'package:my_gstore/common/theme/theme_color.dart';
+import 'package:my_gstore/common/ultils/screen_utils.dart';
 import 'package:my_gstore/presentation/injector_container.dart';
 
 import '../../presentation/routes.dart';
 import '../enum.dart';
 import 'log_util.dart';
+import 'dart:ui' as ui;
 
 class CommonUtils {
+  static Future<Uint8List?> getBytesFromAsset(String path, int size) async {
+    ByteData data = await rootBundle.load(path);
+    ui.Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List(),
+        targetWidth: size - 20, targetHeight: size);
+    ui.FrameInfo fi = await codec.getNextFrame();
+    ByteData? result =
+    await fi.image.toByteData(format: ui.ImageByteFormat.png);
+    return result?.buffer.asUint8List();
+  }
   static bool isEmptyOrNull(dynamic obj) {
     try {
       return (obj == null || obj.isEmpty);
@@ -272,5 +287,37 @@ class CommonUtils {
 
   static void dismissKeyBoard(BuildContext context) {
     FocusScope.of(context).requestFocus(FocusNode());
+  }
+  static void showCustomBottomSheet({
+    required BuildContext context,
+    required Widget child,
+    double? height,
+    Function? onClosed,
+    EdgeInsets? margin,
+    Color? backgroundColor,
+  }) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (BuildContext builder) {
+        double _maxHeight = GScreenUtil.screenHeightDp -
+            CommonConstant.defaultMarginTopOfBottomSheet -
+            GScreenUtil.statusBarHeight;
+        return Container(
+          height: height != null ? min(height, _maxHeight) : _maxHeight,
+          margin: margin ?? EdgeInsets.all(0),
+          decoration: BoxDecoration(
+            color: backgroundColor ?? Colors.white,
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(12), topRight: Radius.circular(12)),
+          ),
+          child: child,
+        );
+      },
+    ).whenComplete(() {
+      if (onClosed != null) {
+        onClosed();
+      }
+    });
   }
 }

@@ -17,9 +17,9 @@ class _MapPageScreenState extends State<MapPageScreen> {
     final panelHightClosed = MediaQuery.of(context).size.height * 0.4;
     final panelHightOpened = MediaQuery.of(context).size.height * 0.85;
     return Scaffold(
-      backgroundColor:Colors.transparent,
+      backgroundColor:Colors.white,
       body: SlidingUpPanel(
-        color: Colors.transparent,
+        color: Colors.white,
         controller: panelController,
         maxHeight: panelHightOpened,
         minHeight: panelHightClosed,

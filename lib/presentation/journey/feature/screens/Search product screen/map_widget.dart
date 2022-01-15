@@ -1,22 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:my_gstore/common/constants/image_constant.dart';
+import 'package:my_gstore/common/network/configs.dart';
 import 'package:my_gstore/common/theme/theme_color.dart';
 import 'package:my_gstore/presentation/journey/feature/screens/Home/component/filter_screen_bottom_sheet.dart';
+import 'package:my_gstore/presentation/journey/feature/screens/Home/component/home_map.dart';
+
+import 'Map Search Screen/map_search_screen.dart';
 
 
 class MapSearchScreen extends StatefulWidget {
   const MapSearchScreen({Key? key}) : super(key: key);
-
   @override
   _MapSearchScreenState createState() => _MapSearchScreenState();
 }
 
 class _MapSearchScreenState extends State<MapSearchScreen> {
-  // static const _initialCameraPosition = CameraPosition(
-  //   target: LatLng(37.4219999, -122.0862462),
-  //   zoom: 11.5,
-  // );
-  // GoogleMap(initialCameraPosition: _initialCameraPosition),
+
+  @override
+  void initState() {
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,7 +30,7 @@ class _MapSearchScreenState extends State<MapSearchScreen> {
       backgroundColor: Colors.white,
       appBar: PreferredSize(
         preferredSize:
-            Size.fromHeight(MediaQuery.of(context).size.height * 1.15 / 2),
+            Size.fromHeight(MediaQuery.of(context).size.height * 1.5 / 2),
         child: AppBar(
           automaticallyImplyLeading: false,
           leading: Row(
@@ -52,11 +58,7 @@ class _MapSearchScreenState extends State<MapSearchScreen> {
             ],
           ),
           flexibleSpace: Container(
-            decoration: BoxDecoration(
-                image: DecorationImage(
-              image: AssetImage(ImageConstant.mockTopBackGround),
-              fit: BoxFit.fill,
-            )),
+          child: MapSearchCityScreen(),
           ),
           title: Container(
             padding: EdgeInsets.all(10),

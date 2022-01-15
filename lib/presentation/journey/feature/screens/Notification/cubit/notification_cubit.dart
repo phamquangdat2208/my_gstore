@@ -39,7 +39,21 @@ class NotificationCubit extends Cubit<NotificationState> {
     });
     return result;
   }
-
+  void makeRead(int? notiId) async {
+    List<NotificationModels> result = [];
+    injector<AppClient>().get('Customer/MakeReadNofifyCation?id=${notiId}');
+    result.clear();
+    final data = await injector<AppClient>().get(
+        'Customer/GetNofifyCationHistory?customerid=${notiId}&page=4&pagesize=12&type=0&isRead=2');
+    data['Data'].forEach((e) {
+      result.add(NotificationModels.fromJson(e));
+    });
+    // injector<EventBusBloc>().add(EventBusRequestInitDataNotificationEvent(
+    //     count: result.where((element) => !element.isRead).toList().length));
+    emit(NotificationGotDataState(
+      result,
+    ));
+  }
 }
 
 abstract class NotificationState {}

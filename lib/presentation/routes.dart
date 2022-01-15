@@ -8,14 +8,13 @@ import 'package:my_gstore/presentation/journey/feature/auth/all%20product/all_pr
 import 'package:my_gstore/presentation/journey/feature/auth/detail%20page/detail_product.dart';
 import 'package:my_gstore/presentation/journey/feature/auth/login/login_phone_number_screen.dart';
 import 'package:my_gstore/presentation/journey/feature/auth/login/login_screen.dart';
-import 'package:my_gstore/presentation/journey/feature/auth/otp/confirm_screen.dart';
 import 'package:my_gstore/presentation/journey/feature/screens/Search%20product%20screen/map_page.dart';
 import 'package:my_gstore/presentation/journey/feature/screens/on_boarding_screen.dart';
 import 'package:my_gstore/presentation/journey/feature/screens/screen_container.dart';
 import 'package:my_gstore/presentation/journey/feature/screens/splash_screen.dart';
 import 'package:my_gstore/presentation/journey/feature/webView/webview_screen.dart';
-
 import 'injector_container.dart';
+import 'journey/feature/auth/individual/action/Update Profile/update_profile_screen.dart';
 
 class Routes {
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
@@ -93,6 +92,8 @@ class Routes {
                 ));
       case RouteName.searchProductScreen:
         return CupertinoPageRoute(builder: (context) => MapPageScreen());
+        case RouteName.updateProfileScreen:
+        return CupertinoPageRoute(builder: (context) => UpdateProfileScreen());
       case RouteName.detailProductScreen:
         return CupertinoPageRoute(
             builder: (context) => ProductDetailPage(

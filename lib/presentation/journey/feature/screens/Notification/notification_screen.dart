@@ -61,7 +61,6 @@ class _NotificationScreenState extends State<NotificationScreen> {
   for(int i=0; i< list.length; i++){
     listW.add(NotificationItem(
       notificationModel: list[i],
-
     ));
   }
   return Column(

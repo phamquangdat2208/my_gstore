@@ -6,6 +6,7 @@ import 'package:my_gstore/common/bloc/snackbar_bloc/snackbar_bloc.dart';
 import 'package:my_gstore/common/constants/icon_constant.dart';
 import 'package:my_gstore/common/constants/image_constant.dart';
 import 'package:my_gstore/common/constants/key_save_data_local.dart';
+import 'package:my_gstore/common/customs/custom_gesturedetactor.dart';
 import 'package:my_gstore/common/global_app_cache/global_app_catch.dart';
 import 'package:my_gstore/common/local/local_app.dart';
 import 'package:my_gstore/common/navigation/route_names.dart';
@@ -14,6 +15,7 @@ import 'package:my_gstore/common/theme/theme_color.dart';
 import 'package:my_gstore/common/theme/theme_text.dart';
 import 'package:my_gstore/common/ultils/common_util.dart';
 import 'package:my_gstore/common/ultils/format_utils.dart';
+import 'package:my_gstore/common/ultils/log_util.dart';
 import 'package:my_gstore/presentation/journey/feature/auth/individual/cubit/individual_cubit.dart';
 import 'package:my_gstore/presentation/journey/feature/widgets/custom_cache_image_network.dart';
 import '../../../../injector_container.dart';
@@ -26,6 +28,20 @@ class IndividualScreen extends StatefulWidget {
 
   @override
   _IndividualScreenState createState() => _IndividualScreenState();
+}
+
+void _logout() async {
+  final localApp = injector<LocalApp>();
+  try {
+    localApp.saveStringSharePreference(KeySaveDataLocal.keySaveAccessToken, "");
+    Routes.instance.navigateTo(RouteName.loginScreen);
+  } catch (e) {
+    // CommonUtils.handleException(injector<SnackBarBloc>(), e,
+    //     methodName: ''); // bug hear
+    Routes.instance.pop();
+  } finally {
+    injector<LoadingBloc>().add(FinishLoading());
+  }
 }
 
 class _IndividualScreenState extends State<IndividualScreen> {
@@ -55,56 +71,51 @@ class _IndividualScreenState extends State<IndividualScreen> {
                             fit: BoxFit.fitWidth,
                             width: double.infinity,
                           )
-                        : CustomCacheImageNetwork(
-                            url: _globalAppCatch.profileModel?.imageTimeline ??
-                                '',
-                      height: MediaQuery.of(context).size.height * 1 / 5,
-                      fit:BoxFit.cover,
-                      width: double.infinity,
-                    ),
+                        : CustomGestureDetector(
+                            onTap: () {
+                              Routes.instance
+                                  .navigateTo(RouteName.updateProfileScreen);
+                            },
+                            child: CustomCacheImageNetwork(
+                              url:
+                                  _globalAppCatch.profileModel?.imageTimeline ??
+                                      '',
+                              height:
+                                  MediaQuery.of(context).size.height * 1 / 5,
+                              fit: BoxFit.cover,
+                              width: double.infinity,
+                            ),
+                          ),
                     SizedBox(
                       height: 40,
                     ),
                   ],
                 ),
                 Positioned(
-                    top: 0,
-                    bottom: 25,
-                    left: 25,
-                    child: GestureDetector(
-                        onTap: () {},
-                        child: Icon(
-                          Icons.settings,
-                          color: Colors.white,
-                        ))),
-                Positioned(
-                    right: 25,
-                    top: 0,
-                    bottom: 25,
-                    child: GestureDetector(
-                      onTap: () {},
-                      child: Icon(
-                        Icons.edit,
-                        color: Colors.white,
-                      ),
-                    )),
-                Positioned(
                     bottom: 0,
                     left: MediaQuery.of(context).size.width * 1 / 2 - 40,
                     child: Stack(
                       children: [
-                        Container(
-                          decoration: new BoxDecoration(
-                            border: Border.all(color: Colors.white, width: 1),
-                            shape: BoxShape.circle,
-                          ),
-                          child: ClipOval(
-                            child: CustomCacheImageNetwork(
-                              url:
-                                  _globalAppCatch.profileModel?.avartaUrl ?? '',
-                              height: MediaQuery.of(context).size.width * 1 / 4,
-                              width: MediaQuery.of(context).size.width * 1 / 4,
-                              fit: BoxFit.fill,
+                        CustomGestureDetector(
+                          onTap: () {
+                            Routes.instance
+                                .navigateTo(RouteName.updateProfileScreen);
+                          },
+                          child: Container(
+                            decoration: new BoxDecoration(
+                              border: Border.all(color: Colors.white, width: 1),
+                              shape: BoxShape.circle,
+                            ),
+                            child: ClipOval(
+                              child: CustomCacheImageNetwork(
+                                url: _globalAppCatch.profileModel?.avartaUrl ??
+                                    '',
+                                height:
+                                    MediaQuery.of(context).size.width * 1 / 4,
+                                width:
+                                    MediaQuery.of(context).size.width * 1 / 4,
+                                fit: BoxFit.cover,
+                              ),
                             ),
                           ),
                         ),
@@ -181,8 +192,7 @@ class _IndividualScreenState extends State<IndividualScreen> {
               height: 0,
             ),
             ListTile(
-              onTap: () {
-              },
+              onTap: () {},
               leading: PersonalItemCustom(
                 icon: IconConst.personalShipping,
                 height: 32,
@@ -494,23 +504,7 @@ class _IndividualScreenState extends State<IndividualScreen> {
             ),
             SizedBox(height: 16),
             ListTile(
-              onTap: () async {
-                // try {
-                //   injector<LoadingBloc>().add(StartLoading());
-                //   GlobalAppCache appCache = injector<GlobalAppCache>();
-                //   await injector<AppClient>().post('logout',
-                //       body: {'Mobile': '${appCache.profileModel?.mobile}'});
-                //   injector<LocalApp>().saveStringSharePreference(
-                //       KeySaveDataLocal.keySaveDataProfile, '');
-                //   Routes.instance.navigateAndRemove(RouteName.loginScreen);
-                // } catch (e) {
-                //   CommonUtils.handleException(injector<SnackBarBloc>(), e,
-                //       methodName: 'onLogOut');
-                //   Routes.instance.pop();
-                // } finally {
-                //   injector<LoadingBloc>().add(FinishLoading());
-                // }
-              },
+              onTap: _logout,
               leading: PersonalItemCustom(
                 icon: IconConst.personalLogout,
                 height: 32,
