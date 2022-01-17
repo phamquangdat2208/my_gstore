@@ -33,7 +33,6 @@ class _HomeScreenState extends State<HomeScreen> {
   ScrollController _controller = ScrollController();
   void initState() {
     _homeCubit.getInitData();
-    _controller.addListener(_scrollListener);
   }
 
   @override
