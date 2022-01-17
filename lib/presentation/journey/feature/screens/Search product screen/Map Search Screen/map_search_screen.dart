@@ -21,7 +21,6 @@ import '../../../../../routes.dart';
 
 class MapSearchCityScreen extends StatefulWidget {
   const MapSearchCityScreen({Key? key}) : super(key: key);
-
   @override
   _MapSearchCityScreenState createState() => _MapSearchCityScreenState();
 }
@@ -41,7 +40,7 @@ class _MapSearchCityScreenState extends State<MapSearchCityScreen> {
     _currentLocation = LatLng(position?.lat ?? Configurations.latGstore,
         position?.lng ?? Configurations.lngGstore);
     _initialLocation = CameraPosition(
-      zoom: 13,
+      zoom: 12,
       target: _currentLocation,
     );
     _initData();
@@ -80,6 +79,7 @@ class _MapSearchCityScreenState extends State<MapSearchCityScreen> {
     return Padding(
       padding: const EdgeInsets.only(bottom: 18.0),
       child: Container(
+        color: AppColors.white,
         width: double.infinity,
         height: MediaQuery.of(context).size.height,
         child: ClipRRect(

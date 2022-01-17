@@ -8,6 +8,7 @@ import 'package:my_gstore/common/network/app_client.dart';
 import 'package:my_gstore/presentation/journey/feature/auth/detail%20page/cubit/detail_cubit.dart';
 import 'package:my_gstore/presentation/journey/feature/auth/individual/cubit/individual_cubit.dart';
 import 'package:my_gstore/presentation/journey/feature/auth/otp/otp_cubit.dart';
+import 'package:my_gstore/presentation/journey/feature/auth/suggest%20today/cubit/suggest_today_cubit.dart';
 import 'package:my_gstore/presentation/journey/feature/screens/Home/cubit/home_cubit.dart';
 import 'package:my_gstore/presentation/journey/feature/screens/Notification/cubit/notification_cubit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -66,6 +67,11 @@ void _initBloc() {
     injector(),
   ));
   injector.registerFactory(() => MapSearchScreenCubit(
+    injector(),
+    injector(),
+    injector(),
+  ));
+  injector.registerFactory(() => SuggestTodayCubit(
     injector(),
     injector(),
     injector(),

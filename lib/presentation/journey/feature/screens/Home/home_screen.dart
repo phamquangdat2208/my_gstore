@@ -9,6 +9,7 @@ import 'package:my_gstore/common/navigation/route_names.dart';
 import 'package:my_gstore/common/theme/theme_color.dart';
 import 'package:my_gstore/presentation/injector_container.dart';
 import 'package:my_gstore/presentation/journey/feature/auth/all%20product/all_product_page.dart';
+import 'package:my_gstore/presentation/journey/feature/auth/suggest%20today/suggest_today.dart';
 import 'package:my_gstore/presentation/journey/feature/screens/Home/component/custom_sliver_appbar_home.dart';
 import 'package:my_gstore/presentation/journey/feature/screens/Home/component/home_center.dart';
 import 'package:my_gstore/presentation/journey/feature/widgets/G%20Shop%20Items/listview_gshop.dart';
@@ -32,7 +33,9 @@ class _HomeScreenState extends State<HomeScreen> {
   ScrollController _controller = ScrollController();
   void initState() {
     _homeCubit.getInitData();
+    _controller.addListener(_scrollListener);
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -137,24 +140,25 @@ class _HomeScreenState extends State<HomeScreen> {
                     return const SizedBox();
                   },
                 ),
-                BlocBuilder<HomeCubit, HomeState>(
-                  bloc: _homeCubit,
-                  builder: (_, state) {
-                    if (state is HomeGettingDataState) {
-                      return CommonShimmer(
-                        numberItem: 0,
-                      );
-                    }
-                    if (state is HomeGotDataState &&
-                        state.getBestBuyNew.isNotEmpty) {
-                      return GridViewDisplayProduct(
-                        label: HomeConstant.suggestToday,
-                        courses: state.getBestBuyNew,
-                      );
-                    }
-                    return const SizedBox();
-                  },
-                ),
+                // BlocBuilder<HomeCubit, HomeState>(
+                //   bloc: _homeCubit,
+                //   builder: (_, state) {
+                //     if (state is HomeGettingDataState) {
+                //       return CommonShimmer(
+                //         numberItem: 0,
+                //       );
+                //     }
+                //     if (state is HomeGotDataState &&
+                //         state.getBestBuyNew.isNotEmpty) {
+                //       return GridViewDisplayProduct(
+                //         label: HomeConstant.suggestToday,
+                //         courses: state.getBestBuyNew,
+                //       );
+                //     }
+                //     return const SizedBox();
+                //   },
+                // ),
+                SuggestToDay(scrollController: _controller),
               ],
             ),
           )

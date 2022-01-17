@@ -14,7 +14,7 @@ class _MapPageScreenState extends State<MapPageScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final panelHightClosed = MediaQuery.of(context).size.height * 0.4;
+    final panelHightClosed = MediaQuery.of(context).size.height * 0.3;
     final panelHightOpened = MediaQuery.of(context).size.height * 0.85;
     return Scaffold(
       backgroundColor:Colors.white,

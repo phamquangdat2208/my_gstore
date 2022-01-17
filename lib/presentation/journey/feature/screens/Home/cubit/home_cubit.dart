@@ -16,6 +16,7 @@ class HomeCubit extends Cubit<HomeState> {
   final GlobalAppCache globalAppCache;
   HomeCubit(this.appClient, this.snackBarBloc, this.globalAppCache)
       : super(HomeInitState());
+  int _pageId = 1;
   void getInitData() async {
     try {
       emit(HomeGettingDataState());
@@ -27,14 +28,13 @@ class HomeCubit extends Cubit<HomeState> {
       final getBestBuy = await getProduct(
           'productapp/GetBestBuyNew?page=1&pagesize=24');
       final getBestBuyNew = await getProduct(
-          'ProductApp/GetBestProductForYouNew?km=25&latitude=21.023714&longitude=105.754272&page=1&pagesize=12');
+          'ProductApp/GetBestProductForYouNew?km=25&latitude=21.023714&longitude=105.754272&page=${_pageId}&pagesize=12');
       emit(HomeGotDataState(
         getGShop,
         getbanner,
         getBestBuy,
         getBestBuyNew,
       ));
-
     } catch (e) {
       emit(HomeGotDataState([],[],[],[]));
       CommonUtils.handleException(snackBarBloc, e,
@@ -68,6 +68,8 @@ Future<List<BannerModels>> getBanner(String endPoint) async{
   }
 }
 
+
+
 abstract class HomeState {}
 
 class HomeInitState extends HomeState {}
@@ -83,3 +85,4 @@ class HomeGotDataState extends HomeState {
 
   HomeGotDataState(this.getGShop,this.getBanner,this.getBestBuyNew,this.getBestBuy);
 }
+

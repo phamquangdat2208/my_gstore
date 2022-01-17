@@ -51,5 +51,7 @@ class IconConst {
   static const String personalUpgrade = '${_path}personal_upgrade.svg';
   static const String markerCart = '${_path}marker_small_store.png';
   static const String markerGstore = '${_path}marker_small_gstore.png';
+  static const String filter = '${_path}icon_filter.svg';
+  static const String microphone = '${_path}mic.svg';
 
 }

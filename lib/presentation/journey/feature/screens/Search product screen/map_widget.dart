@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:my_gstore/common/constants/icon_constant.dart';
 import 'package:my_gstore/common/constants/image_constant.dart';
 import 'package:my_gstore/common/network/configs.dart';
 import 'package:my_gstore/common/theme/theme_color.dart';
+import 'package:my_gstore/common/theme/theme_text.dart';
 import 'package:my_gstore/presentation/journey/feature/screens/Home/component/filter_screen_bottom_sheet.dart';
 import 'package:my_gstore/presentation/journey/feature/screens/Home/component/home_map.dart';
 
@@ -61,7 +64,7 @@ class _MapSearchScreenState extends State<MapSearchScreen> {
           child: MapSearchCityScreen(),
           ),
           title: Container(
-            padding: EdgeInsets.all(10),
+            padding: EdgeInsets.all(12),
             width: MediaQuery.of(context).size.width,
             decoration: new BoxDecoration(
                 boxShadow: [
@@ -80,11 +83,14 @@ class _MapSearchScreenState extends State<MapSearchScreen> {
                   color: AppColors.grey8,
                   size: 17,
                 ),
-                SizedBox(width: 10),
+                SizedBox(width: 8),
                 Text(
                   "Bạn muốn tìm cái giề",
-                  style: TextStyle(color: AppColors.grey8, fontSize: 15),
+                  style: AppTextTheme.normalGrey,
                 ),
+                Spacer(
+                ),
+                SvgPicture.asset(IconConst.microphone,color: AppColors.grey7,height: 16,),
               ],
             ),
           ),
@@ -106,8 +112,9 @@ class _MapSearchScreenState extends State<MapSearchScreen> {
                   shape: BoxShape.circle,
                   color: Colors.white,
                 ),
-                child: Icon(Icons.sort,color: AppColors.grey6,)),
+                child:SvgPicture.asset(IconConst.filter,color: AppColors.grey7,),
               ),
+            )
           ],
         ),
       ),

@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:my_gstore/common/model/product_model.dart';
+import 'package:my_gstore/common/theme/theme_color.dart';
 import 'package:my_gstore/common/theme/theme_text.dart';
 import 'package:my_gstore/common/ultils/common_util.dart';
 import 'package:my_gstore/common/ultils/screen_utils.dart';
@@ -15,7 +16,6 @@ class GridViewDisplayProductMapSearch extends StatelessWidget {
   final bool haveIcon;
   final List<ProductModel>? courses;
   final bool notExpand;
-  final ScrollController? controller;
 
   const GridViewDisplayProductMapSearch({
     Key? key,
@@ -24,7 +24,6 @@ class GridViewDisplayProductMapSearch extends StatelessWidget {
     this.courses,
     this.notExpand = false,
     this.haveIcon = true,
-    required this.controller,
   }) : super(key: key);
 
   @override
@@ -38,19 +37,11 @@ class GridViewDisplayProductMapSearch extends StatelessWidget {
     final heightList =
         (notExpand ? min(numberRow, 2) : numberRow) * (_itemHeight + 25);
     return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(height: 16),
-        Padding(
-          padding: EdgeInsets.only(left: 16),
-          child: Text(
-            label,
-            style: AppTextTheme.mediumRed.copyWith(
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-        ),
         Container(
+          color: AppColors.white,
           width: double.infinity,
           height: heightList,
           child: GridView.builder(
