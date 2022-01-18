@@ -82,10 +82,10 @@ class ListViewDisplayGShop extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             itemCount:
             notExpand ? min(information?.length ?? 0, 4) : information?.length,
-            padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 12.0),
+            padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
             itemBuilder: (context, index){
               return Padding(
-                padding: EdgeInsets.only(left: 12,right: 12),
+                padding: EdgeInsets.only(left: 8,right: 8),
                 child: CategoryDetailWidgetItemGShop(
                   itemWidth: _itemWidth,
                   information: information?[index],

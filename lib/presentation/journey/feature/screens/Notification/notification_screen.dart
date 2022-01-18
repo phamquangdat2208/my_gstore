@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:my_gstore/common/customs/custom_circular_indicator.dart';
 import 'package:my_gstore/common/theme/theme_text.dart';
 import 'package:my_gstore/presentation/injector_container.dart';
 import 'package:my_gstore/presentation/journey/feature/screens/Notification/cubit/notification_cubit.dart';
@@ -44,7 +45,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                     bloc: _notiCubit,
                     builder: (_, state) {
                       if (state is NotificationGettingDataState) {
-                        return CircularProgressIndicator();
+                        return CustomCircularIndicator();
                       }
                       if (state is NotificationGotDataState &&
                           state.getNoti.isNotEmpty) {

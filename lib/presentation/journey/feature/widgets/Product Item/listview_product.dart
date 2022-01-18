@@ -85,10 +85,10 @@ class ListViewDisplayProduct extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             itemCount:
             notExpand ? min(productModel?.length ?? 0, 4) : productModel?.length,
-            padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 12.0),
+            padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
             itemBuilder: (context, index){
               return Padding(
-                padding: EdgeInsets.only(left: 12,right: 12),
+                padding: EdgeInsets.only(left: 8,right: 8),
                 child: CategoryDetailWidgetItemProduct(
                   itemWidth: _itemWidth,
                   productModel: productModel?[index],

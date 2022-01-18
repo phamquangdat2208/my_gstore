@@ -144,12 +144,13 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
 class ItemCard extends StatelessWidget {
   final CategoryModel item;
 
-  const ItemCard({
+   ItemCard({
     Key? key,
     required this.item,
   }) : super(key: key);
 
   @override
+  int _pageId=1;
   Widget build(BuildContext context) {
     return GestureDetector(
         onTap: () {},
@@ -165,7 +166,7 @@ class ItemCard extends StatelessWidget {
                         Routes.instance.navigateTo(RouteName.allProductScreen,
                             arguments: ArgumentAllProductScreen(
                               url:
-                                  'productapp/GetProductForMapElasticNew?name=&minKm=&maxKm=0&cateId=${item.iD}&minPrice=0&maxPrice=0&latitude=21.030235&longitude=105.761697&page=1&pagesize=12&isGstore=ALL',
+                                  'productapp/GetProductForMapElasticNew?name=&minKm=&maxKm=0&cateId=${item.iD}&minPrice=0&maxPrice=0&latitude=21.030235&longitude=105.761697&page=${_pageId}&pagesize=12&isGstore=ALL',
                               title: item.name,
                             ));
                       },

@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_gstore/common/constants/home_constant.dart';
 import 'package:my_gstore/common/theme/theme_color.dart';
+import 'package:my_gstore/common/ultils/log_util.dart';
 import 'package:my_gstore/presentation/injector_container.dart';
 import 'package:my_gstore/presentation/journey/feature/auth/suggest%20today/cubit/suggest_today_cubit.dart';
 import 'package:my_gstore/presentation/journey/feature/widgets/gridview_product.dart';
+
+import 'cubit/suggest_today_state.dart';
 
 class SuggestToDay extends StatefulWidget {
   final ScrollController scrollController;
@@ -57,6 +60,9 @@ void _scrollListener() {
              return CircularProgressIndicator(color: AppColors.grey5,);
            }
            if(state is SuggestTodayGotState && (state.products?.isNotEmpty ?? false)){
+             if (!state.isLastData) {
+               _enableContinueLoadMore = true;
+             }
              return  GridViewDisplayProduct(
                label: HomeConstant.suggestToday,
                courses:state.products,

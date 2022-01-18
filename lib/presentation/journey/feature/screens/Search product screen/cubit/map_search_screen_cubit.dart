@@ -25,13 +25,12 @@ class MapSearchScreenCubit extends Cubit<MapSearchScreenState> {
 
   MapSearchScreenCubit(this.appClient, this.snackBarBloc, this.globalAppCache)
       : super(MapSearchScreenInitState());
-
-  void getInitData() async {
+  int _pageId=1;
+  void getDataLoadInMap() async {
     try {
       emit(MapSearchScreenGettingDataState());
-      GlobalAppCache appCache = injector<GlobalAppCache>();
       final getSampleProduct =
-          await getProduct('productapp/GetBestBuyNew?page=11&pagesize=24');
+          await getProduct('productapp/GetBestBuyNew?page=${_pageId}&pagesize=12');
       emit(MapSearchScreenGotDataState(
         getSampleProduct,
       ));
@@ -41,7 +40,29 @@ class MapSearchScreenCubit extends Cubit<MapSearchScreenState> {
           methodName: 'getInitData MapSearchScreenCubit');
     }
   }
+  void getMoreLoadData() async {
 
+    try {
+      emit(MapSearchScreenLoadingMoreState(state.products));
+      ++_pageId;
+      final getLoadMoreData = await getProduct(
+          'productapp/GetBestBuyNew?page=$_pageId&pagesize=12');
+      if (getLoadMoreData.isNotEmpty){
+        state.products?.addAll(getLoadMoreData);
+      }
+      emit(MapSearchScreenGotDataState(
+        state.products,
+        isLastData: getLoadMoreData.length < Configurations.pageSize,
+      ));
+    } catch (e) {
+      emit(MapSearchScreenGetFailState());
+      CommonUtils.handleException(
+        snackBarBloc,
+        e,
+        methodName: 'getMoreSearchScreen',
+      );
+    }
+  }
   Future<List<ProductModel>> getProduct(String endPoint) async {
     List<ProductModel> result = [];
     final data = await appClient.get(endPoint);
@@ -191,14 +212,34 @@ class ArgumentDataMarker {
 
   ArgumentDataMarker(this.lat, this.lng, this.bitmapDescriptor, this.uint8list);
 }
-abstract class MapSearchScreenState {}
+abstract class MapSearchScreenState {
+  final List<ProductModel>? products;
+  final bool isLastData;
+  MapSearchScreenState({this.products,this.isLastData =false});
+}
 
 class MapSearchScreenInitState extends MapSearchScreenState {}
 
 class MapSearchScreenGettingDataState extends MapSearchScreenState {}
 
 class MapSearchScreenGotDataState extends MapSearchScreenState {
-  final List<ProductModel> getSearchProduct;
+  MapSearchScreenGotDataState(List<ProductModel>? products, {bool isLastData = false})
+      : super(
+    products: products,
+    isLastData: isLastData,
+  );
+}
+class MapSearchScreenGetFailState extends MapSearchScreenState {}
+class MapSearchScreenLoadingMoreState extends MapSearchScreenState {
+  MapSearchScreenLoadingMoreState(List<ProductModel>? products)
+      : super(
+    products: products,
+  );
+}
 
-  MapSearchScreenGotDataState(this.getSearchProduct);
+class MapSearchScreenLoadMoreFailState extends MapSearchScreenState {
+  MapSearchScreenLoadMoreFailState(List<ProductModel>? products)
+      : super(
+    products: products,
+  );
 }

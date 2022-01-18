@@ -130,7 +130,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           Routes.instance.navigateTo(RouteName.allProductScreen,
                               arguments: ArgumentAllProductScreen(
                                 url:
-                                    'productapp/GetBestBuyNew?page=1&pagesize=12',
+                                    'productapp/GetBestBuyNew?',
                                 title: HomeConstant.bestBuy,
                               ));
                         },
@@ -139,12 +139,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     return const SizedBox();
                   },
                 ),
-                // BlocBuilder<HomeCubit, HomeState>(
-                //   bloc: _homeCubit,
-                //   builder: (_, state) {
-                //     if (state is HomeGettingDataState) {
-                //       return CommonShimmer(
-                //         numberItem: 0,
+
+
                 //       );
                 //     }
                 //     if (state is HomeGotDataState &&

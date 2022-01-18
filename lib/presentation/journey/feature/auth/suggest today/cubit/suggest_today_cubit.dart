@@ -2,12 +2,11 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_gstore/common/bloc/snackbar_bloc/snackbar_bloc.dart';
 import 'package:my_gstore/common/global_app_cache/global_app_catch.dart';
-import 'package:my_gstore/common/model/banner_model.dart';
-import 'package:my_gstore/common/model/gshop_model.dart';
 import 'package:my_gstore/common/model/product_model.dart';
 import 'package:my_gstore/common/network/app_client.dart';
 import 'package:my_gstore/common/network/configs.dart';
 import 'package:my_gstore/common/ultils/common_util.dart';
+import 'package:my_gstore/presentation/journey/feature/auth/suggest%20today/cubit/suggest_today_state.dart';
 
 import '../../../../../injector_container.dart';
 
@@ -21,9 +20,6 @@ class SuggestTodayCubit extends Cubit<SuggestTodayState> {
   void getDataSuggestToday() async {
     try {
       emit(SuggestTodayGettingDataState());
-      GlobalAppCache appCache = injector<GlobalAppCache>();
-      // final position = globalAppCache.gspPosition;
-
       final getBestBuyNew = await getProduct(
           'ProductApp/GetBestProductForYouNew?km=25&latitude=21.023714&longitude=105.754272&page=${_pageId}&pagesize=12');
       emit(SuggestTodayGotState(
@@ -67,35 +63,4 @@ class SuggestTodayCubit extends Cubit<SuggestTodayState> {
   }
 }
 
-abstract class SuggestTodayState {
-  final List<ProductModel>?  products;
-  final bool isLastData;
-  SuggestTodayState({this.products, this.isLastData = false});
-}
-
-class SuggestTodayInitState extends SuggestTodayState {}
-
-class SuggestTodayGettingDataState extends SuggestTodayState {}
-
-class SuggestTodayGotState extends SuggestTodayState {
-  SuggestTodayGotState(List<ProductModel>? products, {bool isLastData = false})
-      : super(
-    products: products,
-    isLastData: isLastData,
-  );
-}
-class SuggestTodayGetFailState extends SuggestTodayState {}
-class SuggestTodayLoadingMoreState extends SuggestTodayState {
-  SuggestTodayLoadingMoreState(List<ProductModel>? products)
-      : super(
-    products: products,
-  );
-}
-
-class SuggestTodayLoadMoreFailState extends SuggestTodayState {
-  SuggestTodayLoadMoreFailState(List<ProductModel>? products)
-      : super(
-    products: products,
-  );
-}
 

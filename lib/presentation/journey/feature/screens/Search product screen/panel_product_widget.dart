@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:my_gstore/common/customs/custom_circular_indicator.dart';
 import 'package:my_gstore/common/theme/theme_color.dart';
 import 'package:my_gstore/common/ultils/log_util.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
@@ -21,11 +22,24 @@ class ProductPanel extends StatefulWidget {
 
 class _ProductPanelState extends State<ProductPanel> {
   MapSearchScreenCubit _mapsearchCubit = injector<MapSearchScreenCubit>();
-
+  bool _enableContinueLoadMore = true;
+  bool _runFirst = true;
   @override
   void initState() {
-    _mapsearchCubit.getInitData();
+    _mapsearchCubit.getDataLoadInMap();
+    widget.controller.addListener(_scrollListener);
     super.initState();
+  }
+
+  void _scrollListener() {
+  if(widget.panelController.isPanelOpen){
+    if (widget.controller.position.extentAfter < 100) {
+      if (_enableContinueLoadMore) {
+        _enableContinueLoadMore = false;
+        _mapsearchCubit.getMoreLoadData();
+      }
+    }
+  }
   }
 
   @override
@@ -44,7 +58,6 @@ class _ProductPanelState extends State<ProductPanel> {
   }
 
   void toggleOpen() {
-    LOG.w('toggleOpen');
     widget.panelController.isPanelOpen
         ? widget.panelController.close()
         : widget.panelController.open();
@@ -55,7 +68,7 @@ class _ProductPanelState extends State<ProductPanel> {
       children: [
         Container(
           decoration: const BoxDecoration(
-              color: AppColors.white,
+              color: Colors.transparent,
               borderRadius: BorderRadius.all(Radius.circular(20))),
           height: 40,
           width: MediaQuery.of(context).size.width,
@@ -68,7 +81,10 @@ class _ProductPanelState extends State<ProductPanel> {
                   onTap: toggleClose,
                   child: Padding(
                     padding: EdgeInsets.all(8.0),
-                    child: Icon(Icons.close,size: 25,),
+                    child: Icon(
+                      Icons.close,
+                      size: 25,
+                    ),
                   ),
                 ),
               ),
@@ -77,7 +93,7 @@ class _ProductPanelState extends State<ProductPanel> {
                 child: GestureDetector(
                     onTap: toggleOpen,
                     child: const Padding(
-                      padding: EdgeInsets.fromLTRB(8.0,4.0,8.0,8.0),
+                      padding: EdgeInsets.fromLTRB(8.0, 4.0, 8.0, 8.0),
                       child: Icon(
                         Icons.keyboard_arrow_up,
                         size: 35,
@@ -90,30 +106,43 @@ class _ProductPanelState extends State<ProductPanel> {
         ),
         BlocBuilder<MapSearchScreenCubit, MapSearchScreenState>(
             bloc: _mapsearchCubit,
+            buildWhen: (_,state){
+              return state is MapSearchScreenGettingDataState ||
+              state is MapSearchScreenGotDataState;
+            },
             builder: (_, state) {
               if (state is MapSearchScreenGettingDataState) {
-                return Center(
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: CircularProgressIndicator(color: AppColors.grey7),
-                  ),
-                );
+                return CustomCircularIndicator();
               }
               if (state is MapSearchScreenGotDataState &&
-                  state.getSearchProduct.isNotEmpty) {
+                  (state.products?.isNotEmpty ?? false)) {
+                if (!state.isLastData) {
+                  _enableContinueLoadMore = true;
+                }
                 return Expanded(
                     child: ListView(
+                  padding: EdgeInsets.zero,
                   controller: widget.controller,
                   children: [
                     GridViewDisplayProductMapSearch(
                       label: '',
-                      courses: state.getSearchProduct,
+                      courses: state.products,
                     )
                   ],
                 ));
               }
               return Text('loi');
             }),
+        BlocBuilder<MapSearchScreenCubit, MapSearchScreenState>(
+          bloc: _mapsearchCubit,
+          builder: (_, state) {
+            if (state is MapSearchScreenLoadingMoreState) {
+              return CircularProgressIndicator(color: AppColors.grey5,);
+            }
+            return const SizedBox();
+          },
+        )
+
       ],
     );
   }

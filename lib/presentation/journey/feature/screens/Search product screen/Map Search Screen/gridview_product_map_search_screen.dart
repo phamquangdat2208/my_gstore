@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:my_gstore/common/model/product_model.dart';
 import 'package:my_gstore/common/theme/theme_color.dart';
-import 'package:my_gstore/common/theme/theme_text.dart';
 import 'package:my_gstore/common/ultils/common_util.dart';
 import 'package:my_gstore/common/ultils/screen_utils.dart';
 import 'package:my_gstore/presentation/journey/feature/widgets/Product%20Item/gridview_product_item.dart';
