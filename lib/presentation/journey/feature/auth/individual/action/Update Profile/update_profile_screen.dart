@@ -5,10 +5,10 @@ import 'package:my_gstore/common/constants/image_constant.dart';
 import 'package:my_gstore/common/constants/string_const.dart';
 import 'package:my_gstore/common/customs/custom_gesturedetactor.dart';
 import 'package:my_gstore/common/global_app_cache/global_app_catch.dart';
+import 'package:my_gstore/common/network/configs.dart';
 import 'package:my_gstore/common/theme/theme_color.dart';
 import 'package:my_gstore/common/theme/theme_text.dart';
 import 'package:my_gstore/common/ultils/common_util.dart';
-import 'package:my_gstore/common/ultils/log_util.dart';
 import 'package:my_gstore/common/ultils/validate_ultil.dart';
 import 'package:my_gstore/presentation/injector_container.dart';
 import 'package:my_gstore/presentation/journey/feature/auth/individual/Widget/bottom_sheet_date_picker.dart';
@@ -17,6 +17,7 @@ import 'package:my_gstore/presentation/journey/feature/auth/individual/Widget/up
 import 'package:my_gstore/presentation/journey/feature/widgets/button_bottom.dart';
 import 'package:my_gstore/presentation/journey/feature/widgets/custom_cache_image_network.dart';
 import 'package:my_gstore/presentation/journey/feature/widgets/custom_checkbox.dart';
+import 'package:my_gstore/presentation/journey/feature/widgets/custom_modal_bottom_sheet_image.dart';
 
 class UpdateProfileScreen extends StatefulWidget {
   const UpdateProfileScreen({Key? key}) : super(key: key);
@@ -97,183 +98,201 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
 
     return SafeArea(
       child: Scaffold(
+          extendBodyBehindAppBar: true,
           backgroundColor: AppColors.grey2,
-          appBar: PreferredSize(
-            preferredSize: const Size.fromHeight(
-              190,
-            ),
-            child: Stack(
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(
-                      bottom: (MediaQuery.of(context).size.width * 1 / 4) / 2),
-                  child: AppBar(
-                    backgroundColor: AppColors.grey4,
-                    leading: IconButton(
-                      icon: Container(
-                        alignment: Alignment.center,
-                        padding: const EdgeInsets.all(8.0),
-                        decoration: BoxDecoration(
-                            color: AppColors.black.withOpacity(0.5),
-                            borderRadius: BorderRadius.circular(50.0)),
-                        child: const Icon(
-                          Icons.arrow_back,
-                          color: Colors.white,
-                          size: 18,
-                        ),
-                      ),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                    ),
-                    flexibleSpace: _globalAppCatch
-                                .profileModel?.imageTimeline ==
-                            ''
-                        ? const Image(
-                            image: AssetImage(ImageConstant.mockTopBackGround),
-                            width: double.infinity,
-                            height: 125,
-                            fit: BoxFit.cover,
-                          )
-                        : CustomCacheImageNetwork(
-                            url: _globalAppCatch.profileModel?.imageTimeline ??
-                                '',
-                            width: double.infinity,
-                            height: 145,
-                            fit: BoxFit.cover,
-                          ),
+          appBar: AppBar(
+            elevation: 0,
+            backgroundColor: Colors.transparent,
+            leading: CustomGestureDetector(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Container(
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                      color: AppColors.black.withOpacity(0.5),
+                      borderRadius: BorderRadius.circular(50.0)),
+                  child: const Icon(
+                    Icons.arrow_back,
+                    color: Colors.white,
+                    size: 14,
                   ),
                 ),
-                Positioned(
-                  bottom: 0,
-                  child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.white),
-                      shape: BoxShape.circle,
-                    ),
-                    child: Stack(
-                      children: [
-                        ClipOval(
-                          child: CustomCacheImageNetwork(
-                            url: _globalAppCatch.profileModel?.avartaUrl ?? '',
-                            height: MediaQuery.of(context).size.width * 1 / 4,
-                            width: MediaQuery.of(context).size.width * 1 / 4,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        Positioned(
-                          bottom: 0,
-                          right: 0,
+              ),
+            ),
+          ),
+          body: Form(
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  Stack(
+                    children: [
+                      Column(
+                        children: [
+                          _globalAppCatch.profileModel?.imageTimeline == ''
+                              ? const Image(
+                                  image: AssetImage(
+                                      ImageConstant.mockTopBackGround),
+                                  width: double.infinity,
+                                  height: 125,
+                                  fit: BoxFit.cover,
+                                )
+                              : CustomCacheImageNetwork(
+                                  url: _globalAppCatch
+                                          .profileModel?.imageTimeline ??
+                                      '',
+                                  width: double.infinity,
+                                  height: 145,
+                                  fit: BoxFit.cover,
+                                ),
+                          SizedBox(
+                            height: 40,
+                          )
+                        ],
+                      ),
+                      Positioned(
+                        bottom: 0,
+                        child: CustomGestureDetector(
+                          onTap: () {
+                            customModalBottomSheet(context);
+                          },
                           child: Container(
-                            padding: EdgeInsets.all(1),
+                            width: MediaQuery.of(context).size.width,
+                            alignment: Alignment.center,
                             decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(50),
-                                border: Border.all(color: AppColors.white),
-                                color: AppColors.grey2),
-                            child: SvgPicture.asset(
-                              IconConst.personalCamera,
-                              width: 25,
-                              height: 25,
-                              color: AppColors.logoGreen,
+                              border: Border.all(color: Colors.white),
+                              shape: BoxShape.circle,
+                            ),
+                            child: Stack(
+                              children: [
+                                ClipOval(
+                                  child: CustomCacheImageNetwork(
+                                    url: _globalAppCatch
+                                            .profileModel?.avartaUrl ??
+                                        '',
+                                    height: MediaQuery.of(context).size.width *
+                                        1 /
+                                        4,
+                                    width: MediaQuery.of(context).size.width *
+                                        1 /
+                                        4,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                                Positioned(
+                                  bottom: 0,
+                                  right: 0,
+                                  child: Container(
+                                    padding: EdgeInsets.all(1),
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(50),
+                                        border:
+                                            Border.all(color: AppColors.white),
+                                        color: AppColors.grey2),
+                                    child: SvgPicture.asset(
+                                      IconConst.personalCamera,
+                                      width: 25,
+                                      height: 25,
+                                      color: AppColors.logoGreen,
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                        )
+                        ),
+                      ),
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Column(
+                      children: [
+                        const Text(
+                          StringConst.notePersonal,
+                          style: AppTextTheme.smallGrey,
+                        ),
+                        const SizedBox(
+                          height: 16.0,
+                        ),
+                        CustomTextFieldWithLabelInside(
+                          hintText: StringConst.namePersonal,
+                          textInputType: TextInputType.text,
+                          controller: _nameCtl,
+                          validator: ValidateUtil.validEmpty,
+                        ),
+                        Container(
+                          padding: const EdgeInsets.only(top: 4, bottom: 16),
+                          child: const Text(
+                            '(*) ${StringConst.noteNamePersonal}',
+                            style: AppTextTheme.smallGrey,
+                          ),
+                        ),
+                        CustomTextFieldWithLabelInside(
+                          hintText: '${StringConst.address} (*)',
+                          textInputType: TextInputType.text,
+                          controller: _addressCtl,
+                          textCapitalization: TextCapitalization.words,
+                          validator: ValidateUtil.validEmpty,
+                        ),
+                        const SizedBox(height: 16.0),
+                        CustomTextFieldWithLabelInside(
+                          hintText: '${StringConst.phoneNumber} (*)',
+                          controller: _phoneCtl,
+                          textInputType: TextInputType.number,
+                          validator: ValidateUtil.validEmpty,
+                        ),
+                        const SizedBox(height: 16.0),
+                        CustomTextFieldWithLabelInside(
+                          hintText: '${StringConst.citizenId} (*)',
+                          controller: _codeUserCtl,
+                          textInputType: TextInputType.number,
+                          validator: ValidateUtil.validEmpty,
+                        ),
+                        const SizedBox(height: 16),
+                        CustomTextFieldWithLabelInside(
+                          hintText: '${StringConst.dateProvide} (*)',
+                          onTap: () {
+                            _selectDateProvide(context);
+                          },
+                          readOnly: true,
+                          controller: _codeDateCtl,
+                          validator: ValidateUtil.validEmpty,
+                        ),
+                        const SizedBox(height: 16),
+                        CustomTextFieldWithLabelInside(
+                          hintText: '${StringConst.whereProvide} (*)',
+                          textCapitalization: TextCapitalization.words,
+                          controller: _codeLocationCtl,
+                          validator: ValidateUtil.validEmpty,
+                        ),
+                        const SizedBox(height: 16),
+                        CustomTextFieldWithLabelInside(
+                          hintText: '${StringConst.personalTaxCode}',
+                          textInputType: TextInputType.number,
+                          controller: _userMSTCtl,
+                        ),
+                        const SizedBox(height: 16),
+                        CustomTextFieldWithLabelInside(
+                          hintText: '${StringConst.birthDay}',
+                          readOnly: true,
+                          controller: _birthDayCtl,
+                          onTap: () {
+                            _selectDateTimeBirthDay(context);
+                          },
+                        ),
+                        const SizedBox(height: 16),
+                        CustomTextFieldWithLabelInside(
+                          hintText: 'Email',
+                          textInputType: TextInputType.emailAddress,
+                          controller: _emailCtl,
+                        ),
                       ],
                     ),
                   ),
-                )
-              ],
-            ),
-          ),
-          body: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Form(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    const Text(
-                      StringConst.notePersonal,
-                      style: AppTextTheme.smallGrey,
-                    ),
-                    const SizedBox(
-                      height: 16.0,
-                    ),
-                    CustomTextFieldWithLabelInside(
-                      hintText: StringConst.namePersonal,
-                      textInputType: TextInputType.text,
-                      controller: _nameCtl,
-                      validator: ValidateUtil.validEmpty,
-                    ),
-                    Container(
-                      padding: const EdgeInsets.only(top: 4, bottom: 16),
-                      child: const Text(
-                        '(*) ${StringConst.noteNamePersonal}',
-                        style: AppTextTheme.smallGrey,
-                      ),
-                    ),
-                    CustomTextFieldWithLabelInside(
-                      hintText: '${StringConst.address} (*)',
-                      textInputType: TextInputType.text,
-                      controller: _addressCtl,
-                      textCapitalization: TextCapitalization.words,
-                      validator: ValidateUtil.validEmpty,
-                    ),
-                    const SizedBox(height: 16.0),
-                    CustomTextFieldWithLabelInside(
-                      hintText: '${StringConst.phoneNumber} (*)',
-                      controller: _phoneCtl,
-                      textInputType: TextInputType.number,
-                      validator: ValidateUtil.validEmpty,
-                    ),
-                    const SizedBox(height: 16.0),
-                    CustomTextFieldWithLabelInside(
-                      hintText: '${StringConst.citizenId} (*)',
-                      controller: _codeUserCtl,
-                      textInputType: TextInputType.number,
-                      validator: ValidateUtil.validEmpty,
-                    ),
-                    const SizedBox(height: 16),
-                    CustomTextFieldWithLabelInside(
-                      hintText: '${StringConst.dateProvide} (*)',
-                      onTap: () {
-                        _selectDateProvide(context);
-                      },
-                      readOnly: true,
-                      controller: _codeDateCtl,
-                      validator: ValidateUtil.validEmpty,
-                    ),
-                    const SizedBox(height: 16),
-                    CustomTextFieldWithLabelInside(
-                      hintText: '${StringConst.whereProvide} (*)',
-                      textCapitalization: TextCapitalization.words,
-                      controller: _codeLocationCtl,
-                      validator: ValidateUtil.validEmpty,
-                    ),
-                    const SizedBox(height: 16),
-                    CustomTextFieldWithLabelInside(
-                      hintText: '${StringConst.personalTaxCode}',
-                      textInputType: TextInputType.number,
-                      controller: _userMSTCtl,
-                    ),
-                    const SizedBox(height: 16),
-                    CustomTextFieldWithLabelInside(
-                      hintText: '${StringConst.birthDay}',
-                      readOnly: true,
-                      controller: _birthDayCtl,
-                      onTap: () {
-                        _selectDateTimeBirthDay(context);
-                      },
-                    ),
-                    const SizedBox(height: 16),
-                    CustomTextFieldWithLabelInside(
-                      hintText: 'Email',
-                      textInputType: TextInputType.emailAddress,
-                      controller: _emailCtl,
-                    ),
-                  ],
-                ),
+                ],
               ),
             ),
           ),
@@ -309,9 +328,24 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                     Expanded(
                         child: Padding(
                       padding: EdgeInsets.all(8),
-                      child: Text(
-                        'Tôi đồng ý trở thành người bán và tuân theo chính sách của G-Store Xem chính sách tại đây',
-                        maxLines: 2,
+                      child: CustomGestureDetector(
+                        onTap: () {
+                          CommonUtils.runUrl(Configurations.urlPolicy);
+                        },
+                        child: RichText(
+                          text: TextSpan(
+                            children: [
+                              TextSpan(
+                                  text:
+                                      'Tôi đồng ý trở thành người bán và tuân theo chính sách của G-Store ',
+                                  style: AppTextTheme.normalBlack),
+                              TextSpan(
+                                  text: 'Xem chính sách tại đây',
+                                  style: AppTextTheme.normalBlue)
+                            ],
+                          ),
+                          maxLines: 2,
+                        ),
                       ),
                     ))
                   ],
@@ -336,4 +370,19 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
           )),
     );
   }
+}
+
+void customModalBottomSheet(BuildContext context) {
+  showModalBottomSheet(
+      backgroundColor: Colors.white,
+      context: context,
+      isScrollControlled: true,
+      isDismissible: true,
+      shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(16))),
+      builder: (context) => DraggableScrollableSheet(
+          minChildSize: 0.2,
+          initialChildSize: 0.2,
+          expand: false,
+          builder: (_, controller) => CustomModalBottomSheet()));
 }

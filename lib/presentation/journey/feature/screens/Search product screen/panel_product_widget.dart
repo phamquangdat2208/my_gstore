@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_gstore/common/customs/custom_circular_indicator.dart';
 import 'package:my_gstore/common/theme/theme_color.dart';
-import 'package:my_gstore/common/ultils/log_util.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import '../../../../injector_container.dart';
 import 'Map Search Screen/gridview_product_map_search_screen.dart';
@@ -21,9 +20,8 @@ class ProductPanel extends StatefulWidget {
 }
 
 class _ProductPanelState extends State<ProductPanel> {
-  MapSearchScreenCubit _mapsearchCubit = injector<MapSearchScreenCubit>();
+  MapSearchProductScreenCubit _mapsearchCubit = injector<MapSearchProductScreenCubit>();
   bool _enableContinueLoadMore = true;
-  bool _runFirst = true;
   @override
   void initState() {
     _mapsearchCubit.getDataLoadInMap();
@@ -104,7 +102,7 @@ class _ProductPanelState extends State<ProductPanel> {
             ],
           ),
         ),
-        BlocBuilder<MapSearchScreenCubit, MapSearchScreenState>(
+        BlocBuilder<MapSearchProductScreenCubit, MapSearchScreenState>(
             bloc: _mapsearchCubit,
             buildWhen: (_,state){
               return state is MapSearchScreenGettingDataState ||
@@ -133,7 +131,7 @@ class _ProductPanelState extends State<ProductPanel> {
               }
               return Text('loi');
             }),
-        BlocBuilder<MapSearchScreenCubit, MapSearchScreenState>(
+        BlocBuilder<MapSearchProductScreenCubit, MapSearchScreenState>(
           bloc: _mapsearchCubit,
           builder: (_, state) {
             if (state is MapSearchScreenLoadingMoreState) {

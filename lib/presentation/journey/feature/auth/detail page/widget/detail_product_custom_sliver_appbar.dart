@@ -14,7 +14,7 @@ double heightSliver = 414.0.h;
 
 class DetailProductCustomSliverAppbar extends SliverPersistentHeaderDelegate {
   // final DetailProductBloc detailProductBloc;
-  final ProductModel? productEntity;
+  final ProductModel? productModel;
   final Function onClose;
   final Function moveToCart;
   final Function(BuildContext context) onIconMoreTap;
@@ -22,7 +22,7 @@ class DetailProductCustomSliverAppbar extends SliverPersistentHeaderDelegate {
 
   DetailProductCustomSliverAppbar(
       {required this.onFavourite,
-      this.productEntity,
+      this.productModel,
       required this.onClose,
       required this.moveToCart,
       required this.onIconMoreTap});
@@ -132,7 +132,7 @@ class DetailProductCustomSliverAppbar extends SliverPersistentHeaderDelegate {
             ),
           ),
           Positioned(
-            child: CommonUtils.mapLevelUserToWidget(productEntity?.numberTS),
+            child: CommonUtils.mapLevelUserToWidget(productModel?.numberTS),
             right: 16,
             bottom: 12,
           )

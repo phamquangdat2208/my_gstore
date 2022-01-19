@@ -11,4 +11,7 @@ class RouteName {
   static const String detailProductScreen = 'Detail all Product screen';
   static const String searchProductScreen = 'Search Product Screen';
   static const String updateProfileScreen = 'Update Profile Screen';
+  static const String mapGShopScreen = 'map gshop screen';
+  static const String postedForSale = 'Post Product for sale';
+
 }

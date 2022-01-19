@@ -11,13 +11,16 @@ import 'package:my_gstore/common/global_app_cache/global_app_catch.dart';
 import 'package:my_gstore/common/local/local_app.dart';
 import 'package:my_gstore/common/navigation/route_names.dart';
 import 'package:my_gstore/common/network/app_client.dart';
+import 'package:my_gstore/common/network/configs.dart';
 import 'package:my_gstore/common/theme/theme_color.dart';
 import 'package:my_gstore/common/theme/theme_text.dart';
 import 'package:my_gstore/common/ultils/common_util.dart';
 import 'package:my_gstore/common/ultils/format_utils.dart';
 import 'package:my_gstore/common/ultils/log_util.dart';
 import 'package:my_gstore/presentation/journey/feature/auth/individual/cubit/individual_cubit.dart';
+import 'package:my_gstore/presentation/journey/feature/widgets/button_bottom.dart';
 import 'package:my_gstore/presentation/journey/feature/widgets/custom_cache_image_network.dart';
+import 'package:my_gstore/presentation/journey/feature/widgets/grey_sizebox.dart';
 import '../../../../injector_container.dart';
 import '../../../../routes.dart';
 import 'Widget/icon_list_title.dart';
@@ -125,12 +128,46 @@ class _IndividualScreenState extends State<IndividualScreen> {
             ),
             Column(
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 8,
                 ),
                 Text('${_globalAppCatch.profileModel?.fullName ?? ''}',
                     style: AppTextTheme.medium20PxBlack),
               ],
+            ),
+            CustomGestureDetector(
+              onTap: (){
+                Routes.instance.navigateTo(RouteName.postedForSale);
+              },
+              child: Container(
+                margin: EdgeInsets.fromLTRB(
+                    MediaQuery.of(context).size.width * 1 / 10,
+                    16,
+                    MediaQuery.of(context).size.width * 1 / 10,
+                    16),
+                padding: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(8)),
+                  color: AppColors.green.withOpacity(0.8),
+                  boxShadow: [
+                    BoxShadow(
+                      color: AppColors.grey5.withOpacity(0.5),
+                      offset: Offset(0, 3),
+                      blurRadius: 7,
+                      spreadRadius: 5,
+                    )
+                  ],
+                ),
+                child: Center(
+                  child: Text(
+                    'Đăng bán sản phẩm',
+                    style: AppTextTheme.IndividualButtonWhite,
+                  ),
+                ),
+              ),
+            ),
+            GreySizedBox(
+              height: 16,
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(8, 16, 8, 16),
@@ -170,6 +207,9 @@ class _IndividualScreenState extends State<IndividualScreen> {
                   ],
                 ),
               ),
+            ),
+            GreySizedBox(
+              height: 16,
             ),
             ListTile(
               onTap: () {},
@@ -228,7 +268,7 @@ class _IndividualScreenState extends State<IndividualScreen> {
                 color: AppColors.grey8,
               ),
             ),
-            SizedBox(height: 16),
+           GreySizedBox(height: 16),
             ListTile(
               onTap: () {},
               leading: PersonalItemCustom(
@@ -459,7 +499,9 @@ class _IndividualScreenState extends State<IndividualScreen> {
               height: 0,
             ),
             ListTile(
-              onTap: () {},
+              onTap: () {
+                CommonUtils.runUrl(Configurations.urlPolicy);
+              },
               leading: PersonalItemCustom(
                 icon: IconConst.personalPolicy,
                 height: 32,
@@ -502,7 +544,9 @@ class _IndividualScreenState extends State<IndividualScreen> {
                 color: AppColors.grey8,
               ),
             ),
-            SizedBox(height: 16),
+            GreySizedBox(
+              height: 16,
+            ),
             ListTile(
               onTap: _logout,
               leading: PersonalItemCustom(

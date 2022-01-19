@@ -1,26 +1,24 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:my_gstore/common/bloc/loading_bloc/loading_bloc.dart';
-import 'package:my_gstore/common/bloc/loading_bloc/loading_event.dart';
-import 'package:my_gstore/common/bloc/snackbar_bloc/snackbar_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:my_gstore/common/constants/home_constant.dart';
+import 'package:my_gstore/common/constants/icon_constant.dart';
 import 'package:my_gstore/common/constants/image_constant.dart';
 import 'package:my_gstore/common/constants/string_const.dart';
 import 'package:my_gstore/common/customs/custom_gesturedetactor.dart';
-import 'package:my_gstore/common/model/detail_product_model.dart';
 import 'package:my_gstore/common/navigation/route_names.dart';
 import 'package:my_gstore/common/network/app_client.dart';
 import 'package:my_gstore/common/theme/theme_color.dart';
 import 'package:my_gstore/common/theme/theme_text.dart';
-import 'package:my_gstore/common/ultils/common_util.dart';
 import 'package:my_gstore/common/ultils/format_utils.dart';
 import 'package:my_gstore/presentation/journey/feature/auth/all%20product/all_product_page.dart';
 import 'package:my_gstore/presentation/journey/feature/auth/detail%20page/widget/demo_pageview_title.dart';
 import 'package:my_gstore/presentation/journey/feature/auth/detail%20page/widget/page_container_demo.dart';
 import 'package:my_gstore/presentation/journey/feature/widgets/Product%20Item/listview_product.dart';
 import 'package:my_gstore/presentation/journey/feature/widgets/custom_cache_image_network.dart';
-import 'package:my_gstore/presentation/journey/feature/widgets/gridview_product.dart';
+import 'package:my_gstore/presentation/journey/feature/widgets/grey_sizebox.dart';
+import 'package:my_gstore/presentation/journey/feature/widgets/shimmer/listview_display_product.dart';
 
 import '../../../../injector_container.dart';
 import '../../../../routes.dart';
@@ -322,27 +320,119 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
+                                state.getDetail.hasTransfer ?? false
+                                    ? Container(
+                                        margin: EdgeInsets.only(
+                                            left: 16,
+                                            right: 16,
+                                            top: 16,
+                                            bottom: 12),
+                                        padding: EdgeInsets.all(15),
+                                        decoration: const BoxDecoration(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(15)),
+                                          color: Colors.white,
+                                        ),
+                                        child: Row(
+                                          children: [
+                                            SvgPicture.asset(
+                                              IconConst.addtoCart,
+                                              color: AppColors.grey7,
+                                            ),
+                                            SizedBox(
+                                              width: 8,
+                                            ),
+                                            Text(
+                                              'Có dịch vụ chuyển hàng',
+                                              style: AppTextTheme.normalBlack,
+                                            ),
+                                          ],
+                                        ),
+                                      )
+                                    : SizedBox(),
                                 Container(
-                                  margin: EdgeInsets.only(
-                                      left: 16, right: 16, top: 16, bottom: 12),
-                                  padding: EdgeInsets.all(15),
-                                  decoration: const BoxDecoration(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(15)),
-                                    color: Colors.white,
-                                  ),
-                                  child: Row(
+                                  color: AppColors.white,
+                                  // padding:
+                                  //     EdgeInsets.symmetric(horizontal: 20.0),
+                                  width: double.infinity,
+                                  height: 170,
+                                  child: Stack(
                                     children: [
-                                      SizedBox(
-                                        width: 5,
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          SizedBox(height: 10),
+                                          Padding(
+                                            padding: const EdgeInsets.all(12.0),
+                                            child: const Text(
+                                              'Mô tả sản phẩm',
+                                              style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 17,
+                                                fontWeight: FontWeight.w400,
+                                                height: 1.5,
+                                                wordSpacing: 1.1,
+                                                fontFamily: 'Roboto',
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(height: 5),
+                                          Expanded(
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.fromLTRB(
+                                                      12, 0, 12, 0),
+                                              child: Text(
+                                                '${state.getDetail.description ?? ' '}',
+                                                style: AppTextTheme
+                                                    .styleDesProduct,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                      Text(
-                                        'Giảm 300,000 đ khi thanh toán bằng G-Token',
-                                        style: TextStyle(fontSize: 12),
-                                      ),
+                                      Positioned(
+                                        bottom: 0,
+                                        left: 0,
+                                        right: 0,
+                                        child: Container(
+                                          width: double.infinity,
+                                          padding: EdgeInsets.only(bottom: 5),
+                                          height: 30,
+                                          decoration: BoxDecoration(
+                                              color: AppColors.white,
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  color: AppColors.white,
+                                                  blurRadius: 15,
+                                                  offset: Offset(0, -20),
+                                                )
+                                              ]),
+                                          child: Center(
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Text(
+                                                  'Xem tất cả',
+                                                  style:
+                                                      AppTextTheme.normalBlue,
+                                                ),
+                                                Icon(
+                                                  Icons.chevron_right,
+                                                  size: 14,
+                                                  color: AppColors.blue,
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      )
                                     ],
                                   ),
                                 ),
+                                GreySizedBox(),
                                 Container(
                                   color: AppColors.white,
                                   width: MediaQuery.of(context).size.width,
@@ -378,14 +468,20 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                                   color: AppColors.white,
                                   width: MediaQuery.of(context).size.width,
                                   child: BlocBuilder<DetailProductCubit,
-                                      DetailState>(
+                                          DetailState>(
                                       bloc: _detailCubit,
                                       builder: (_, state) {
                                         if (state is DetailGotDataState) {
-                                          if (state.getSampleProduct.isNotEmpty) {
-                                            return GridViewDisplayProduct(
-                                              label: StringConst.sameProduct,
-                                              courses: state.getSampleProduct,
+                                          if (state
+                                              .getSampleProduct.isNotEmpty) {
+                                            return Container(
+                                              color: AppColors.grey3,
+                                              child: ListViewDetailProduct(
+                                                notExpand: true,
+                                                label: StringConst.sameProduct,
+                                                productModel:
+                                                    state.getSampleProduct,
+                                              ),
                                             );
                                           }
                                           return Padding(
@@ -401,7 +497,8 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                                         }
                                         return Text('false');
                                       }),
-                                )
+                                ),
+                                SizedBox(height:16),
                               ],
                             ),
                           ))),

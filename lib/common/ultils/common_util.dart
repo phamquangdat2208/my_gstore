@@ -1,6 +1,5 @@
 import 'dart:math';
 import 'dart:typed_data';
-
 import 'package:flash/flash.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -18,12 +17,15 @@ import 'package:my_gstore/common/exception/app_exception.dart';
 import 'package:my_gstore/common/exception/connect_exception.dart';
 import 'package:my_gstore/common/exception/timeout_exception.dart';
 import 'package:my_gstore/common/exception/token_expired_exception.dart';
+import 'package:my_gstore/common/global_app_cache/global_app_catch.dart';
 import 'package:my_gstore/common/navigation/route_names.dart';
 import 'package:my_gstore/common/network/app_client.dart';
 import 'package:my_gstore/common/network/configs.dart';
 import 'package:my_gstore/common/theme/theme_color.dart';
 import 'package:my_gstore/common/ultils/screen_utils.dart';
 import 'package:my_gstore/presentation/injector_container.dart';
+import 'package:my_gstore/presentation/journey/feature/webView/webview_screen.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../presentation/routes.dart';
 import '../enum.dart';
@@ -37,9 +39,10 @@ class CommonUtils {
         targetWidth: size - 20, targetHeight: size);
     ui.FrameInfo fi = await codec.getNextFrame();
     ByteData? result =
-    await fi.image.toByteData(format: ui.ImageByteFormat.png);
+        await fi.image.toByteData(format: ui.ImageByteFormat.png);
     return result?.buffer.asUint8List();
   }
+
   static bool isEmptyOrNull(dynamic obj) {
     try {
       return (obj == null || obj.isEmpty);
@@ -47,9 +50,11 @@ class CommonUtils {
       return true;
     }
   }
+
   static bool isNull(dynamic input) {
     return ["", null, false, 0].contains(input);
   }
+
   static int countNumberRowOfGridview(List? data) {
     if (data?.isEmpty ?? true) {
       return 1;
@@ -59,6 +64,7 @@ class CommonUtils {
     }
     return (data.length + 1) ~/ 2;
   }
+
   static String textHelloInHome() {
     int hour = DateTime.now().hour;
     if (hour >= 4 && hour < 12) {
@@ -71,6 +77,25 @@ class CommonUtils {
       return HomeConstant.goodAfterNoon;
     }
     return HomeConstant.goodEvening;
+  }
+
+  static Future runUrl(String url, {bool runInApp = true}) async {
+    if (runInApp == true) {
+      Routes.instance.navigateTo(RouteName.webViewScreen,
+          arguments: ArgumentWebViewScreen(url));
+      return;
+    }
+
+    if (await canLaunch(url)) {
+      injector<GlobalAppCache>().openingOtherApp = true;
+      await launch(url);
+      LOG.e('runUrlrunUrl: $url');
+      await Future.delayed(const Duration(milliseconds: 1000));
+      injector<GlobalAppCache>().openingOtherApp = false;
+    } else {
+      LOG.e('Exception: runUrl: $url');
+      injector<SnackBarBloc>().add(ShowSnackbarEvent());
+    }
   }
 
   static String getTwoCharOfName(String? name) {
@@ -92,6 +117,7 @@ class CommonUtils {
       return name ?? '';
     }
   }
+
   static Widget mapLevelUserToWidget(int? sort, {bool? haveLogoGstore}) {
     if ((sort ?? 0) >= ServicePackageConstant.gShopTS ||
         haveLogoGstore == true) {
@@ -112,6 +138,7 @@ class CommonUtils {
     }
     return SizedBox();
   }
+
   static bool _getOld(String endpoint) {
     try {
       List<String> result = endpoint.split('/');
@@ -159,6 +186,7 @@ class CommonUtils {
     }
     return 'http://image.gstore.social/ResizeImg/ImageResize/$type/resize${typePng ? 'png' : ''}/normal/high/${_oldUrl ? Configurations.hostImageOld : Configurations.hostImage}$endPoint';
   }
+
   static dynamic convertDateTime(String? input,
       {bool outputDateTime = false, String? format}) {
     if (input?.isEmpty ?? true) {
@@ -172,6 +200,7 @@ class CommonUtils {
     }
     return dateFormatText.format(dateTime);
   }
+
   static void handleException(SnackBarBloc? snackBarBloc, e,
       {required String methodName,
       String? exceptionName,
@@ -288,6 +317,7 @@ class CommonUtils {
   static void dismissKeyBoard(BuildContext context) {
     FocusScope.of(context).requestFocus(FocusNode());
   }
+
   static void showCustomBottomSheet({
     required BuildContext context,
     required Widget child,

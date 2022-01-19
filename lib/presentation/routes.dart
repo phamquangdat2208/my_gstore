@@ -4,6 +4,7 @@ import 'package:my_gstore/common/bloc/loading_bloc/loading_bloc.dart';
 import 'package:my_gstore/common/bloc/loading_bloc/loading_event.dart';
 import 'package:my_gstore/common/navigation/route_names.dart';
 import 'package:my_gstore/common/ultils/log_util.dart';
+import 'package:my_gstore/presentation/journey/feature/auth/Post%20Product%20For%20Sale/post_product_sale.dart';
 import 'package:my_gstore/presentation/journey/feature/auth/all%20product/all_product_page.dart';
 import 'package:my_gstore/presentation/journey/feature/auth/detail%20page/detail_product.dart';
 import 'package:my_gstore/presentation/journey/feature/auth/login/login_phone_number_screen.dart';
@@ -15,6 +16,7 @@ import 'package:my_gstore/presentation/journey/feature/screens/splash_screen.dar
 import 'package:my_gstore/presentation/journey/feature/webView/webview_screen.dart';
 import 'injector_container.dart';
 import 'journey/feature/auth/individual/action/Update Profile/update_profile_screen.dart';
+import 'journey/feature/screens/gshop map screen/gshop_map_screen.dart';
 
 class Routes {
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
@@ -67,8 +69,11 @@ class Routes {
     switch (settings.name) {
       case RouteName.webViewScreen:
         return CupertinoPageRoute(
-          builder: (context) =>
-              WebViewScreen(url: settings.arguments as String),
+          builder: (context) => WebViewScreen(
+            argument: settings.arguments != null
+                ? settings.arguments as ArgumentWebViewScreen
+                : null,
+          ),
         );
       case RouteName.loginScreen:
         return CupertinoPageRoute(
@@ -92,8 +97,12 @@ class Routes {
                 ));
       case RouteName.searchProductScreen:
         return CupertinoPageRoute(builder: (context) => MapPageScreen());
-        case RouteName.updateProfileScreen:
+      case RouteName.mapGShopScreen:
+        return CupertinoPageRoute(builder: (context) => MapSearchGShopScreen());
+      case RouteName.updateProfileScreen:
         return CupertinoPageRoute(builder: (context) => UpdateProfileScreen());
+      case RouteName.postedForSale:
+        return CupertinoPageRoute(builder: (context) => PostedForSalePage());
       case RouteName.detailProductScreen:
         return CupertinoPageRoute(
             builder: (context) => ProductDetailPage(

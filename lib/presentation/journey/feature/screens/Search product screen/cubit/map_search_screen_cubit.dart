@@ -7,7 +7,6 @@ import 'package:my_gstore/common/constants/icon_constant.dart';
 import 'package:my_gstore/common/constants/search_product_constants.dart';
 import 'package:my_gstore/common/constants/service_package_constant.dart';
 import 'package:my_gstore/common/global_app_cache/global_app_catch.dart';
-import 'package:my_gstore/common/model/detail_product_model.dart';
 import 'package:my_gstore/common/model/marker_model.dart';
 import 'package:my_gstore/common/model/product_model.dart';
 import 'package:my_gstore/common/network/app_client.dart';
@@ -18,12 +17,12 @@ import 'dart:ui' as ui;
 import '../../../../../injector_container.dart';
 import 'package:http/http.dart' as http;
 
-class MapSearchScreenCubit extends Cubit<MapSearchScreenState> {
+class MapSearchProductScreenCubit extends Cubit<MapSearchScreenState> {
   final AppClient appClient;
   final SnackBarBloc snackBarBloc;
   final GlobalAppCache globalAppCache;
 
-  MapSearchScreenCubit(this.appClient, this.snackBarBloc, this.globalAppCache)
+  MapSearchProductScreenCubit(this.appClient, this.snackBarBloc, this.globalAppCache)
       : super(MapSearchScreenInitState());
   int _pageId=1;
   void getDataLoadInMap() async {
@@ -37,7 +36,7 @@ class MapSearchScreenCubit extends Cubit<MapSearchScreenState> {
     } catch (e) {
       emit(MapSearchScreenGotDataState([],));
       CommonUtils.handleException(snackBarBloc, e,
-          methodName: 'getInitData MapSearchScreenCubit');
+          methodName: 'getInitData MapSearchProductScreenCubit');
     }
   }
   void getMoreLoadData() async {

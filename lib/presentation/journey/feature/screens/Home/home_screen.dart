@@ -15,7 +15,6 @@ import 'package:my_gstore/presentation/journey/feature/screens/Home/component/ho
 import 'package:my_gstore/presentation/journey/feature/widgets/G%20Shop%20Items/listview_gshop.dart';
 import 'package:my_gstore/presentation/journey/feature/widgets/Product%20Item/listview_product.dart';
 import 'package:my_gstore/presentation/journey/feature/widgets/custom_cache_image_network.dart';
-import 'package:my_gstore/presentation/journey/feature/widgets/gridview_product.dart';
 import 'package:my_gstore/presentation/journey/feature/widgets/shimmer/common_shimmer.dart';
 import '../../../../routes.dart';
 import 'component/home_map.dart';
@@ -69,7 +68,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       return ListViewDisplayGShop(
                         label: HomeConstant.gShop,
                         information: state.getGShop,
-                        onMore: () {},
+                        onMore: () {
+                         Routes.instance.navigateTo(RouteName.mapGShopScreen);
+                        },
                       );
                     }
                     return const SizedBox();

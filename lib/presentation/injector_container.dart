@@ -17,6 +17,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'journey/feature/auth/login/cubit/login_with_phone_cubit.dart';
 import 'journey/feature/screens/Category/Cubit/category_cubit.dart';
 import 'journey/feature/screens/Search product screen/cubit/map_search_screen_cubit.dart';
+import 'journey/feature/screens/gshop map screen/cubit/map_search_gshop_cubit.dart';
 
 final injector = GetIt.instance;
 
@@ -67,7 +68,12 @@ void _initBloc() {
     injector(),
     injector(),
   ));
-  injector.registerFactory(() => MapSearchScreenCubit(
+  injector.registerFactory(() => MapSearchProductScreenCubit(
+    injector(),
+    injector(),
+    injector(),
+  ));
+  injector.registerFactory(() => MapGShopScreenCubit(
     injector(),
     injector(),
     injector(),

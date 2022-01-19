@@ -14,6 +14,7 @@ import 'package:my_gstore/presentation/journey/feature/auth/all%20product/Cubit/
 import 'package:my_gstore/presentation/journey/feature/auth/all%20product/Cubit/all_product_state.dart';
 import 'package:my_gstore/presentation/journey/feature/screens/Home/component/filter_screen_bottom_sheet.dart';
 import 'package:my_gstore/presentation/journey/feature/widgets/Product%20Item/gridview_product_item.dart';
+import 'package:my_gstore/presentation/journey/feature/widgets/gridview_product.dart';
 
 import '../../../../injector_container.dart';
 import '../../../../routes.dart';
@@ -36,11 +37,25 @@ class AllProductScreen extends StatefulWidget {
 
 class _AllProductScreenState extends State<AllProductScreen> {
   AllProductCubit _allProductCubit = injector<AllProductCubit>();
+   ScrollController controller = ScrollController();
+  bool _enableContinueLoadMore = true;
+  bool _runFirst = true;
 
   void initState() {
     _allProductCubit.getLoadData(widget.argument?.url ?? '');
+    controller.addListener(_scrollListener);
     super.initState();
   }
+
+  void _scrollListener() {
+    if (controller.position.extentAfter < 100) {
+      if (_enableContinueLoadMore) {
+        _enableContinueLoadMore = false;
+        _allProductCubit.getLoadMoreData(widget.argument?.url ?? '');
+      }
+    }
+  }
+
   void onFilterPress() {
     showModalBottomSheet(
         shape: RoundedRectangleBorder(
@@ -54,6 +69,7 @@ class _AllProductScreenState extends State<AllProductScreen> {
               heightFactor: 0.85, child: FilterScreenSelect());
         });
   }
+
   @override
   Widget build(BuildContext context) {
     final _itemWidth = (GScreenUtil.screenWidthDp - 48) / 2;
@@ -103,36 +119,43 @@ class _AllProductScreenState extends State<AllProductScreen> {
             ),
           ),
         ),
-        body: BlocBuilder<AllProductCubit, AllProductState>(
-          bloc: _allProductCubit,
-
-          builder: (_, state) {
-            if (state is AllProductGettingState) {
-              return CustomCircularIndicator();
-            }
-            if (state is AllProductGotState &&
-                (state.products?.isNotEmpty ?? false)) {
-              return GridView.builder(
-                itemCount: state.products?.length,
-                padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 12.0),
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 16.0,
-                  mainAxisSpacing: 12.0,
-                  childAspectRatio: _itemWidth / _itemHeight,
-                ),
-                itemBuilder: (context, index) {
-                  return CategoryDetailWidgetItemProduct(
-                    itemWidth: _itemWidth,
-                    productModel: state.products?[index],
-                  );
+        body: SingleChildScrollView(
+          controller: controller,
+          child: Column(
+            children: [
+              BlocBuilder<AllProductCubit, AllProductState>(
+                bloc: _allProductCubit,
+                buildWhen: (_, state) {
+                  return state is AllProductGettingState ||
+                      state is AllProductGotState;
                 },
-              );
-            }
-            return Center(child: Text('loi'));
-          },
+                builder: (_, state) {
+                  if (state is AllProductGettingState) {
+                    return CustomCircularIndicator();
+                  }
+                  if (state is AllProductGotState &&
+                      (state.products?.isNotEmpty ?? false)) {
+                    if (!state.isLastData) {
+                      _enableContinueLoadMore = true;
+                    }
+                    return GridViewDisplayProduct(
+                      label: '',
+                      courses: state.products,
+                    );
+                  }
+                  return Center(child: Text('loi'));
+                },
+              ),
+              BlocBuilder<AllProductCubit, AllProductState>(
+                  bloc: _allProductCubit,
+                  builder: (_, state) {
+                    if (state is AllProductLoadingMoreState) {
+                      return CircularProgressIndicator(color: AppColors.grey7,);
+                    }
+                    return SizedBox();
+                  })
+            ],
+          ),
         ));
   }
-
-
 }

@@ -218,6 +218,12 @@ class AppTextTheme {
     fontWeight: FontWeight.w400,
     fontFamily: 'Roboto',
   );
+  static const IndividualButtonWhite = TextStyle(
+    color: Colors.white,
+    fontSize: 16,
+    fontWeight: FontWeight.w400,
+    fontFamily: 'Roboto',
+  );
   static const smallgreyline = TextStyle(
     fontSize: 10.0,
     fontWeight: FontWeight.w400,

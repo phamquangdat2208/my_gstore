@@ -2,6 +2,8 @@ class IconConst {
   static const String _path = 'assets/icons/';
   static const String back = '${_path}back.png';
   static const String logo = '${_path}logo.png';
+  static const String charity_logo = '${_path}charity_logo.jpg';
+
   static const String notifications = '${_path}notifications.png';
   static const String category = '${_path}categories.png';
   static const String shopping_cart = '${_path}shopping-cart.png';
@@ -53,5 +55,7 @@ class IconConst {
   static const String markerGstore = '${_path}marker_small_gstore.png';
   static const String filter = '${_path}icon_filter.svg';
   static const String microphone = '${_path}mic.svg';
+  static const String addtoCart = '${_path}icon_add_to_cart.svg';
+
 
 }

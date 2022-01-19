@@ -39,6 +39,7 @@ dependencies:
   auto_size_text: ^3.0.0
   sliding_up_panel: ^2.0.0+1
   geolocator: ^8.0.1 # get current location
+  url_launcher: ^6.0.9 # open an other app
 dev_dependencies:
   flutter_test:
     sdk: flutter

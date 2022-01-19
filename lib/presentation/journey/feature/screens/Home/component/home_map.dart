@@ -25,7 +25,7 @@ class HomeMapComponent extends StatefulWidget {
 }
 
 class _HomeMapComponentState extends State<HomeMapComponent> {
-  final MapSearchScreenCubit _mapSearchScreenCubit = injector<MapSearchScreenCubit>();
+  final MapSearchProductScreenCubit _mapSearchScreenCubit = injector<MapSearchProductScreenCubit>();
   late CameraPosition _initialLocation;
   final _controller = Completer();
   late LatLng _currentLocation;

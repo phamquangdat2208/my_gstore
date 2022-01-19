@@ -30,8 +30,8 @@ class _MapSearchCityScreenState extends State<MapSearchCityScreen> {
   final _controller = Completer();
   late LatLng _currentLocation;
   int _helperCreateIdMarker = 1;
-  final MapSearchScreenCubit _mapSearchScreenCubit =
-      injector<MapSearchScreenCubit>();
+  final MapSearchProductScreenCubit _mapSearchScreenCubit =
+      injector<MapSearchProductScreenCubit>();
   Set<Marker> _markers = {};
 
   @override

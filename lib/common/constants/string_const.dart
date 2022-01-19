@@ -21,6 +21,7 @@ class StringConst {
   static const String gMart = 'G-Mart';
   static const String continueText = 'Tiếp tục';
   static const String sameProduct ='Sản phẩm tương tự';
+  static const String newProduct ='Sản phẩm mới';
   static const String descriptionProduct ='Mô tả sản phẩm';
   static const String pleaseWaitToApprove = 'Vui lòng chờ sản phẩm phê duyệt';
   static const String rewardWallet = 'Tài khoản thưởng';
@@ -158,6 +159,7 @@ class StringConst {
       'Video bạn quá dài, vui lòng cắt video xuống còn 60s';
   static const String image = 'Ảnh';
   static const String video = 'Video';
+  static const String suggestAddImage = 'Thêm tối đa 5 ảnh\nMẹo: Chạm và giữ một ảnh để chọn nhiều';
   static const String addImage = 'Thêm ảnh';
   static const String addImageOrVideo = 'Thêm ảnh/video';
   static const String updateProduct = 'Cập nhật sản phẩm';
