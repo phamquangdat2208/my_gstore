@@ -4,15 +4,22 @@ import 'package:flutter_svg/svg.dart';
 import 'package:my_gstore/common/bloc/event_bus/event_bus_bloc.dart';
 import 'package:my_gstore/common/bloc/event_bus/event_bus_event.dart';
 import 'package:my_gstore/common/constants/icon_constant.dart';
+import 'package:my_gstore/common/navigation/route_names.dart';
 import 'package:my_gstore/common/network/app_client.dart';
 import 'package:my_gstore/common/theme/theme_color.dart';
 import 'package:my_gstore/common/theme/theme_text.dart';
+import 'package:my_gstore/common/ultils/log_util.dart';
+import 'package:my_gstore/presentation/journey/feature/screens/Notification/cubit/notification_cubit.dart';
 import 'package:my_gstore/presentation/journey/feature/screens/Notification/model/notification_model.dart';
 
 import '../../../../../injector_container.dart';
+import '../../../../../routes.dart';
 
 class NotificationItem extends StatefulWidget {
   final NotificationModels notificationModel;
+
+  // final Function(int id) onTap;
+
   const NotificationItem({
     Key? key,
     required this.notificationModel,
@@ -23,25 +30,37 @@ class NotificationItem extends StatefulWidget {
 }
 
 class _NotificationItemState extends State<NotificationItem> {
-  void makeRead(int? notiId) async {
-    List<NotificationModels> result = [];
-    injector<AppClient>().get('Customer/MakeReadNofifyCation?id=${notiId}');
-    result.clear();
-    final data = await injector<AppClient>().get(
-        'Customer/GetNofifyCationHistory?customerid=${notiId}&page=4&pagesize=12&type=0&isRead=2');
-    data['Data'].forEach((e) {
-      result.add(NotificationModels.fromJson(e));
-    });
-    // injector<EventBusBloc>().add(EventBusRequestInitDataNotificationEvent(
-    //     count: result.where((element) => !element.isRead).toList().length));
-    setState(() {
-    });
-  }
+  NotificationCubit _notiCubit = injector<NotificationCubit>();
+
+  // void makeRead(int? notiId) async {
+  //   List<NotificationModels> result = [];
+  //   injector<AppClient>().get('Customer/MakeReadNofifyCation?id=${notiId}');
+  //   result.clear();
+  //   final data = await injector<AppClient>().get(
+  //       'Customer/GetNofifyCationHistory?customerid=${injector<AppClient>().globalAppCatch.profileModel?.iD}&page=1&pagesize=12&type=0&isRead=2');
+  //   data['Data'].forEach((e) {
+  //     result.add(NotificationModels.fromJson(e));
+  //   });
+  //   // injector<EventBusBloc>().add(EventBusRequestInitDataNotificationEvent(
+  //   //     count: result.where((element) => !element.isRead).toList().length));
+  //   setState(() {
+  //   });
+  //
+  // }
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-      makeRead(widget.notificationModel.iD);
+        if (widget.notificationModel.isRead == false) {
+          widget.notificationModel.isRead = true;
+          _notiCubit.makeRead(widget.notificationModel.iD);
+        }
+        Routes.instance.navigateTo(RouteName.notificationDetail,
+            arguments: widget.notificationModel);
+        setState(() {});
+        // makeRead(widget.notificationModel.iD);
+        // widget.onTap(widget.notificationModel?.iD??0);
       },
       child: Container(
         width: double.infinity,

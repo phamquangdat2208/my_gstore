@@ -27,44 +27,47 @@ class MapGShopScreenCubit extends Cubit<MapGShopScreenState> {
   MapGShopScreenCubit(this.appClient, this.snackBarBloc, this.globalAppCache)
       : super(MapGShopScreenInitState());
   int page = 1;
-  int type =3;
+  int type = 3;
+
   void getDataLoadInMap() async {
     try {
       emit(MapGShopScreenGettingDataState());
-      final getGShopInDistance =
-      await getGShop('Customer/GetShopGStore?maxKm=100&page=${page}&pagesize=100&type=$type');
+      final getGShopInDistance = await getGShop(
+          'Customer/GetShopGStore?maxKm=100&page=${page}&pagesize=100&type=$type');
       emit(MapGShopScreenGotDataState(
         getGShopInDistance,
       ));
     } catch (e) {
-      emit(MapGShopScreenGotDataState([],));
+      emit(MapGShopScreenGotDataState(
+        [],
+      ));
       CommonUtils.handleException(snackBarBloc, e,
           methodName: 'getInitData MapGShopScreenCubit');
     }
   }
-  // void getMoreLoadData() async {
-  //
-  //   try {
-  //     emit(MapGShopScreenLoadingMoreState(state.products));
-  //     ++_pageId;
-  //     final getLoadMoreData = await getProduct(
-  //         'productapp/GetBestBuyNew?page=$_pageId&pagesize=12');
-  //     if (getLoadMoreData.isNotEmpty){
-  //       state.products?.addAll(getLoadMoreData);
-  //     }
-  //     emit(MapGShopScreenGotDataState(
-  //       state.products,
-  //       isLastData: getLoadMoreData.length < Configurations.pageSize,
-  //     ));
-  //   } catch (e) {
-  //     emit(MapGShopScreenGetFailState());
-  //     CommonUtils.handleException(
-  //       snackBarBloc,
-  //       e,
-  //       methodName: 'getMoreSearchScreen',
-  //     );
-  //   }
-  // }
+
+  void getMoreLoadData() async {
+    try {
+      emit(MapGShopScreenLoadingMoreState(state.gshop));
+      final getLoadMoreData = await getGShop(
+          'Customer/GetShopGStore?maxKm=100&page=${++page}&pagesize=100&type=$type');
+      if (getLoadMoreData.isNotEmpty) {
+        state.gshop?.addAll(getLoadMoreData);
+      }
+      emit(MapGShopScreenGotDataState(
+        state.gshop,
+        isLastData: getLoadMoreData.length < Configurations.pageSize,
+      ));
+    } catch (e) {
+      emit(MapGShopScreenGetFailState());
+      CommonUtils.handleException(
+        snackBarBloc,
+        e,
+        methodName: 'getMoreGShopSearchScreen',
+      );
+    }
+  }
+
   Future<List<GShopModels>> getGShop(String endPoint) async {
     List<GShopModels> result = [];
     final data = await appClient.get(endPoint);
@@ -87,10 +90,10 @@ class MapGShopScreenCubit extends Cubit<MapGShopScreenState> {
     final result = <MarkerModel>[];
     final data = await appClient
         .get('productapp/GetCategoryForMapNew?name=${name ?? ''}&minKm=0&maxKm='
-        '${maxKm ?? Configurations.maxKmInt}&minPrice='
-        '${minPrice ?? 0}&maxPrice=${maxPrice ?? 0}'
-        '&categoryId=${categoryId ?? 0}&latitude=$lat&longitude'
-        '=$lng&isGstore=${isGstore ?? false}');
+            '${maxKm ?? Configurations.maxKmInt}&minPrice='
+            '${minPrice ?? 0}&maxPrice=${maxPrice ?? 0}'
+            '&categoryId=${categoryId ?? 0}&latitude=$lat&longitude'
+            '=$lng&isGstore=${isGstore ?? false}');
     if (data.containsKey('Data')) {
       data['Data']?.forEach((obj) {
         result.add(MarkerModel.fromJson(obj));
@@ -98,6 +101,7 @@ class MapGShopScreenCubit extends Cubit<MapGShopScreenState> {
     }
     return await createMarker(result);
   }
+
   Future<List<MarkerModel>> createMarker(List<MarkerModel> input,
       {bool forHome = false}) async {
     final listBitmapDescription = await _getByteIconFromUrl(input);
@@ -186,7 +190,7 @@ class MapGShopScreenCubit extends Cubit<MapGShopScreenState> {
       var frameInfo = await codec.getNextFrame();
       ui.Image targetUiImage = frameInfo.image;
       ByteData? targetByteData =
-      await targetUiImage.toByteData(format: ui.ImageByteFormat.png);
+          await targetUiImage.toByteData(format: ui.ImageByteFormat.png);
       bytes = targetByteData?.buffer.asUint8List();
       if (bytes == null) {
         return null;
@@ -205,6 +209,7 @@ class MapGShopScreenCubit extends Cubit<MapGShopScreenState> {
     }
   }
 }
+
 class ArgumentDataMarker {
   //ko có id nên dùng lat để identifier tránh việc chạy multi async bị lẫn marker
   double lat;
@@ -214,10 +219,12 @@ class ArgumentDataMarker {
 
   ArgumentDataMarker(this.lat, this.lng, this.bitmapDescriptor, this.uint8list);
 }
+
 abstract class MapGShopScreenState {
   final List<GShopModels>? gshop;
   final bool isLastData;
-  MapGShopScreenState({this.gshop,this.isLastData =false});
+
+  MapGShopScreenState({this.gshop, this.isLastData = false});
 }
 
 class MapGShopScreenInitState extends MapGShopScreenState {}
@@ -225,23 +232,26 @@ class MapGShopScreenInitState extends MapGShopScreenState {}
 class MapGShopScreenGettingDataState extends MapGShopScreenState {}
 
 class MapGShopScreenGotDataState extends MapGShopScreenState {
-  MapGShopScreenGotDataState(List<GShopModels>? gshop, {bool isLastData = false})
+  MapGShopScreenGotDataState(List<GShopModels>? gshop,
+      {bool isLastData = false})
       : super(
-    gshop: gshop,
-    isLastData: isLastData,
-  );
+          gshop: gshop,
+          isLastData: isLastData,
+        );
 }
+
 class MapGShopScreenGetFailState extends MapGShopScreenState {}
+
 class MapGShopScreenLoadingMoreState extends MapGShopScreenState {
   MapGShopScreenLoadingMoreState(List<GShopModels>? gshop)
       : super(
-    gshop: gshop,
-  );
+          gshop: gshop,
+        );
 }
 
 class MapGShopScreenLoadMoreFailState extends MapGShopScreenState {
   MapGShopScreenLoadMoreFailState(List<GShopModels>? gshop)
       : super(
-    gshop: gshop,
-  );
+          gshop: gshop,
+        );
 }

@@ -11,12 +11,15 @@ class ListViewDisplayGShopMapScreen extends StatelessWidget {
   final List<GShopModels>? information;
   final bool notExpand;
   final Function? onMore;
+
+  final ScrollController? scrollController;
   const ListViewDisplayGShopMapScreen({
     Key? key,
     this.numberItem = 2,
     this.information,
     this.notExpand = false,
     this.onMore,
+    this.scrollController,
   }) : super(key: key);
 
   @override
@@ -34,6 +37,7 @@ class ListViewDisplayGShopMapScreen extends StatelessWidget {
           height: _itemHeight+34,
           width: double.infinity,
           child: ListView.builder(
+            controller: scrollController,
             scrollDirection: Axis.horizontal,
             itemCount:
             notExpand ? min(information?.length ?? 0, 4) : information?.length,

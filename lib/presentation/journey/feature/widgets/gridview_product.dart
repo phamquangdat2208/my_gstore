@@ -13,32 +13,32 @@ class GridViewDisplayProduct extends StatelessWidget {
   final int numberItem;
   final String label;
   final bool haveIcon;
-  final List<ProductModel>? courses;
+  final List<ProductModel>? products;
   final bool notExpand;
 
   const GridViewDisplayProduct({
     Key? key,
     this.numberItem =2,
     required this.label,
-    this.courses,
+    this.products,
     this.notExpand = false,
     this.haveIcon = true,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    if (courses?.isEmpty ?? true) {
+    if (products?.isEmpty ?? true) {
       return SizedBox();
     }
     final _itemWidth = (GScreenUtil.screenWidthDp - 48) / 2;
     final _itemHeight = _itemWidth + 70;
-    final numberRow = CommonUtils.countNumberRowOfGridview(courses);
+    final numberRow = CommonUtils.countNumberRowOfGridview(products);
     final heightList =
         (notExpand ? min(numberRow, 2) : numberRow) * (_itemHeight + 25);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(height: 16),
+
         Padding(
           padding: EdgeInsets.only(left: 16),
           child: Text(
@@ -53,7 +53,7 @@ class GridViewDisplayProduct extends StatelessWidget {
           height: heightList,
           child: GridView.builder(
             itemCount:
-                notExpand ? min(courses?.length ?? 0, 4) : courses?.length,
+                notExpand ? min(products?.length ?? 0, 4) : products?.length,
             physics: const NeverScrollableScrollPhysics(),
             padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 12.0),
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -65,7 +65,7 @@ class GridViewDisplayProduct extends StatelessWidget {
             itemBuilder: (context, index) {
               return CategoryDetailWidgetItemProduct(
                 itemWidth: _itemWidth,
-                productModel: courses?[index],
+                productModel: products?[index],
               );
             },
           ),

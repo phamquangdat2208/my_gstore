@@ -6,7 +6,6 @@ import 'package:my_gstore/common/global_app_cache/global_app_catch.dart';
 import 'package:my_gstore/common/local/local_app.dart';
 import 'package:my_gstore/common/network/app_client.dart';
 import 'package:my_gstore/presentation/journey/feature/auth/all%20product/Cubit/all_product_cubit.dart';
-import 'package:my_gstore/presentation/journey/feature/auth/detail%20page/cubit/detail_cubit.dart';
 import 'package:my_gstore/presentation/journey/feature/auth/individual/cubit/individual_cubit.dart';
 import 'package:my_gstore/presentation/journey/feature/auth/otp/otp_cubit.dart';
 import 'package:my_gstore/presentation/journey/feature/auth/suggest%20today/cubit/suggest_today_cubit.dart';
@@ -14,6 +13,8 @@ import 'package:my_gstore/presentation/journey/feature/screens/Home/cubit/home_c
 import 'package:my_gstore/presentation/journey/feature/screens/Notification/cubit/notification_cubit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'journey/feature/auth/detail product page/cubit/detail_cubit.dart';
+import 'journey/feature/auth/g shop page/cubit/gshop_infor_cubit.dart';
 import 'journey/feature/auth/login/cubit/login_with_phone_cubit.dart';
 import 'journey/feature/screens/Category/Cubit/category_cubit.dart';
 import 'journey/feature/screens/Search product screen/cubit/map_search_screen_cubit.dart';
@@ -84,6 +85,11 @@ void _initBloc() {
     injector(),
   ));
   injector.registerFactory(() => AllProductCubit(
+    injector(),
+    injector(),
+    injector(),
+  ));
+  injector.registerFactory(() => GShopPageCubit(
     injector(),
     injector(),
     injector(),

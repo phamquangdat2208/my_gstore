@@ -25,7 +25,7 @@ class HomeCenter extends StatelessWidget {
           ),
 
           Container(
-            height: 65,
+            height: 68,
             color: Colors.white,
             margin: const EdgeInsets.only(left: 10, right: 10),
             width: MediaQuery.of(context).size.width,
@@ -78,7 +78,7 @@ class HomeCenter extends StatelessWidget {
                   child: Container(),
                 ),
                 Container(
-                  height: 65,
+                  height: 68,
                   padding: const EdgeInsets.all(10),
                   alignment: Alignment.center,
                   decoration: BoxDecoration(

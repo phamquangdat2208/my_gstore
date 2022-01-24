@@ -44,21 +44,23 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
     TextEditingController _addressCtl = TextEditingController();
     _addressCtl.text = _globalAppCatch.profileModel?.address ?? '';
     TextEditingController _userMSTCtl = TextEditingController();
+    _userMSTCtl.text= _globalAppCatch.profileModel?.userMST??'';
     TextEditingController _desCtl = TextEditingController();
     TextEditingController _phoneCtl = TextEditingController();
     _phoneCtl.text = _globalAppCatch.profileModel?.mobile ?? '';
     TextEditingController _emailCtl = TextEditingController();
     _emailCtl.text = _globalAppCatch.profileModel?.email ?? '';
     TextEditingController _birthDayCtl = TextEditingController();
+    _birthDayCtl.text=_globalAppCatch.profileModel?.birthDayText??'';
     // Số CMT
     TextEditingController _codeUserCtl = TextEditingController();
     _codeUserCtl.text = _globalAppCatch.profileModel?.cardCode ?? '';
     // Ngày cấp CMT
     TextEditingController _codeDateCtl = TextEditingController();
-
+    _codeDateCtl.text = _globalAppCatch.profileModel?.cardCodeDateText ?? '';
     // Nơi cấp CMT
     TextEditingController _codeLocationCtl = TextEditingController();
-
+    _codeLocationCtl.text = _globalAppCatch.profileModel?.cardCodeLocation ?? '';
     /// Company
     TextEditingController _companyName = TextEditingController();
 
@@ -124,6 +126,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
             ),
           ),
           body: Form(
+            key: _formKey,
             child: SingleChildScrollView(
               child: Column(
                 children: [
@@ -314,7 +317,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                         check = !check;
                       },
                       child: Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 8.0, 0, 8.0),
+                        padding: const EdgeInsets.fromLTRB(4, 8.0, 4, 8.0),
                         child: CustomCheckBox(
                           value: check,
                           onChange: (status) {

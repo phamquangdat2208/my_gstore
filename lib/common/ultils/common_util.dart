@@ -64,7 +64,19 @@ class CommonUtils {
     }
     return (data.length + 1) ~/ 2;
   }
-
+  static Future openMap(double latitude, double longitude) async {
+    String googleUrl =
+        'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude';
+    if (await canLaunch(googleUrl)) {
+      injector<GlobalAppCache>().openingOtherApp = true;
+      await launch(googleUrl);
+      await Future.delayed(Duration(milliseconds: 200));
+      injector<GlobalAppCache>().openingOtherApp = false;
+    } else {
+      injector<SnackBarBloc>().add(ShowSnackbarEvent());
+      LOG.e('Exception: openMap: cannot open Map');
+    }
+  }
   static String textHelloInHome() {
     int hour = DateTime.now().hour;
     if (hour >= 4 && hour < 12) {

@@ -24,10 +24,11 @@ class _MapSearchGShopScreenState extends State<MapSearchGShopScreen> {
   final _controller = Completer();
   late LatLng _currentLocation;
   int _helperCreateIdMarker = 1;
+  ScrollController scrollController = ScrollController();
   final MapGShopScreenCubit _mapGShopScreenCubit =
       injector<MapGShopScreenCubit>();
   Set<Marker> _markers = {};
-
+  bool _enableContinueLoadMore = true;
   @override
   void initState() {
     _mapGShopScreenCubit.getDataLoadInMap();
@@ -40,8 +41,17 @@ class _MapSearchGShopScreenState extends State<MapSearchGShopScreen> {
     );
     _initData();
     super.initState();
+    scrollController.addListener(_scrollListener);
   }
+  void _scrollListener() {
+      if (scrollController.position.pixels == scrollController.position.maxScrollExtent) {
+        if (_enableContinueLoadMore) {
+          _enableContinueLoadMore = false;
+          _mapGShopScreenCubit.getMoreLoadData();
+        }
+      }
 
+  }
   void _initData() async {
     final markerData = await _mapGShopScreenCubit.getDataMarkerInMap(
       lat: Configurations.latGstore,
@@ -158,22 +168,35 @@ class _MapSearchGShopScreenState extends State<MapSearchGShopScreen> {
             right: 0,
             child: BlocBuilder<MapGShopScreenCubit, MapGShopScreenState>(
               bloc: _mapGShopScreenCubit,
+              buildWhen: (_,state){
+                return state is MapGShopScreenGettingDataState||
+                state is MapGShopScreenGotDataState;
+              },
               builder: (_, state) {
                 if (state is MapGShopScreenGettingDataState) {
                   return SizedBox();
                 }
                 if (state is MapGShopScreenGotDataState &&
                     (state.gshop?.isNotEmpty ?? false)) {
+                  if (!state.isLastData) {
+                    _enableContinueLoadMore = true;
+                  }
                   return ListViewDisplayGShopMapScreen(
+                    scrollController: scrollController,
                     information: state.gshop,
                   );
+                }
+                if (state is MapGShopScreenLoadingMoreState) {
+                  return CircularProgressIndicator(color: AppColors.grey5,);
                 }
                 return Container(
                   child: Text('loi'),
                   color: AppColors.red,
                 );
               },
-            ))
+            )
+        ),
+
       ],
     );
   }

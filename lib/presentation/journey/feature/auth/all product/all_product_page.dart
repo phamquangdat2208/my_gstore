@@ -39,7 +39,6 @@ class _AllProductScreenState extends State<AllProductScreen> {
   AllProductCubit _allProductCubit = injector<AllProductCubit>();
    ScrollController controller = ScrollController();
   bool _enableContinueLoadMore = true;
-  bool _runFirst = true;
 
   void initState() {
     _allProductCubit.getLoadData(widget.argument?.url ?? '');
@@ -73,7 +72,7 @@ class _AllProductScreenState extends State<AllProductScreen> {
   @override
   Widget build(BuildContext context) {
     final _itemWidth = (GScreenUtil.screenWidthDp - 48) / 2;
-    final _itemHeight = _itemWidth + 80;
+    // final _itemHeight = _itemWidth + 80;
     return Scaffold(
         backgroundColor: AppColors.white,
         appBar: AppBar(
@@ -140,7 +139,7 @@ class _AllProductScreenState extends State<AllProductScreen> {
                     }
                     return GridViewDisplayProduct(
                       label: '',
-                      courses: state.products,
+                      products: state.products,
                     );
                   }
                   return Center(child: Text('loi'));

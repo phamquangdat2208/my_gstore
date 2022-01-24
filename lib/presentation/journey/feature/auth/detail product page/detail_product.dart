@@ -2,32 +2,34 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:my_gstore/common/constants/home_constant.dart';
 import 'package:my_gstore/common/constants/icon_constant.dart';
 import 'package:my_gstore/common/constants/image_constant.dart';
 import 'package:my_gstore/common/constants/string_const.dart';
 import 'package:my_gstore/common/customs/custom_gesturedetactor.dart';
+import 'package:my_gstore/common/model/product_model.dart';
 import 'package:my_gstore/common/navigation/route_names.dart';
 import 'package:my_gstore/common/network/app_client.dart';
 import 'package:my_gstore/common/theme/theme_color.dart';
 import 'package:my_gstore/common/theme/theme_text.dart';
 import 'package:my_gstore/common/ultils/format_utils.dart';
 import 'package:my_gstore/presentation/journey/feature/auth/all%20product/all_product_page.dart';
-import 'package:my_gstore/presentation/journey/feature/auth/detail%20page/widget/demo_pageview_title.dart';
-import 'package:my_gstore/presentation/journey/feature/auth/detail%20page/widget/page_container_demo.dart';
+import 'package:my_gstore/presentation/journey/feature/auth/detail%20product%20page/widget/demo_pageview_title.dart';
+import 'package:my_gstore/presentation/journey/feature/auth/detail%20product%20page/widget/page_container_demo.dart';
+import 'package:my_gstore/presentation/journey/feature/auth/detail%20product%20page/widget/tab_direction.dart';
 import 'package:my_gstore/presentation/journey/feature/widgets/Product%20Item/listview_product.dart';
 import 'package:my_gstore/presentation/journey/feature/widgets/custom_cache_image_network.dart';
 import 'package:my_gstore/presentation/journey/feature/widgets/grey_sizebox.dart';
 import 'package:my_gstore/presentation/journey/feature/widgets/shimmer/listview_display_product.dart';
-
 import '../../../../injector_container.dart';
 import '../../../../routes.dart';
 import 'cubit/detail_cubit.dart';
 
 class ProductDetailPage extends StatefulWidget {
-  int? id;
+  ProductModel? products;
 
-  ProductDetailPage({Key? key, required this.id}) : super(key: key);
+  ProductDetailPage({Key? key, required this.products}) : super(key: key);
 
   @override
   State<ProductDetailPage> createState() => _ProductDetailPageState();
@@ -42,7 +44,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
   @override
   void initState() {
     // _initData();
-    _detailCubit.getDataProduct(widget.id.toString());
+    _detailCubit.getDataProduct(widget.products?.iD.toString() ?? '');
     super.initState();
   }
 
@@ -223,7 +225,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                             ],
                           ),
                           SizedBox(height: 8),
-                          Text(state.getDetail.name ?? '',
+                          Text(state.getDetail.categoryName ?? '',
                               style: AppTextTheme.normalBlue),
                           SizedBox(height: 8),
                           Text(
@@ -231,11 +233,20 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                             style: AppTextTheme.mediumBlack,
                             maxLines: 2,
                           ),
-                          SizedBox(height: 8),
-                          Text(
-                              '${state.getDetail.customerItem?.fullname ?? ''}',
-                              style: AppTextTheme.normalBlue),
-                          SizedBox(height: 8),
+                          CustomGestureDetector(
+                            onTap: () {
+                              Routes.instance.navigateTo(
+                                  RouteName.gShopInformationScreen,
+                                  arguments: state.getInfoShop);
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                  top: 8.0, bottom: 8.0, right: 8.0),
+                              child: Text(
+                                  '${state.getDetail.customerItem?.fullname ?? ''}',
+                                  style: AppTextTheme.normalBlue),
+                            ),
+                          ),
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -452,7 +463,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                                                     arguments:
                                                         ArgumentAllProductScreen(
                                                       url:
-                                                          'productapp/GetProductSampleShop?id=${widget.id}&page=1&pagesize=12&latitude=${injector<AppClient>().header?.lat}&longitude=${injector<AppClient>().header?.lng}',
+                                                          'productapp/GetProductSampleShop?id=${widget.products?.iD ?? 0}&page=1&pagesize=12&latitude=${injector<AppClient>().header?.lat}&longitude=${injector<AppClient>().header?.lng}',
                                                       title: HomeConstant
                                                           .SampleShop,
                                                     ));
@@ -481,6 +492,18 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                                                 label: StringConst.sameProduct,
                                                 productModel:
                                                     state.getSampleProduct,
+                                                onMore: () {
+                                                  Routes.instance.navigateTo(
+                                                      RouteName
+                                                          .allProductScreen,
+                                                      arguments:
+                                                          ArgumentAllProductScreen(
+                                                        url:
+                                                            'productapp/GetProductForMapElasticNew?name=&minKm=&maxKm=0&cateId=${state.getDetail.cateId}&minPrice=0&maxPrice=0&latitude=${injector<AppClient>().header?.lat}&longitude=${injector<AppClient>().header?.lng}&page=1&pagesize=12&isGstore=ALL',
+                                                        title: StringConst
+                                                            .sameProduct,
+                                                      ));
+                                                },
                                               ),
                                             );
                                           }
@@ -498,15 +521,18 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                                         return Text('false');
                                       }),
                                 ),
-                                SizedBox(height:16),
+                                SizedBox(height: 16),
                               ],
                             ),
                           ))),
                       PageContainerDemo(
                         index: 1,
                         indexSelected: _index,
-                        child: Container(
-                          child: Image.asset(ImageConstant.mockTopBackGround),
+                        child: DetailProductDirection(
+                          // latLng: LatLng(state.getDetail?.latitude??0,
+                          //     state.getDetail?.longitude??0),
+                          latLng: LatLng(21.064414507585408, 105.8317527955209),
+                          indexSelected: _index,
                         ),
                       ),
                       PageContainerDemo(

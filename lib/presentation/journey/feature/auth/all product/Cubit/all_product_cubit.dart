@@ -11,7 +11,8 @@ import 'package:my_gstore/common/ultils/common_util.dart';
 import '../../../../../injector_container.dart';
 import 'all_product_state.dart';
 
-class AllProductCubit extends Cubit<AllProductState> {
+class
+AllProductCubit extends Cubit<AllProductState> {
   final AppClient appClient;
   final SnackBarBloc snackBarBloc;
   final GlobalAppCache globalAppCache;
@@ -39,7 +40,7 @@ class AllProductCubit extends Cubit<AllProductState> {
     try {
       emit(AllProductLoadingMoreState(state.products));
       final getLoadData =
-          await getProduct('${url}page=${++_pageId}&pagesize=$_pageSize');
+          await getProduct('${url}page=${++_pageId}&pagesize=12');
       if (getLoadData.isNotEmpty) {
         state.products?.addAll(getLoadData);
       }

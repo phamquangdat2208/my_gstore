@@ -1,4 +1,3 @@
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_gstore/common/bloc/snackbar_bloc/snackbar_bloc.dart';
 import 'package:my_gstore/common/global_app_cache/global_app_catch.dart';
@@ -14,9 +13,11 @@ class SuggestTodayCubit extends Cubit<SuggestTodayState> {
   final AppClient appClient;
   final SnackBarBloc snackBarBloc;
   final GlobalAppCache globalAppCache;
+
   SuggestTodayCubit(this.appClient, this.snackBarBloc, this.globalAppCache)
       : super(SuggestTodayInitState());
   int _pageId = 1;
+
   void getDataSuggestToday() async {
     try {
       emit(SuggestTodayGettingDataState());
@@ -31,13 +32,14 @@ class SuggestTodayCubit extends Cubit<SuggestTodayState> {
           methodName: 'getInitData SuggestTodayCubit');
     }
   }
+
   void getMoreSuggestToday() async {
     try {
       emit(SuggestTodayLoadingMoreState(state.products));
       ++_pageId;
       final getLoadMoreData = await getProduct(
           'ProductApp/GetBestProductForYouNew?km=25&latitude=21.023714&longitude=105.754272&page=${_pageId}&pagesize=12');
-      if (getLoadMoreData.isNotEmpty){
+      if (getLoadMoreData.isNotEmpty) {
         state.products?.addAll(getLoadMoreData);
       }
       emit(SuggestTodayGotState(
@@ -53,6 +55,7 @@ class SuggestTodayCubit extends Cubit<SuggestTodayState> {
       );
     }
   }
+
   Future<List<ProductModel>> getProduct(String endPoint) async {
     List<ProductModel> result = [];
     final data = await appClient.get(endPoint);
@@ -62,5 +65,3 @@ class SuggestTodayCubit extends Cubit<SuggestTodayState> {
     return result;
   }
 }
-
-

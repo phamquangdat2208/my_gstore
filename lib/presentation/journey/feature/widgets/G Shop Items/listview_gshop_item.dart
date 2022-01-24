@@ -3,10 +3,13 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:my_gstore/common/constants/icon_constant.dart';
 import 'package:my_gstore/common/model/gshop_model.dart';
+import 'package:my_gstore/common/navigation/route_names.dart';
 import 'package:my_gstore/common/theme/theme_color.dart';
 import 'package:my_gstore/common/theme/theme_text.dart';
 import 'package:my_gstore/common/ultils/format_utils.dart';
 import 'package:my_gstore/presentation/journey/feature/widgets/custom_cache_image_network.dart';
+
+import '../../../../routes.dart';
 
 class CategoryDetailWidgetItemGShop extends StatelessWidget {
   final double itemWidth;
@@ -22,8 +25,8 @@ class CategoryDetailWidgetItemGShop extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        // Routes.instance
-        //     .navigateTo(RouteName.CourseDetailScreen, arguments: courseModel);
+        Routes.instance
+            .navigateTo(RouteName.gShopInformationScreen, arguments: information);
       },
       child: Container(
         width: itemWidth,
@@ -36,19 +39,57 @@ class CategoryDetailWidgetItemGShop extends StatelessWidget {
             Container(
               padding:EdgeInsets.all(2),
               decoration: const BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                borderRadius: BorderRadius.all(Radius.circular(12.0)),
                 gradient: LinearGradient(
                   colors: AppColors.colorsGradient,
                   begin: Alignment.centerLeft,
                   end: Alignment.centerRight,
                 ),
               ),
-              child: CustomCacheImageNetwork(
-                url: information?.avartaUrl??'',
-                width: double.infinity,
-                height: 146,
-                fit: BoxFit.cover,
-                border: 8,
+              child: Stack(
+                children: [
+                  CustomCacheImageNetwork(
+                    url: information?.avartaUrl??'',
+                    width: double.infinity,
+                    height: 146,
+                    fit: BoxFit.cover,
+                    border: 12,
+                  ),
+                  information?.type == 3 ? Positioned(
+                    right: 0,
+                    top: 0,
+                    child: Stack(
+                      children: [
+                        ClipRRect(
+                            borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(12),
+                                bottomLeft: Radius.circular(12)),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color:
+                                AppColors.logoSkyBlue.withOpacity(0.9),
+                              ),
+                              width: 30,
+                              height: 25,
+                            )),
+                        Positioned.fill(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Image.asset(
+                                IconConst.homecenter_gshop,
+                                width: 18,
+                                height: 18,
+                                color: AppColors.white,
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                  ):SizedBox()
+                ],
               ),),
             SizedBox(height: 4.0),
             Padding(
@@ -59,7 +100,7 @@ class CategoryDetailWidgetItemGShop extends StatelessWidget {
                   SizedBox(
                     height:20,
                     child: Text(
-                      information?.fullname ?? '',
+                      information?.fullname ?? 'User',
                       overflow: TextOverflow.ellipsis,
                       style: AppTextTheme.mediumBlack.copyWith(
                         fontWeight: FontWeight.w400,

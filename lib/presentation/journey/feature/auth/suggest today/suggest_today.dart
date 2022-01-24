@@ -65,7 +65,7 @@ void _scrollListener() {
              }
              return  GridViewDisplayProduct(
                label: HomeConstant.suggestToday,
-               courses:state.products,
+               products:state.products,
              );
            }
            return Text('Loi');

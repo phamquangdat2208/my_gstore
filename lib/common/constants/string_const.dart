@@ -21,6 +21,7 @@ class StringConst {
   static const String gMart = 'G-Mart';
   static const String continueText = 'Tiếp tục';
   static const String sameProduct ='Sản phẩm tương tự';
+  static const String sameGShop ='Cửa hàng tương tự';
   static const String newProduct ='Sản phẩm mới';
   static const String descriptionProduct ='Mô tả sản phẩm';
   static const String pleaseWaitToApprove = 'Vui lòng chờ sản phẩm phê duyệt';
@@ -39,10 +40,13 @@ class StringConst {
   static const String status = 'Tình trạng';
   static const String more = 'Xem thêm';
   static const String cancelOrderSuccess = 'Hủy đơn hàng thành công!';
+  static const String NoFavoriteItem = 'Bạn chưa có sản phẩm yêu thích nào được lưu';
+
   static const String topsToFixQuantityProduct =
       'Mẹo: Nếu chỉ cập nhật số lượng, bản hãy cập nhật ở màn Quản Lý Sản Phẩm để không bị phê duyệt lại.';
   static const String topSearch = 'Tìm kiếm hàng đầu';
   static const String infoOrderBaoKim = 'Thông tin vận đơn';
+  static const String discover = 'Khám phá ngay';
   static const String sender = 'NGƯỜI GỬI';
   static const String billLadingInfo = 'Thông tin vận đơn';
   static const String orderConfirmation = 'Xác nhận đơn hàng';

@@ -3,13 +3,14 @@ class IconConst {
   static const String back = '${_path}back.png';
   static const String logo = '${_path}logo.png';
   static const String charity_logo = '${_path}charity_logo.jpg';
-
+  static const String targetLocation = '${_path}target_location.png';
   static const String notifications = '${_path}notifications.png';
   static const String category = '${_path}categories.png';
   static const String shopping_cart = '${_path}shopping-cart.png';
   static const String news = '${_path}news.png';
   static const String user = '${_path}user.png';
   static const String home = '${_path}home.png';
+  static const String discountPercent = '${_path}discount.png';
   static const String phone = '${_path}phone.png';
   static const String notification = '${_path}notification.svg';
   static const String search = '${_path}search.png';
@@ -56,6 +57,6 @@ class IconConst {
   static const String filter = '${_path}icon_filter.svg';
   static const String microphone = '${_path}mic.svg';
   static const String addtoCart = '${_path}icon_add_to_cart.svg';
-
+  static const String locationCart = '${_path}icon_location_cart.svg';
 
 }
