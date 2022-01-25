@@ -133,7 +133,6 @@ class ListViewDetailItem extends StatelessWidget {
                           const SizedBox(
                             width: 16,
                           ),
-
                           Image.asset(
                             IconConst.icondistance,
                             width: 18,
@@ -142,7 +141,7 @@ class ListViewDetailItem extends StatelessWidget {
                             width: 4,
                           ),
                           Text("${(products?.kmText)}km",
-                              style:AppTextTheme.smallGreen),
+                              style: AppTextTheme.smallGreen),
                         ],
                       ),
                     ),
@@ -164,7 +163,9 @@ class ListViewDetailItem extends StatelessWidget {
                           Text(
                               FormatUtils.formatCurrencyDoubleToString(
                                   products?.priceOld ?? 0),
-                              style: AppTextTheme.smallGrey.copyWith(decoration: TextDecoration.lineThrough,fontSize: 10)),
+                              style: AppTextTheme.smallGrey.copyWith(
+                                  decoration: TextDecoration.lineThrough,
+                                  fontSize: 10)),
                           SizedBox(width: 2),
                           Text(
                               FormatUtils.formatCurrencyDoubleToString(

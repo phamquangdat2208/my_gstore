@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:my_gstore/common/constants/icon_constant.dart';
 import 'package:my_gstore/common/model/product_model.dart';
 import 'package:my_gstore/common/navigation/route_names.dart';
@@ -31,7 +29,7 @@ class CategoryDetailWidgetItemProduct extends StatelessWidget {
       },
       child: Container(
         width: itemWidth,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: AppColors.white,
         ),
         child: Column(
@@ -40,9 +38,9 @@ class CategoryDetailWidgetItemProduct extends StatelessWidget {
             Stack(
               children: [
                 Container(
-                  padding: EdgeInsets.all(2),
+                  padding: const EdgeInsets.all(2),
                   decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                    borderRadius: BorderRadius.all(Radius.circular(16.0)),
                     gradient: LinearGradient(
                       colors: AppColors.colorsGradient,
                       begin: Alignment.centerLeft,
@@ -54,101 +52,73 @@ class CategoryDetailWidgetItemProduct extends StatelessWidget {
                     width: double.infinity,
                     height: 146,
                     fit: BoxFit.cover,
-                    border: 8,
+                    border: 16,
                   ),
                 ),
-                productModel?.percentDiscount != 0
-                    ? Positioned(
-                        right: 0,
-                        top: 0,
-                        child: Stack(
-                          children: [
-                            ClipRRect(
-                                borderRadius: BorderRadius.only(
-                                    topRight: Radius.circular(8),
-                                    bottomLeft: Radius.circular(12)),
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    color:
-                                        AppColors.logoSkyBlue.withOpacity(0.9),
-                                  ),
-                                  width: 80,
-                                  height: 25,
-                                )),
-                            Positioned.fill(
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Image.asset(
-                                    IconConst.logo,
-                                    width: 18,
-                                    height: 18,
-                                    color: AppColors.white,
-                                  ),
-                                  SizedBox(
-                                    width: 4,
-                                  ),
-                                  Text(
-                                    'Giảm',
-                                    style:
-                                        AppTextTheme.normalRobotoWhite.copyWith(
-                                      fontSize: 10,
+                Positioned(
+                  right: 0,
+                  top: 0,
+                  child: Stack(
+                    children: [
+                      ClipRRect(
+                          borderRadius: const BorderRadius.only(
+                              topRight: Radius.circular(16),
+                              bottomLeft: Radius.circular(16)),
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 6, vertical: 4),
+                            decoration: BoxDecoration(
+                              color: AppColors.logoSkyBlue.withOpacity(0.9),
+                            ),
+                            child: Row(
+                              children: [
+                                Image.asset(
+                                  IconConst.logo,
+                                  width: 18,
+                                  height: 18,
+                                  color: AppColors.white,
+                                ),
+                                productModel?.percentDiscount != 0
+                                    ? Row(
+                                  mainAxisAlignment:
+                                  MainAxisAlignment.center,
+                                  crossAxisAlignment:
+                                  CrossAxisAlignment.center,
+                                  children: [
+                                    const SizedBox(
+                                      width: 4,
                                     ),
-                                    textScaleFactor: 1,
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        bottom: 2, left: 2),
-                                    child: Text(
-                                      '${productModel?.percentDiscount}%',
-                                      style: AppTextTheme.normalRobotoWhite,
+                                    Text(
+                                      'Giảm',
+                                      style: AppTextTheme
+                                          .normalRobotoWhite
+                                          .copyWith(
+                                        fontSize: 10,
+                                      ),
                                       textScaleFactor: 1,
                                     ),
-                                  ),
-                                ],
-                              ),
-                            )
-                          ],
-                        ),
-                      )
-                    : Positioned(
-                        right: 0,
-                        top: 0,
-                        child: Stack(
-                          children: [
-                            ClipRRect(
-                                borderRadius: BorderRadius.only(
-                                    topRight: Radius.circular(8),
-                                    bottomLeft: Radius.circular(12)),
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    color:
-                                        AppColors.logoSkyBlue.withOpacity(0.9),
-                                  ),
-                                  width: 30,
-                                  height: 25,
-                                )),
-                            Positioned.fill(
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Image.asset(
-                                    IconConst.logo,
-                                    width: 18,
-                                    height: 18,
-                                    color: AppColors.white,
-                                  ),
-                                ],
-                              ),
-                            )
-                          ],
-                        ),
-                      )
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          bottom: 2, left: 2),
+                                      child: Text(
+                                        '${productModel?.percentDiscount}%',
+                                        style: AppTextTheme
+                                            .normalRobotoWhite,
+                                        textScaleFactor: 1,
+                                      ),
+                                    ),
+                                  ],
+                                )
+                                    : const SizedBox()
+                              ],
+                            ),
+                          )),
+                    ],
+                  ),
+                )
               ],
             ),
-            SizedBox(height: 4.0),
+            const SizedBox(height: 4.0),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 4),
               child: Column(
@@ -187,7 +157,7 @@ class CategoryDetailWidgetItemProduct extends StatelessWidget {
                         '(${productModel?.ratings ?? 0})',
                         style: AppTextTheme.smallYellow,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 24,
                       ),
                       Image.asset(
@@ -200,7 +170,7 @@ class CategoryDetailWidgetItemProduct extends StatelessWidget {
                       ),
                     ],
                   ),
-                  Divider(
+                  const Divider(
                     height: 8,
                     color: AppColors.grey6,
                   ),
@@ -209,14 +179,16 @@ class CategoryDetailWidgetItemProduct extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Text(
-                          '${FormatUtils.formatCurrencyDoubleToString(productModel?.priceOld ?? 0)}',
-                          style: AppTextTheme.smallgreyline.copyWith(
+                          FormatUtils.formatCurrencyDoubleToString(
+                              productModel?.priceOld ?? 0),
+                          style: AppTextTheme.smallGrey.copyWith(
                               decoration: TextDecoration.lineThrough)),
-                      SizedBox(
+                      const SizedBox(
                         width: 4,
                       ),
                       Text(
-                        '${FormatUtils.formatCurrencyDoubleToString(productModel?.priceNew ?? 0000)}',
+                        FormatUtils.formatCurrencyDoubleToString(
+                            productModel?.priceNew ?? 0000),
                         style: AppTextTheme.normalRobotoRed,
                       ),
                     ],

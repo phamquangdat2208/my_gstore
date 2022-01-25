@@ -9,14 +9,19 @@ class IconConst {
   static const String shopping_cart = '${_path}shopping-cart.png';
   static const String news = '${_path}news.png';
   static const String user = '${_path}user.png';
+  static const String gDetailBackground = '${_path}g_detail_background_sliver_appbar.png';
   static const String home = '${_path}home.png';
   static const String discountPercent = '${_path}discount.png';
   static const String phone = '${_path}phone.png';
+  static const String favorite = '${_path}icon_favorite.svg';
+  static const String productCart = '${_path}icon_shopping_cart.svg';
+  static const String more = '${_path}icon_more.svg';
   static const String notification = '${_path}notification.svg';
   static const String search = '${_path}search.png';
   static const String personalCamera = '${_path}personal_infor_camera.svg';
   static const String imagePlaceHolder = '${_path}image_place_holder.svg';
   static const String iconRight='${_path}icon_right2.png';
+  static const String iconClose='${_path}icon_close.svg';
   static const String iconClock = '${_path}icon_clock_2.svg';
   static const String homecenter_qr ='${_path}home_center_qr.png';
   static const String homecenter_chart ='${_path}home_center_chart.png';
@@ -36,6 +41,7 @@ class IconConst {
   static const String personalSelDone = '${_path}personal_order_sell_done.svg';
   static const String personalNewOrder = '${_path}personal_new_order.png';
   static const String iconNews = '${_path}icon_news.svg';
+  static const String share = '${_path}icon_share.svg';
   static const String personalLocation = '${_path}personal_list_location.svg';
   static const String personalPaymentType = '${_path}personal_payment_type.svg';
   static const String personalPolicy = '${_path}personal_privacy_policy.svg';

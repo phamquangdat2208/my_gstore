@@ -25,8 +25,8 @@ class CategoryDetailWidgetItemGShop extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Routes.instance
-            .navigateTo(RouteName.gShopInformationScreen, arguments: information);
+        Routes.instance.navigateTo(RouteName.gShopInformationScreen,
+            arguments: information);
       },
       child: Container(
         width: itemWidth,
@@ -37,9 +37,9 @@ class CategoryDetailWidgetItemGShop extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              padding:EdgeInsets.all(2),
+              padding: EdgeInsets.all(2),
               decoration: const BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(12.0)),
+                borderRadius: BorderRadius.all(Radius.circular(16.0)),
                 gradient: LinearGradient(
                   colors: AppColors.colorsGradient,
                   begin: Alignment.centerLeft,
@@ -49,48 +49,51 @@ class CategoryDetailWidgetItemGShop extends StatelessWidget {
               child: Stack(
                 children: [
                   CustomCacheImageNetwork(
-                    url: information?.avartaUrl??'',
+                    url: information?.avartaUrl ?? '',
                     width: double.infinity,
                     height: 146,
                     fit: BoxFit.cover,
-                    border: 12,
+                    border: 16,
                   ),
-                  information?.type == 3 ? Positioned(
-                    right: 0,
-                    top: 0,
-                    child: Stack(
-                      children: [
-                        ClipRRect(
-                            borderRadius: BorderRadius.only(
-                                topRight: Radius.circular(12),
-                                bottomLeft: Radius.circular(12)),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color:
-                                AppColors.logoSkyBlue.withOpacity(0.9),
-                              ),
-                              width: 30,
-                              height: 25,
-                            )),
-                        Positioned.fill(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
+                  information?.type == 3
+                      ? Positioned(
+                          right: 0,
+                          top: 0,
+                          child: Stack(
                             children: [
-                              Image.asset(
-                                IconConst.homecenter_gshop,
-                                width: 18,
-                                height: 18,
-                                color: AppColors.white,
-                              ),
+                              ClipRRect(
+                                  borderRadius: BorderRadius.only(
+                                      topRight: Radius.circular(16),
+                                      bottomLeft: Radius.circular(12)),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: AppColors.logoSkyBlue
+                                          .withOpacity(0.9),
+                                    ),
+                                    width: 30,
+                                    height: 25,
+                                  )),
+                              Positioned.fill(
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Image.asset(
+                                      IconConst.homecenter_gshop,
+                                      width: 18,
+                                      height: 18,
+                                      color: AppColors.white,
+                                    ),
+                                  ],
+                                ),
+                              )
                             ],
                           ),
                         )
-                      ],
-                    ),
-                  ):SizedBox()
+                      : SizedBox()
                 ],
-              ),),
+              ),
+            ),
             SizedBox(height: 4.0),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 4),
@@ -98,7 +101,7 @@ class CategoryDetailWidgetItemGShop extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(
-                    height:20,
+                    height: 20,
                     child: Text(
                       information?.fullname ?? 'User',
                       overflow: TextOverflow.ellipsis,
@@ -117,7 +120,10 @@ class CategoryDetailWidgetItemGShop extends StatelessWidget {
                     textAlign: TextAlign.start,
                     maxLines: 2,
                   ),
-                  Divider(height: 8,color: AppColors.grey6,),
+                  Divider(
+                    height: 8,
+                    color: AppColors.grey6,
+                  ),
                   Row(
                     children: [
                       RatingBarIndicator(
@@ -131,24 +137,24 @@ class CategoryDetailWidgetItemGShop extends StatelessWidget {
                         direction: Axis.horizontal,
                       ),
                       Text(
-                        ' ${information?.avgRating??0}',
+                        ' ${information?.avgRating ?? 0}',
                         style: AppTextTheme.smallYellow,
                       ),
                       Text(
-                        '(${information?.ratings??0})',
+                        '(${information?.ratings ?? 0})',
                         style: AppTextTheme.smallYellow,
                       ),
-
-                      SizedBox(width: 24,),
+                      SizedBox(
+                        width: 24,
+                      ),
                       Image.asset(
                         IconConst.icondistance,
                         width: 18,
                       ),
                       Text(
-                        ' ${(information?.km??0).toStringAsFixed(1)}km',
+                        ' ${(information?.km ?? 0).toStringAsFixed(1)}km',
                         style: AppTextTheme.smallGreen,
                       ),
-
                     ],
                   ),
                 ],
